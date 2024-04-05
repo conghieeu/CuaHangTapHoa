@@ -1,6 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
+using Hieu;
 using Unity.VisualScripting;
+using UnityEditor;
 using UnityEngine;
 
 namespace CuaHang
@@ -10,24 +13,23 @@ namespace CuaHang
         public BoxSensor _sensorForward;
         public StaffMovement _movement;
         public Transform _targetTransform;  // Thứ mà cái này nhân viên hướng tới, không phải là thứ đang dữ trong người
-        public Transform _objectPlantHolding; // objectPlant người chơi đã nhặt đc và đang giữ trong người
+        public Transform _parcelHolding; // objectPlant người chơi đã nhặt đc và đang giữ trong người
         public Transform _objectPlantHolder; // Kho chứa các ObjectPlant ở trong world
         public Transform _targetModelHolding; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
-        public Transform _storageTransform; // cái kho
+        public Transform _storageHolder; // cái kho
         public bool _isMoveToTarget;
-        public bool _isPickedUpObjectPlant;
+        public bool _isPickedUpParcel;
 
         private void Start()
         {
             _movement.MoveTo(_targetTransform);
-            _sensorForward._eventTrigger.AddListener(OnArrivesObjectPlant);
+            _sensorForward._eventTrigger.AddListener(OnArrivesTarget);
         }
 
         private void FixedUpdate()
         {
             BehaviorAI();
         }
-
 
         void BehaviorAI()
         {
@@ -38,64 +40,116 @@ namespace CuaHang
             }
         }
 
-        public void OnArrivesObjectPlant()
+        void OnArrivesTarget()
         {
-            if (IsTouchTargetPlace())
+            // move to parcel and pickup parcel
+            if (IsArrivesObjPlant())
             {
-                PickUpParcel();
-                TryShipItems();
-
-                // đặt parcel vào kho
-                if (TryShipItems() == false)
-                {
-                    // TODO: Đặt parcel xuống như thế nào
-                    
-                }
-
-                // nhặt parcel
+                Debug.Log("Đã chạm phải ObjPlant");
                 if (_targetTransform.GetComponent<ObjectPlant>()._objPlantSO._name == "Parcel")
                 {
-                    _objectPlantHolding = _targetTransform;
+                    PickUpParcel();
+                    _parcelHolding = _targetTransform;
+                    _targetTransform = null;
                 }
-
-                //  tìm chỗ để thả item
-                Debug.Log("Nhân viên tìm kệ còn trống");
-                _targetTransform = null;
-                GetTableCanDrop();
-
             }
+
+            // giao hàng vào kệ
+            if (IsItemInParcel())
+            {
+                //  tìm chỗ để thả item
+                Debug.Log("Nhân viên tìm kệ còn trống hoặc cái kho để đặt parcel rỗng");
+                PutItemToTable();
+            }
+
+            // khi đã giao hết hàng
+            if (!IsItemInParcel())
+            {
+                // Tìm kho và tìm chỗ trống còn trong kho đó
+                Debug.Log("Tìm kho hàng để đặt parcel rỗng");
+                PutParcelToStorage();
+            }
+
+            // TODO: Trường hợp parcel đã đặt ra khỏi tay rồi thì cần tìm kiện hàng còn item bênh trong để đặt tiếp vào kệ
+        }
+
+        void PutItemToTable()
+        {
+            if (IsArrivesObjPlant())
+            {
+                SenderItems();
+            }
+            
+            _targetTransform = FindTableCanDrop();
+        }
+
+        void PutParcelToStorage()
+        {
+            if (_parcelHolding != null)
+            {
+                _targetTransform = FindStorageRoom();
+            }
+
+            if (IsArrivesStorage())
+            {
+                Debug.Log("Đặt tới kho");
+                DropParcel(_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty());
+                _targetTransform = null;
+            }
+        }
+
+        bool IsArrivesStorage()
+        {
+            return _sensorForward.GetHits().Find(hit => hit.transform == _targetTransform && hit.GetComponent<StorageRoom>());
         }
 
         // AI biết nó chạm tới tứ nó cần
-        public bool IsTouchTargetPlace()
+        bool IsArrivesObjPlant()
         {
-            foreach (var hit in _sensorForward._Hits)
-            {
-                if (hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>())
-                {
-                    Debug.Log("AI đã chạm vào ObjectPlant");
-                    return true;
-                }
-            }
-            return false;
+            return _sensorForward.GetHits().Find(hit => hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>());
         }
 
         // AI nó sẽ nhặt lênh
-        public void PickUpParcel()
+        void PickUpParcel()
         {
-            if (!_isPickedUpObjectPlant)
+            if (!_isPickedUpParcel)
             {
                 // AI ẩn cái ObjectPlant mà nó nhặt đi
                 _targetTransform.SetParent(_targetModelHolding);
                 _targetTransform.localPosition = Vector3.zero;
                 _targetTransform.localRotation = Quaternion.identity;
 
-                _isPickedUpObjectPlant = true;
+                _isPickedUpParcel = true;
             }
         }
 
+        void DropParcel(Transform location)
+        {
+            if (_isPickedUpParcel)
+            {
+                // AI ẩn cái ObjectPlant mà nó nhặt đi
+                _parcelHolding.SetParent(_objectPlantHolder);
+                _parcelHolding.position = location.position;
+                _parcelHolding.rotation = location.rotation;
+
+                _isPickedUpParcel = false;
+            }
+        }
+
+        Transform FindStorageRoom()
+        {
+            foreach (Transform child in _storageHolder)
+            {
+                StorageRoom storage = child.GetComponent<StorageRoom>();
+                if (storage == null) continue;
+                if (storage.GetSlotEmpty() == null) continue;
+                return child;
+            }
+            return null;
+        }
+
         // AI nó sẽ di chuyển tới điểm tiếp, AI tìm chỗ để đặt các item
-        public Transform GetTableCanDrop()
+        Transform FindTableCanDrop()
         {
             // thực hiện chọn địa điểm: Chọn ngẫu nhiên cái kệ còn trống
             foreach (Transform objPlant in _objectPlantHolder)
@@ -104,7 +158,7 @@ namespace CuaHang
                 if (!table) continue;
                 if (table._objPlantSO._name != "Table") continue;
                 if (!table._objPlantSO._listItem.Contains(null)) continue;
-                _targetTransform = objPlant;
+                return objPlant;
             }
 
             // Trường hợp không còn có cái kệ nào còn trống
@@ -112,16 +166,16 @@ namespace CuaHang
             return null;
         }
 
-        // Nó sẽ đưa cái item từ slot này sang slot kia của cái bàn
-        public bool TryShipItems()
+        // Nó sẽ đưa cái item từ slot này sang slot kia của cái bàn, false là còn kiện hàng đơn hàng chưa giao hết
+        void SenderItems()
         {
             // Nếu vật thể đã chạm được tới thực thể cần tới 
-            if (IsTouchTargetPlace() && _objectPlantHolding != null)
+            if (IsArrivesObjPlant() && _parcelHolding != null)
             {
                 // thực hiện việc truyền đơn hàng
                 Debug.Log("Thực hiện việc truyền dữ liệu đơn hàng");
 
-                ObjectPlantSO parcelSO = _objectPlantHolding.GetComponent<ObjectPlant>()._objPlantSO;
+                ObjectPlantSO parcelSO = _parcelHolding.GetComponent<ObjectPlant>()._objPlantSO;
                 ObjectPlantSO tableSO = _targetTransform.GetComponent<ObjectPlant>()._objPlantSO;
 
                 // chuyển item
@@ -141,12 +195,21 @@ namespace CuaHang
 
                 // Load lại các item hiển thị
                 _targetTransform.GetComponent<ObjectPlant>().LoadItemsSlot();
-                _objectPlantHolding.GetComponent<ObjectPlant>().LoadItemsSlot();
-
-                // Trả false nếu parcel còn kiện hàng
-                if (!parcelSO._listItem.Contains(null)) return false;
+                _parcelHolding.GetComponent<ObjectPlant>().LoadItemsSlot();
             }
-            return true;
+        }
+
+        /// <summary> Kiểm tra item có còn trong parcel không </summary>
+        bool IsItemInParcel()
+        {
+            if (_parcelHolding)
+                if (_parcelHolding.GetComponent<ObjectPlant>())
+                    foreach (var item in _parcelHolding.GetComponent<ObjectPlant>()._objPlantSO._listItem)
+                    {
+                        if (item != null) return true;
+                    }
+
+            return false;
         }
     }
 }

@@ -73,7 +73,7 @@ namespace CuaHang
 
         private void CheckPlant()
         {
-            if (_sensorAround._Hits.Count == 0 && IsTouchGround() && _isDistance)
+            if (_sensorAround.GetHits().Count == 0 && IsTouchGround() && _isDistance)
             {
                 _canPlant = true;
             }
@@ -89,7 +89,7 @@ namespace CuaHang
             if (_isCheckGround == false) return true;
 
             // Làm thế nào để cái sensor check ở dưới
-            foreach (var obj in _sensorGround._Hits)
+            foreach (var obj in _sensorGround.GetHits())
             {
                 if (obj.CompareTag(_groundTag))
                 {

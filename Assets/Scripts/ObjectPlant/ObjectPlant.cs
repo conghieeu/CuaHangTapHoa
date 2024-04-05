@@ -28,14 +28,14 @@ namespace CuaHang
             for (int i = 0; i < _slots.Count && i < _objPlantSO._listItem.Count; i++)
             {
                 // tạo đưa vào slot
-                if (_objPlantSO._listItem[i])
+                if (_objPlantSO._listItem[i] && _slots[i].childCount == 0)
                 {
                     Instantiate(_objPlantSO._listItem[i]._itemPrefabs, _slots[i]);
                 }
             }
 
             // TODO: Lấy item ra
-            for (int i = 0; i < _slots.Count; i++)
+            for (int i = _slots.Count - 1; i >= 0; i--)
             {
                 if (_objPlantSO._listItem[i] == null && _slots[i].childCount > 0)
                 {

@@ -8,6 +8,9 @@ namespace Hieu
     {
         public List<Transform> _slots;
 
-        
+        public Transform GetSlotEmpty()
+        {
+            return _slots.Find(child => child.childCount == 0);
+        }
     }
 }

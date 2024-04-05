@@ -13,9 +13,6 @@ namespace CuaHang
         // [SerializeField] List<String> _tags;
         [SerializeField] Vector3 _size;
         public UnityEvent _eventTrigger;
-        int _collCount;
-
-        public List<Transform> _Hits { get => _hits; }
 
         private void FixedUpdate()
         {
@@ -24,22 +21,19 @@ namespace CuaHang
 
         void DetectTarget()
         {
-            RaycastHit[] hits = Physics.BoxCastAll(transform.position, _size / 2f, transform.forward, transform.rotation, 0f);
-
-            List<Transform> hit = hits.Select(x => x.transform).ToList();
-
-            _hits = hit;
-
-            SetCollHitCount();
+            if (!GetHits().SequenceEqual(_hits))
+            {
+                Debug.Log("_eventTrigger.Invoke");
+                _eventTrigger.Invoke();
+                _hits = GetHits();
+            }
         }
 
-        void SetCollHitCount()
+        public List<Transform> GetHits()
         {
-            if (_hits.Count != _collCount)
-            {
-                _eventTrigger.Invoke();
-                _collCount = _hits.Count;
-            }
+            RaycastHit[] hits = Physics.BoxCastAll(transform.position, _size / 2f, transform.forward, transform.rotation, 0f);
+
+            return hits.Select(x => x.transform).ToList();
         }
 
         protected void OnDrawGizmosSelected()
