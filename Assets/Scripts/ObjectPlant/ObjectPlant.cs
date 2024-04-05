@@ -7,7 +7,7 @@ namespace CuaHang
 {
     public class ObjectPlant : MonoBehaviour
     {
-        public ObjectPlantSO _objectInfoSO;
+        public ObjectPlantSO _objPlantSO;
         public Transform _models;
         public Transform _tempPrefab;
         public PlayerCtrl _player;
@@ -25,21 +25,21 @@ namespace CuaHang
         // tải hình ảnh item từ trong SO lên, đây là việc load dữ liệu lênh nên ko được chỉnh sửa dử liệu
         public void LoadItemsSlot()
         {
-            for (int i = 0; i < _slots.Count && i < _objectInfoSO._listItem.Count; i++)
+            for (int i = 0; i < _slots.Count && i < _objPlantSO._listItem.Count; i++)
             {
-                // tạo đưa vào
-                Instantiate(_objectInfoSO._listItem[i]._itemPrefabs, _slots[i]);
+                // tạo đưa vào slot
+                if (_objPlantSO._listItem[i])
+                {
+                    Instantiate(_objPlantSO._listItem[i]._itemPrefabs, _slots[i]);
+                }
             }
 
             // TODO: Lấy item ra
-            for (int i = _slots.Count - 1; i >= 0; i--)
+            for (int i = 0; i < _slots.Count; i++)
             {
-                if (_objectInfoSO._listItem.Count < i + 1 && _slots[i].childCount > 0)
+                if (_objPlantSO._listItem[i] == null && _slots[i].childCount > 0)
                 {
-                    foreach (Transform child in _slots[i].transform)
-                    {
-                        Destroy(child.gameObject);
-                    }
+                    Destroy(_slots[i].GetChild(0).gameObject);
                 }
             }
         }
@@ -52,7 +52,7 @@ namespace CuaHang
             // Set Temp 
             ObjectTemp temp = _player._temp;
             temp.gameObject.SetActive(true);
-            temp._ObjectContactDisplay = _objectInfoSO;
+            temp._ObjectContactDisplay = _objPlantSO;
         }
     }
 

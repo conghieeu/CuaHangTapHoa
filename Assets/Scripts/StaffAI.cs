@@ -13,13 +13,14 @@ namespace CuaHang
         public Transform _objectPlantHolding; // objectPlant người chơi đã nhặt đc và đang giữ trong người
         public Transform _objectPlantHolder; // Kho chứa các ObjectPlant ở trong world
         public Transform _targetModelHolding; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
+        public Transform _storageTransform; // cái kho
         public bool _isMoveToTarget;
         public bool _isPickedUpObjectPlant;
 
         private void Start()
         {
             _movement.MoveTo(_targetTransform);
-            _sensorForward._eventTrigger.AddListener(OnArrivesColl);
+            _sensorForward._eventTrigger.AddListener(OnArrivesObjectPlant);
         }
 
         private void FixedUpdate()
@@ -37,12 +38,31 @@ namespace CuaHang
             }
         }
 
-        public void OnArrivesColl()
+        public void OnArrivesObjectPlant()
         {
             if (IsTouchTargetPlace())
             {
                 PickUpParcel();
-                DropItemToTable();
+                TryShipItems();
+
+                // đặt parcel vào kho
+                if (TryShipItems() == false)
+                {
+                    // TODO: Đặt parcel xuống như thế nào
+                    
+                }
+
+                // nhặt parcel
+                if (_targetTransform.GetComponent<ObjectPlant>()._objPlantSO._name == "Parcel")
+                {
+                    _objectPlantHolding = _targetTransform;
+                }
+
+                //  tìm chỗ để thả item
+                Debug.Log("Nhân viên tìm kệ còn trống");
+                _targetTransform = null;
+                GetTableCanDrop();
+
             }
         }
 
@@ -82,33 +102,14 @@ namespace CuaHang
             {
                 ObjectPlant table = objPlant.GetComponent<ObjectPlant>();
                 if (!table) continue;
-                if (table._objectInfoSO._name != "Table") continue;
-                if (table._objectInfoSO._listItem.Count >= table._objectInfoSO._numberSlots) continue;
+                if (table._objPlantSO._name != "Table") continue;
+                if (!table._objPlantSO._listItem.Contains(null)) continue;
                 _targetTransform = objPlant;
             }
 
             // Trường hợp không còn có cái kệ nào còn trống
 
-
             return null;
-        }
-
-        // AI tìm chỗ để thả objectPlant
-        public void DropItemToTable()
-        {
-            // TODO: Thả như nào ?
-            TryShipItems();
-
-            // Khi nào thì nên thả ObjectPlant
-            _objectPlantHolding = _targetTransform;
-            _targetTransform = null;
-
-            // DONE: Địa điểm thả ở đâu
-            if (_targetTransform == null)
-            {
-                Debug.Log("Nhân viên tìm kệ còn trống");
-                GetTableCanDrop();
-            }
         }
 
         // Nó sẽ đưa cái item từ slot này sang slot kia của cái bàn
@@ -120,32 +121,32 @@ namespace CuaHang
                 // thực hiện việc truyền đơn hàng
                 Debug.Log("Thực hiện việc truyền dữ liệu đơn hàng");
 
-                ObjectPlantSO parcelSO = _objectPlantHolding.GetComponent<ObjectPlant>()._objectInfoSO;
-                ObjectPlantSO tableSO = _targetTransform.GetComponent<ObjectPlant>()._objectInfoSO;
+                ObjectPlantSO parcelSO = _objectPlantHolding.GetComponent<ObjectPlant>()._objPlantSO;
+                ObjectPlantSO tableSO = _targetTransform.GetComponent<ObjectPlant>()._objPlantSO;
 
-                for (int i = 0; i < parcelSO._listItem.Count; i++)
+                // chuyển item
+                for (int i = parcelSO._listItem.Count - 1; i >= 0; i--)
                 {
-                    ObjectSellSO item = parcelSO._listItem[i];
+                    if (parcelSO._listItem[i] == null) continue;
 
-                    // Truyền Item
-                    tableSO._listItem.Add(item);
-                    parcelSO._listItem.RemoveAt(i);
-                    i--;
-
-                    // Load lại các item hiển thị
-                    _targetTransform.GetComponent<ObjectPlant>().LoadItemsSlot();
-                    _objectPlantHolding.GetComponent<ObjectPlant>().LoadItemsSlot();
-
-                    // Khi đơn hàng được thả hết, hoặc kệ hàng này bị đầy thì thả thành công
-                    // Lúc này cần chuyển sang table tiếp theo để thả hết hàng
-                    if (parcelSO._listItem.Count <= parcelSO._numberSlots && tableSO._listItem.Count >= tableSO._numberSlots)
+                    for (int j = 0; j < tableSO._listItem.Count; j++)
                     {
-                        return true;
+                        if (tableSO._listItem[j] == null)
+                        {
+                            tableSO._listItem[j] = parcelSO._listItem[i];
+                            parcelSO._listItem[i] = null;
+                        }
                     }
                 }
-            }
 
-            return false;
+                // Load lại các item hiển thị
+                _targetTransform.GetComponent<ObjectPlant>().LoadItemsSlot();
+                _objectPlantHolding.GetComponent<ObjectPlant>().LoadItemsSlot();
+
+                // Trả false nếu parcel còn kiện hàng
+                if (!parcelSO._listItem.Contains(null)) return false;
+            }
+            return true;
         }
     }
 }

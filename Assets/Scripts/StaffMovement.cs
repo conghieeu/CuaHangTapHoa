@@ -10,7 +10,6 @@ public class StaffMovement : MonoBehaviour
 
     NavMeshAgent _navMeshAgent;
 
-
     private void Awake()
     {
         _navMeshAgent = GetComponent<NavMeshAgent>();

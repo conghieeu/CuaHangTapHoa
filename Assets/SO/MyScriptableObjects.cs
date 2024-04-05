@@ -8,7 +8,6 @@ public class ObjectPlantSO : ScriptableObject
     public string _nameID;
     public float _price;
     public string _currency;
-    public int _numberSlots; 
     public List<ObjectSellSO> _listItem;
 }
 

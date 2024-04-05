@@ -16,5 +16,8 @@ MonoBehaviour:
   _nameID: Table01
   _price: 8
   _currency: USD
-  _numberSlots: 4
-  _listItem: []
+  _listItem:
+  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
+  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
+  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
+  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}

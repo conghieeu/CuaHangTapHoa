@@ -35,7 +35,7 @@ namespace CuaHang
 
         void SetCollHitCount()
         {
-            if (_hits.Count > _collCount)
+            if (_hits.Count != _collCount)
             {
                 _eventTrigger.Invoke();
                 _collCount = _hits.Count;

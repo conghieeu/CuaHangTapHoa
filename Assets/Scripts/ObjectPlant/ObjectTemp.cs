@@ -54,7 +54,7 @@ namespace CuaHang
                 ObjectPlant o = Instantiate(_objectPlant, this.transform.position, this.transform.rotation, _objectContactHolder).GetComponent<ObjectPlant>();
 
                 o._models.transform.rotation = _models.rotation;
-                o._objectInfoSO = _objectPlantSO;
+                o._objPlantSO = _objectPlantSO;
 
             }
         }
