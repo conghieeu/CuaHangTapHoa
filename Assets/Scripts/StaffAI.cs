@@ -22,6 +22,8 @@ namespace CuaHang
 
         private void Start()
         {
+            _targetTransform = FindParcel();
+
             _movement.MoveTo(_targetTransform);
             _sensorForward._eventTrigger.AddListener(OnArrivesTarget);
         }
@@ -43,16 +45,7 @@ namespace CuaHang
         void OnArrivesTarget()
         {
             // move to parcel and pickup parcel
-            if (IsArrivesObjPlant())
-            {
-                Debug.Log("Đã chạm phải ObjPlant");
-                if (_targetTransform.GetComponent<ObjectPlant>()._objPlantSO._name == "Parcel")
-                {
-                    PickUpParcel();
-                    _parcelHolding = _targetTransform;
-                    _targetTransform = null;
-                }
-            }
+            if (_parcelHolding == null) OnArrivesParcel();
 
             // giao hàng vào kệ
             if (IsItemInParcel())
@@ -73,13 +66,27 @@ namespace CuaHang
             // TODO: Trường hợp parcel đã đặt ra khỏi tay rồi thì cần tìm kiện hàng còn item bênh trong để đặt tiếp vào kệ
         }
 
+        private void OnArrivesParcel()
+        {
+            if (IsArrivesObjPlant())
+            {
+                Debug.Log("Đã chạm phải ObjPlant");
+                if (_targetTransform.GetComponent<ObjectPlant>()._objPlantSO._name == "Parcel")
+                {
+                    PickUpParcel();
+                    _parcelHolding = _targetTransform;
+                    _targetTransform = null;
+                }
+            }
+        }
+
         void PutItemToTable()
         {
             if (IsArrivesObjPlant())
             {
                 SenderItems();
             }
-            
+
             _targetTransform = FindTableCanDrop();
         }
 
@@ -94,7 +101,7 @@ namespace CuaHang
             {
                 Debug.Log("Đặt tới kho");
                 DropParcel(_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty());
-                _targetTransform = null;
+                _targetTransform = FindParcel();
             }
         }
 
@@ -136,6 +143,21 @@ namespace CuaHang
             }
         }
 
+        // Tìm parcel còn item trước và parcel không còn item sau
+        Transform FindParcel()
+        {
+            foreach (Transform objPlant in _objectPlantHolder)
+            {
+                ObjectPlant parcel = objPlant.GetComponent<ObjectPlant>();
+                if (!parcel) continue;
+                if (parcel._objPlantSO._name != "Parcel") continue;
+                if (!parcel._objPlantSO._listItem.Contains(null) && FindTableCanDrop()) return objPlant;
+                else return objPlant;
+            }
+            return null;
+        }
+
+
         Transform FindStorageRoom()
         {
             foreach (Transform child in _storageHolder)
@@ -162,7 +184,6 @@ namespace CuaHang
             }
 
             // Trường hợp không còn có cái kệ nào còn trống
-
             return null;
         }
 
