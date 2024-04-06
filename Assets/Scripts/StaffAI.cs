@@ -42,23 +42,26 @@ namespace CuaHang.StaffAI
 
         void OnArrivesTarget()
         {
+            if (IsArrivesObjPlant())
+            {
+                SenderItems();
+            }
+
             // move to parcel and pickup parcel
             if (_parcelHolding == null) StatePickParcel();
 
             // giao hàng vào kệ
-            if (FindObjectPlant("Table"))
+            if (FindObjectPlant("Table") && IsItemInParcel())
             {
                 //  tìm chỗ để thả item
                 Debug.Log("Nhân viên tìm kệ còn trống hoặc cái kho để đặt parcel rỗng");
                 StateItemToTable();
-                return;
             }
-
             // Tìm thùng rác còn trống đặt parcel vào trong đó
-            if (!FindObjectPlant("Table"))
+            else if (!FindObjectPlant("Table") || !IsItemInParcel())
             {
-                Debug.Log("Tìm thùng rác để đặt parcel rỗng");
-                StateParcelToStorage();
+                Debug.Log("Tìm thùng rác hoặc kho để đặt parcel rỗng");
+                StateDropParcel();
             }
         }
 
@@ -77,16 +80,13 @@ namespace CuaHang.StaffAI
 
         void StateItemToTable()
         {
-            if (IsArrivesObjPlant())
-            {
-                SenderItems();
-            }
-
             _targetTransform = FindObjectPlant("Table");
         }
 
-        void StateParcelToStorage()
+        /// <summary> Cần tìm đối tượng để AI có thể đạt parcel xuống </summary>
+        void StateDropParcel()
         {
+            // Tìm kiện hàng hoặc thùng rác
             if (_parcelHolding != null && _isFindingParcel == false)
             {
                 if (IsItemInParcel())
@@ -99,10 +99,17 @@ namespace CuaHang.StaffAI
                 }
             }
 
-            // Đặt parcel vào kho
+            // Đặt parcel vào đâu đó
             if (IsArrivesStorage())
             {
-                Debug.Log("Đặt tới kho");
+                Debug.Log("Đặt tới kho, hoặc thùng rác");
+
+                // Thêm parcel vào thùng rác để nó xoá
+                if (IsItemInParcel() == false)
+                {
+                    _targetTransform.GetComponent<Trash>().AddDeleteItem(_parcelHolding);
+                }
+
                 DropParcel(_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty());
 
                 if (_parcelHolding == null)

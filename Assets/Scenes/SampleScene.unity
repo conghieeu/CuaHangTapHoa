@@ -2243,6 +2243,8 @@ MonoBehaviour:
   - {fileID: 988158318787685040}
   - {fileID: 1611375544584547144}
   _maxSlot: 1
+  _timeDelete: 3
+  _itemsDelete: []
 --- !u!114 &7665632069718744732
 MonoBehaviour:
   m_ObjectHideFlags: 0
