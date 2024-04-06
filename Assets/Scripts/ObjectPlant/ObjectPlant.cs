@@ -8,6 +8,7 @@ namespace CuaHang
 {
     public class ObjectPlant : MonoBehaviour
     {
+        [Header("ObjectPlant")]
         public ObjectPlantSO _objPlantSO;
         public Transform _models;
         public Transform _tempPrefab;
@@ -27,7 +28,7 @@ namespace CuaHang
         // tải hình ảnh item từ trong SO lên, đây là việc load dữ liệu lênh nên ko được chỉnh sửa dử liệu
         public void LoadItemsSlot()
         {
-            if(!_objPlantSO) return;
+            if(!_objPlantSO || _objPlantSO._listItem.Count == 0) return;
             for (int i = 0; i < _slots.Count && i < _objPlantSO._listItem.Count; i++)
             {
                 // tạo đưa vào slot

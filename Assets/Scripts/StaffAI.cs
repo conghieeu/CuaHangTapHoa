@@ -1,10 +1,4 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
-using Hieu;
-using Unity.VisualScripting;
-using UnityEditor;
 using UnityEngine;
 
 namespace CuaHang.StaffAI
@@ -17,11 +11,12 @@ namespace CuaHang.StaffAI
         public Transform _targetTransform;  // Thứ mà cái này nhân viên hướng tới, không phải là thứ đang dữ trong người
         public Transform _parcelHolding; // objectPlant người chơi đã nhặt đc và đang giữ trong người
         public Transform _objectPlantHolder; // Kho chứa các ObjectPlant ở trong world
-        public Transform _targetModelHolding; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
-        public Transform _storageHolder; // cái kho
+        public Transform _targetModelHolding; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người
+
         public bool _isMoveToTarget;
         public bool _isPickedUpParcel;
         public bool _isFindingParcel;
+        public bool _isDropParcelToTrash; // dat parcel rong vao thung rac, parcel thua vao kho
 
         private void Start()
         {
@@ -51,18 +46,18 @@ namespace CuaHang.StaffAI
             if (_parcelHolding == null) StatePickParcel();
 
             // giao hàng vào kệ
-            if (IsItemInParcel())
+            if (FindObjectPlant("Table"))
             {
                 //  tìm chỗ để thả item
                 Debug.Log("Nhân viên tìm kệ còn trống hoặc cái kho để đặt parcel rỗng");
                 StateItemToTable();
+                return;
             }
 
-            // khi đã giao hết hàng
-            if (!IsItemInParcel())
+            // Tìm thùng rác còn trống đặt parcel vào trong đó
+            if (!FindObjectPlant("Table"))
             {
-                // Tìm kho và tìm chỗ trống còn trong kho đó
-                Debug.Log("Tìm kho hàng để đặt parcel rỗng");
+                Debug.Log("Tìm thùng rác để đặt parcel rỗng");
                 StateParcelToStorage();
             }
         }
@@ -87,14 +82,21 @@ namespace CuaHang.StaffAI
                 SenderItems();
             }
 
-            _targetTransform = FindTableCanDrop();
+            _targetTransform = FindObjectPlant("Table");
         }
 
         void StateParcelToStorage()
         {
             if (_parcelHolding != null && _isFindingParcel == false)
             {
-                _targetTransform = FindStorageRoom();
+                if (IsItemInParcel())
+                {
+                    _targetTransform = FindStorageRoom();
+                }
+                else
+                {
+                    _targetTransform = FindTrash();
+                }
             }
 
             // Đặt parcel vào kho
@@ -160,39 +162,49 @@ namespace CuaHang.StaffAI
                 ObjectPlant parcel = objPlant.GetComponent<ObjectPlant>();
                 if (!parcel) continue;
                 if (parcel._objPlantSO._name != "Parcel") continue;
-                if (!parcel._objPlantSO._listItem.Contains(null) && FindTableCanDrop()) return objPlant;
+                if (!parcel._objPlantSO._listItem.Contains(null) && FindObjectPlant("Table")) return objPlant;
                 else return objPlant;
             }
             return null;
         }
 
+        Transform FindTrash()
+        {
+            foreach (Transform child in _objectPlantHolder)
+            {
+                Trash trash = child.GetComponent<Trash>();
+                if (!trash) continue;
+                if (trash._objPlantSO._name != "Trash") continue;
+                if (trash.GetSlotEmpty() == null) continue;
+                return child;
+            }
+            return null;
+        }
 
         Transform FindStorageRoom()
         {
-            foreach (Transform child in _storageHolder)
+            foreach (Transform child in _objectPlantHolder)
             {
                 StorageRoom storage = child.GetComponent<StorageRoom>();
                 if (storage == null) continue;
+                if (storage._objPlantSO._name != "Storage") continue;
                 if (storage.GetSlotEmpty() == null) continue;
                 return child;
             }
             return null;
         }
 
-        // AI nó sẽ di chuyển tới điểm tiếp, AI tìm chỗ để đặt các item
-        Transform FindTableCanDrop()
+        /// <summary> Tim object plant theo ten trong SO </summary>
+        Transform FindObjectPlant(String name)
         {
-            // thực hiện chọn địa điểm: Chọn ngẫu nhiên cái kệ còn trống
-            foreach (Transform objPlant in _objectPlantHolder)
+            foreach (Transform child in _objectPlantHolder)
             {
-                ObjectPlant table = objPlant.GetComponent<ObjectPlant>();
+                ObjectPlant table = child.GetComponent<ObjectPlant>();
                 if (!table) continue;
-                if (table._objPlantSO._name != "Table") continue;
+                if (table._objPlantSO._name != name) continue;
                 if (!table._objPlantSO._listItem.Contains(null)) continue;
-                return objPlant;
+                return child;
             }
-
-            // Trường hợp không còn có cái kệ nào còn trống
             return null;
         }
 

@@ -6,10 +6,10 @@ namespace CuaHang
 {
     public class StorageRoom : ObjectPlant
     {
-        public Transform _objectPlantHolder;
+        [Header("           StorageRoom")]
         public int _maxSlot = 3; // số lượng tối đa mỗi slot mà AI có thể chất hàng lênh
 
-        public Transform GetSlotEmpty()
+        public virtual Transform GetSlotEmpty()
         {
             return _slots.Find(child => child.childCount < _maxSlot);
         }
