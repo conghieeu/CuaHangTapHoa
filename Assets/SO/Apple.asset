@@ -14,6 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSellSO
   _name: Apple
   _nameID: Apple01
-  _price: 0.3
+  _price: 3
   _currency: USD
   _itemPrefabs: {fileID: 5093278088282058274, guid: ad81afd499c88fd4ca0c23549ee682c8, type: 3}

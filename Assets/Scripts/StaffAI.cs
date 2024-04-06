@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -6,10 +7,11 @@ using Unity.VisualScripting;
 using UnityEditor;
 using UnityEngine;
 
-namespace CuaHang
+namespace CuaHang.StaffAI
 {
     public class StaffAI : MonoBehaviour
     {
+
         public BoxSensor _sensorForward;
         public StaffMovement _movement;
         public Transform _targetTransform;  // Thứ mà cái này nhân viên hướng tới, không phải là thứ đang dữ trong người
@@ -19,6 +21,7 @@ namespace CuaHang
         public Transform _storageHolder; // cái kho
         public bool _isMoveToTarget;
         public bool _isPickedUpParcel;
+        public bool _isFindingParcel;
 
         private void Start()
         {
@@ -45,14 +48,14 @@ namespace CuaHang
         void OnArrivesTarget()
         {
             // move to parcel and pickup parcel
-            if (_parcelHolding == null) OnArrivesParcel();
+            if (_parcelHolding == null) StatePickParcel();
 
             // giao hàng vào kệ
             if (IsItemInParcel())
             {
                 //  tìm chỗ để thả item
                 Debug.Log("Nhân viên tìm kệ còn trống hoặc cái kho để đặt parcel rỗng");
-                PutItemToTable();
+                StateItemToTable();
             }
 
             // khi đã giao hết hàng
@@ -60,17 +63,14 @@ namespace CuaHang
             {
                 // Tìm kho và tìm chỗ trống còn trong kho đó
                 Debug.Log("Tìm kho hàng để đặt parcel rỗng");
-                PutParcelToStorage();
+                StateParcelToStorage();
             }
-
-            // TODO: Trường hợp parcel đã đặt ra khỏi tay rồi thì cần tìm kiện hàng còn item bênh trong để đặt tiếp vào kệ
         }
 
-        private void OnArrivesParcel()
+        private void StatePickParcel()
         {
             if (IsArrivesObjPlant())
             {
-                Debug.Log("Đã chạm phải ObjPlant");
                 if (_targetTransform.GetComponent<ObjectPlant>()._objPlantSO._name == "Parcel")
                 {
                     PickUpParcel();
@@ -80,7 +80,7 @@ namespace CuaHang
             }
         }
 
-        void PutItemToTable()
+        void StateItemToTable()
         {
             if (IsArrivesObjPlant())
             {
@@ -90,18 +90,25 @@ namespace CuaHang
             _targetTransform = FindTableCanDrop();
         }
 
-        void PutParcelToStorage()
+        void StateParcelToStorage()
         {
-            if (_parcelHolding != null)
+            if (_parcelHolding != null && _isFindingParcel == false)
             {
                 _targetTransform = FindStorageRoom();
             }
 
+            // Đặt parcel vào kho
             if (IsArrivesStorage())
             {
                 Debug.Log("Đặt tới kho");
                 DropParcel(_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty());
-                _targetTransform = FindParcel();
+
+                if (_parcelHolding == null)
+                {
+                    Debug.Log("Nhân viên tìm bưu kiện khác");
+                    _targetTransform = FindParcel();
+                    _isFindingParcel = true;
+                }
             }
         }
 
@@ -127,6 +134,7 @@ namespace CuaHang
                 _targetTransform.localRotation = Quaternion.identity;
 
                 _isPickedUpParcel = true;
+                _isFindingParcel = false;
             }
         }
 
@@ -135,11 +143,12 @@ namespace CuaHang
             if (_isPickedUpParcel)
             {
                 // AI ẩn cái ObjectPlant mà nó nhặt đi
-                _parcelHolding.SetParent(_objectPlantHolder);
+                _parcelHolding.SetParent(location);
                 _parcelHolding.position = location.position;
                 _parcelHolding.rotation = location.rotation;
 
                 _isPickedUpParcel = false;
+                _parcelHolding = null;
             }
         }
 

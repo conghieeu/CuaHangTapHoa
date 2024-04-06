@@ -2,15 +2,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace Hieu
+namespace CuaHang
 {
-    public class StorageRoom : MonoBehaviour
+    public class StorageRoom : ObjectPlant
     {
-        public List<Transform> _slots;
+        public Transform _objectPlantHolder;
+        public int _maxSlot = 3; // số lượng tối đa mỗi slot mà AI có thể chất hàng lênh
 
         public Transform GetSlotEmpty()
         {
-            return _slots.Find(child => child.childCount == 0);
+            return _slots.Find(child => child.childCount < _maxSlot);
         }
     }
 }

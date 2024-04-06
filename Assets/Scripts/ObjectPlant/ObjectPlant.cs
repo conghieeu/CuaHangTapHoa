@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Runtime.InteropServices.WindowsRuntime;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -11,6 +12,7 @@ namespace CuaHang
         public Transform _models;
         public Transform _tempPrefab;
         public PlayerCtrl _player;
+        
 
         [Space]
         public List<Transform> _slots;
@@ -25,6 +27,7 @@ namespace CuaHang
         // tải hình ảnh item từ trong SO lên, đây là việc load dữ liệu lênh nên ko được chỉnh sửa dử liệu
         public void LoadItemsSlot()
         {
+            if(!_objPlantSO) return;
             for (int i = 0; i < _slots.Count && i < _objPlantSO._listItem.Count; i++)
             {
                 // tạo đưa vào slot
