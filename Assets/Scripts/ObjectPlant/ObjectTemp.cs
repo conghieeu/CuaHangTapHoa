@@ -7,11 +7,9 @@ namespace CuaHang
 {
     public class ObjectTemp : MonoBehaviour
     {
-        [SerializeField] ObjectPlantSO _objectPlantSO;
-        
         [Space]
-        [SerializeField] Transform _objectPlant;
-        [SerializeField] Transform _objectContactHolder;
+        public Transform _objectContactHolder;
+        public Transform _objPlantOnDrag;
         [Space]
         [SerializeField] bool _canPlant;
         [SerializeField] bool _isDistance;
@@ -25,37 +23,28 @@ namespace CuaHang
         [SerializeField] BoxSensor _sensorGround;
 
         public bool _IsDistance { get => _isDistance; set => _isDistance = value; }
-        public ObjectPlantSO _ObjectContactDisplay { get => _objectPlantSO; set => _objectPlantSO = value; }
 
-        private void Awake()
+        private void FixedUpdate()
         {
-            
+            CheckPlant();
+            SetMaterial();
         }
 
         private void Update()
         {
-            
             PlantPrefab();
-        }
-
-        private void FixedUpdate()
-        {
-
-            CheckPlant();
-            SetMaterial();
         }
 
         private void PlantPrefab()
         {
             if (Input.GetMouseButtonDown(0) && _canPlant)
             {
+                _objPlantOnDrag.transform.position = this.transform.position;
+                _objPlantOnDrag.transform.rotation = this.transform.rotation;
+                _objPlantOnDrag.GetComponent<ObjectPlant>()._models.transform.rotation = _models.rotation;
+
                 gameObject.SetActive(false);
-
-                ObjectPlant o = Instantiate(_objectPlant, this.transform.position, this.transform.rotation, _objectContactHolder).GetComponent<ObjectPlant>();
-
-                o._models.transform.rotation = _models.rotation;
-                o._objPlantSO = _objectPlantSO;
-
+                _objPlantOnDrag.gameObject.SetActive(true);
             }
         }
 

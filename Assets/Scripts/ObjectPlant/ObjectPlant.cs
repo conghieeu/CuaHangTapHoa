@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -12,36 +13,48 @@ namespace CuaHang
         public ObjectPlantSO _objPlantSO;
         public Transform _models;
         public Transform _tempPrefab;
-        public PlayerCtrl _player;
-        
 
-        [Space]
+        [Header("Value")]
+        public string _name;
+        public float _price;
+        public string _currency;
+        public List<ObjectSellSO> _listItem;
         public List<Transform> _slots;
 
         private void Start()
         {
-            _player = PlayerCtrl.Instance;
+            LoadSO();
 
             LoadItemsSlot();
+        }
+
+        public void LoadSO()
+        {
+            if(_objPlantSO == null) return;
+
+            _name = _objPlantSO._name;
+            _price = _objPlantSO._price;
+            _currency = _objPlantSO._currency;
+            _listItem = _objPlantSO._listItem;
         }
 
         // tải hình ảnh item từ trong SO lên, đây là việc load dữ liệu lênh nên ko được chỉnh sửa dử liệu
         public void LoadItemsSlot()
         {
-            if(!_objPlantSO || _objPlantSO._listItem.Count == 0) return;
-            for (int i = 0; i < _slots.Count && i < _objPlantSO._listItem.Count; i++)
+            if (_listItem.Count == 0) return;
+            for (int i = 0; i < _slots.Count && i < _listItem.Count; i++)
             {
                 // tạo đưa vào slot
-                if (_objPlantSO._listItem[i] && _slots[i].childCount == 0)
+                if (_listItem[i] && _slots[i].childCount == 0)
                 {
-                    Instantiate(_objPlantSO._listItem[i]._itemPrefabs, _slots[i]);
+                    Instantiate(_listItem[i]._itemPrefabs, _slots[i]);
                 }
             }
 
             // TODO: Lấy item ra
             for (int i = _slots.Count - 1; i >= 0; i--)
             {
-                if (_objPlantSO._listItem[i] == null && _slots[i].childCount > 0)
+                if (_listItem[i] == null && _slots[i].childCount > 0)
                 {
                     Destroy(_slots[i].GetChild(0).gameObject);
                 }
@@ -51,13 +64,12 @@ namespace CuaHang
         // đặt object cần đặt vào vị trí
         public void InstantTemp()
         {
-            Destroy(this.gameObject);
+            this.gameObject.SetActive(false);
 
             // Set Temp 
-            ObjectTemp temp = _player._temp;
+            ObjectTemp temp = PlayerCtrl.Instance._temp;
             temp.gameObject.SetActive(true);
-            temp._ObjectContactDisplay = _objPlantSO;
+            temp._objPlantOnDrag = this.transform;
         }
     }
-
 }
