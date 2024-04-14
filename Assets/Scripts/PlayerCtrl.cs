@@ -9,6 +9,7 @@ namespace CuaHang
     {
         public ObjectTemp _temp;
         public Transform _modelTempHolding;
+        public BoxSensor _boxSensor;
 
         public static PlayerCtrl Instance { get; private set; }
 

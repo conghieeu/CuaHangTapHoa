@@ -51,7 +51,7 @@ namespace CuaHang
                 }
             }
 
-            // TODO: Lấy item ra
+            // Lấy item ra
             for (int i = _slots.Count - 1; i >= 0; i--)
             {
                 if (_listItem[i] == null && _slots[i].childCount > 0)

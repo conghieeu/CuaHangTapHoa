@@ -1958,6 +1958,55 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3815829700302661678, guid: 18f0251649454ea47b3a38ec126b206e, type: 3}
   m_PrefabInstance: {fileID: 1823131303052359694}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2068422186
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2068422187}
+  - component: {fileID: 2068422188}
+  m_Layer: 0
+  m_Name: BoxSensor
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2068422187
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068422186}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0.202, z: 0.366}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 868200816}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2068422188
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2068422186}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 03107e4c994ee9241b32b2dfb9a3f1f5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _hits: []
+  _size: {x: 1, y: 1, z: 1}
+  _eventTrigger:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &2140833597
 GameObject:
   m_ObjectHideFlags: 0
@@ -2231,6 +2280,10 @@ PrefabInstance:
     - target: {fileID: 2170220986683345571, guid: 18f0251649454ea47b3a38ec126b206e, type: 3}
       propertyPath: m_Name
       value: "Nh\xE2n vi\xEAn qu\xE8n"
+      objectReference: {fileID: 0}
+    - target: {fileID: 2170220986683345571, guid: 18f0251649454ea47b3a38ec126b206e, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4820262868049286928, guid: 18f0251649454ea47b3a38ec126b206e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -2911,6 +2964,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1311103227}
     - target: {fileID: 5380269693520670829, guid: c60c5b0082c866f45b95cde31f23f9db, type: 3}
+      propertyPath: _boxSensor
+      value: 
+      objectReference: {fileID: 2068422188}
+    - target: {fileID: 5380269693520670829, guid: c60c5b0082c866f45b95cde31f23f9db, type: 3}
       propertyPath: _modelTempHolding
       value: 
       objectReference: {fileID: 1142908365}
@@ -2920,6 +2977,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 5838243689704323114, guid: c60c5b0082c866f45b95cde31f23f9db, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1142908365}
+    - targetCorrespondingSourceObject: {fileID: 5838243689704323114, guid: c60c5b0082c866f45b95cde31f23f9db, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2068422187}
     - targetCorrespondingSourceObject: {fileID: 9172395903318584849, guid: c60c5b0082c866f45b95cde31f23f9db, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1010413513}

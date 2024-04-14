@@ -9,12 +9,12 @@ namespace CuaHang
 {
     public class BoxSensor : MonoBehaviour
     {
-        [SerializeField] List<Transform> _hits;
+        public List<Transform> _hits;
         // [SerializeField] List<String> _tags;
         [SerializeField] Vector3 _size;
         public UnityEvent _eventTrigger;
 
-        private void FixedUpdate()
+        private void Update()
         {
             DetectTarget();
         }
@@ -23,13 +23,13 @@ namespace CuaHang
         {
             if (!GetHits().SequenceEqual(_hits))
             {
+                _hits = GetHits();
                 Debug.Log("BoxSensor: _eventTrigger.Invoke đã được gọi");
                 _eventTrigger.Invoke();
-                _hits = GetHits();
             }
         }
 
-        public List<Transform> GetHits()
+        List<Transform> GetHits()
         {
             RaycastHit[] hits = Physics.BoxCastAll(transform.position, _size / 2f, transform.forward, transform.rotation, 0f);
 

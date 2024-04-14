@@ -129,13 +129,13 @@ namespace CuaHang.StaffAI
 
         bool IsArrivesStorage()
         {
-            return _sensorForward.GetHits().Find(hit => hit.transform == _targetTransform && hit.GetComponent<StorageRoom>());
+            return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<StorageRoom>());
         }
 
         // AI biết nó chạm tới tứ nó cần
         bool IsArrivesObjPlant()
         {
-            return _sensorForward.GetHits().Find(hit => hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>());
+            return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>());
         }
 
         // AI nó sẽ nhặt lênh
