@@ -4,6 +4,7 @@ using UnityEngine;
 
 namespace CuaHang
 {
+    /// <summary> Aim con trỏ, drag temp và có thể snap khi drag temp </summary>
     public class Snapping : MonoBehaviour
     {
         public ObjectTemp _temp;
@@ -40,11 +41,11 @@ namespace CuaHang
             // khoảng cách bị quá dài
             if (Vector3.Distance(cam.transform.position, _hit.point) < _snapDistance)
             {
-                _temp.GetComponent<ObjectTemp>()._IsDistance = true;
+                _temp.GetComponent<ObjectTemp>()._isDistance = true;
             }
             else
             {
-                _temp.GetComponent<ObjectTemp>()._IsDistance = false;
+                _temp.GetComponent<ObjectTemp>()._isDistance = false;
             }
         }
 

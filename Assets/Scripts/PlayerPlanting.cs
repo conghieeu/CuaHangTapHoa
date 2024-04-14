@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 namespace CuaHang
 {
@@ -15,12 +16,27 @@ namespace CuaHang
             _ctrl = GetComponent<PlayerCtrl>();
         }
 
+        private void FixedUpdate()
+        {
+            if (_ctrl._temp._isDragging) TempAiming();
+        }
+
         private void Update()
         {
             if (Input.GetKeyUp(KeyCode.T))
             {
                 SenderItems();
             }
+        }
+
+        /// <summary> Khi mà drag object Temp thì player sẽ hướng về object Temp </summary>
+        void TempAiming()
+        {
+            var direction = _ctrl._temp.transform.position - transform.position;
+
+            direction.y = 0;
+
+            transform.forward = direction;
         }
 
         // kiện hàng trên tay người chơi còn chạm vào kệ trống người chơi có thể truyền item parcel sang kệ đó

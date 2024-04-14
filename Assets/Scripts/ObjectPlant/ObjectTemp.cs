@@ -12,19 +12,18 @@ namespace CuaHang
         public Transform _objPlantOnDrag;
         public ListStaff _listStaff;
         [Space]
-        [SerializeField] bool _canPlant;
-        [SerializeField] bool _isDistance;
-        [SerializeField] bool _isCheckGround;
+        public bool _isDragging;
+        public bool _isDistance;
+        public bool _canPlant;
+        public bool _isCheckGround;
         [Space]
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
         [SerializeField] Material _green, _red;
-        
+
         [Space]
         [SerializeField] BoxSensor _sensorAround;
         [SerializeField] BoxSensor _sensorGround;
-
-        public bool _IsDistance { get => _isDistance; set => _isDistance = value; }
 
         private void FixedUpdate()
         {
@@ -34,7 +33,7 @@ namespace CuaHang
 
         private void Update()
         {
-            PlantPrefab();
+            PlantObjPlant();
         }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
@@ -45,26 +44,26 @@ namespace CuaHang
                 _objPlantOnDrag.SetParent(PlayerCtrl.Instance._modelTempHolding);
                 _objPlantOnDrag.localPosition = Vector3.zero;
                 _objPlantOnDrag.localRotation = Quaternion.identity;
-
             }
             else
-            {
-
-            }
-
-            _listStaff.CallListStaffAIUpdateArrivesTarget();
-        }
-
-
-        private void PlantPrefab()
-        {
-            if (Input.GetMouseButtonDown(0) && _canPlant)
             {
                 _objPlantOnDrag.transform.position = this.transform.position;
                 _objPlantOnDrag.transform.rotation = this.transform.rotation;
                 _objPlantOnDrag.GetComponent<ObjectPlant>()._models.transform.rotation = _models.rotation;
                 _objPlantOnDrag.SetParent(_objPlantHolder);
                 gameObject.SetActive(false);
+            }
+
+            _isDragging = isDragging;
+
+            // gọi các nhân viên để nó cập nhập tình huống
+            _listStaff.CallListStaffAIUpdateArrivesTarget();
+        }
+
+        private void PlantObjPlant()
+        {
+            if (Input.GetMouseButtonDown(0) && _canPlant)
+            {
                 OnDragging(false);
             }
         }
