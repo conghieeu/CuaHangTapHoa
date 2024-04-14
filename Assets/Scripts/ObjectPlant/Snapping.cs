@@ -6,7 +6,7 @@ namespace CuaHang
 {
     public class Snapping : MonoBehaviour
     {
-        public Transform _temp;
+        public ObjectTemp _temp;
         public bool _enableSnapping; // bật chế độ snapping
         public float _snapDistance = 6f; // Khoảng cách cho phép đặt 
         public float tilesize = 1;
@@ -58,6 +58,7 @@ namespace CuaHang
                 {
                     // Nếu chạm phải là vật thể object có thể đem đi dặt thì biến nó thành dạng temp, để có thể đem đi đặt
                     _hit.transform.GetComponent<ObjectPlant>().InstantTemp();
+                    _temp.OnDragging(true);
                 }
             }
         }
@@ -81,8 +82,8 @@ namespace CuaHang
         // Giúp xoay temp
         private void SetTempRotation()
         {
-            _temp.position = _hit.point;
-            _temp.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
+            _temp.transform.position = _hit.point;
+            _temp.transform.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
         }
     }
 

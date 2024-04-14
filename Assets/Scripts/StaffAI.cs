@@ -19,10 +19,7 @@ namespace CuaHang.StaffAI
 
         private void Start()
         {
-            _targetTransform = FindParcel();
-
-            _movement.MoveTo(_targetTransform);
-            _sensorForward._eventTrigger.AddListener(OnArrivesTarget);
+            OnUpdateArrivesTarget();
         }
 
         private void FixedUpdate()
@@ -37,6 +34,16 @@ namespace CuaHang.StaffAI
                 Debug.Log("AI di chuyển tới target");
                 _movement.MoveTo(_targetTransform);
             }
+        }
+
+        // TODO: khi người chơi nhặt vật phẩm objectPlant mà thằng nhân viên đang hướng khi nó sẽ chuyển sang vật thể khác
+        public void OnUpdateArrivesTarget()
+        {
+            if (_isPickedUpParcel) return;
+
+            _targetTransform = FindParcel();
+            if (_targetTransform) _movement.MoveTo(_targetTransform);
+            _sensorForward._eventTrigger.AddListener(OnArrivesTarget);
         }
 
         void OnArrivesTarget()

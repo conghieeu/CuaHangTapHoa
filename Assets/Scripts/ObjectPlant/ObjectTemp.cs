@@ -10,6 +10,7 @@ namespace CuaHang
         [Space]
         public Transform _objPlantHolder;
         public Transform _objPlantOnDrag;
+        public ListStaff _listStaff;
         [Space]
         [SerializeField] bool _canPlant;
         [SerializeField] bool _isDistance;
@@ -18,6 +19,7 @@ namespace CuaHang
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
         [SerializeField] Material _green, _red;
+        
         [Space]
         [SerializeField] BoxSensor _sensorAround;
         [SerializeField] BoxSensor _sensorGround;
@@ -35,7 +37,23 @@ namespace CuaHang
             PlantPrefab();
         }
 
-        // TODO: Làm sao để model temp đang dragging nó hiện giống model đang di chuyển
+        /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
+        public void OnDragging(bool isDragging)
+        {
+            if (isDragging)
+            {
+                _objPlantOnDrag.SetParent(PlayerCtrl.Instance._modelTempHolding);
+                _objPlantOnDrag.localPosition = Vector3.zero;
+                _objPlantOnDrag.localRotation = Quaternion.identity;
+
+            }
+            else
+            {
+
+            }
+
+            _listStaff.CallListStaffAIUpdateArrivesTarget();
+        }
 
 
         private void PlantPrefab()
@@ -47,6 +65,7 @@ namespace CuaHang
                 _objPlantOnDrag.GetComponent<ObjectPlant>()._models.transform.rotation = _models.rotation;
                 _objPlantOnDrag.SetParent(_objPlantHolder);
                 gameObject.SetActive(false);
+                OnDragging(false);
             }
         }
 
