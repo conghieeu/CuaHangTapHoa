@@ -5,7 +5,6 @@ namespace CuaHang.StaffAI
 {
     public class StaffAI : MonoBehaviour
     {
-
         public BoxSensor _sensorForward;
         public StaffMovement _movement;
         public Transform _targetTransform;  // Thứ mà cái này nhân viên hướng tới, không phải là thứ đang dữ trong người

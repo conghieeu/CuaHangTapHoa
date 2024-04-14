@@ -8,7 +8,7 @@ namespace CuaHang
     public class ObjectTemp : MonoBehaviour
     {
         [Space]
-        public Transform _objectContactHolder;
+        public Transform _objPlantHolder;
         public Transform _objPlantOnDrag;
         [Space]
         [SerializeField] bool _canPlant;
@@ -35,6 +35,9 @@ namespace CuaHang
             PlantPrefab();
         }
 
+        // TODO: Làm sao để model temp đang dragging nó hiện giống model đang di chuyển
+
+
         private void PlantPrefab()
         {
             if (Input.GetMouseButtonDown(0) && _canPlant)
@@ -42,9 +45,8 @@ namespace CuaHang
                 _objPlantOnDrag.transform.position = this.transform.position;
                 _objPlantOnDrag.transform.rotation = this.transform.rotation;
                 _objPlantOnDrag.GetComponent<ObjectPlant>()._models.transform.rotation = _models.rotation;
-
+                _objPlantOnDrag.SetParent(_objPlantHolder);
                 gameObject.SetActive(false);
-                _objPlantOnDrag.gameObject.SetActive(true);
             }
         }
 

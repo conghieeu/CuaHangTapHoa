@@ -64,8 +64,6 @@ namespace CuaHang
         // đặt object cần đặt vào vị trí
         public void InstantTemp()
         {
-            this.gameObject.SetActive(false);
-
             // Set Temp 
             ObjectTemp temp = PlayerCtrl.Instance._temp;
             temp.gameObject.SetActive(true);
