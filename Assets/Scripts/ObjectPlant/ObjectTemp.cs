@@ -10,7 +10,6 @@ namespace CuaHang
         [Space]
         public Transform _objPlantHolder;
         public Transform _objPlantOnDrag;
-        public ListStaff _listStaff;
         [Space]
         public bool _isDragging;
         public bool _isDistance;
@@ -57,7 +56,7 @@ namespace CuaHang
             _isDragging = isDragging;
 
             // gọi các nhân viên để nó cập nhập tình huống
-            _listStaff.CallListStaffAIUpdateArrivesTarget();
+            ListStaff.Instance.CallListStaffAIUpdateArrivesTarget();
         }
 
         private void PlantObjPlant()

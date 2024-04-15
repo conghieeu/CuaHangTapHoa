@@ -75,7 +75,7 @@ namespace CuaHang.StaffAI
         {
             if (IsArrivesObjPlant())
             {
-                if (_targetTransform.GetComponent<ObjectPlant>()._objPlantSO._name == "Parcel")
+                if (_targetTransform.GetComponent<ObjectPlant>()._name == "Parcel")
                 {
                     PickUpParcel();
                     _parcelHolding = _targetTransform;
@@ -93,6 +93,7 @@ namespace CuaHang.StaffAI
         void StateDropParcel()
         {
             // Tìm kiện hàng hoặc thùng rác
+            Debug.Log((_parcelHolding != null) + "&&" + _isFindingParcel);
             if (_parcelHolding != null && _isFindingParcel == false)
             {
                 if (IsItemInParcel())
@@ -129,13 +130,13 @@ namespace CuaHang.StaffAI
 
         bool IsArrivesStorage()
         {
-            return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<StorageRoom>());
+            return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<StorageRoom>()); ;
         }
 
         // AI biết nó chạm tới tứ nó cần
         bool IsArrivesObjPlant()
         {
-            return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>());
+            return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>()); ;
         }
 
         // AI nó sẽ nhặt lênh
@@ -150,6 +151,8 @@ namespace CuaHang.StaffAI
 
                 _isPickedUpParcel = true;
                 _isFindingParcel = false;
+
+                ListStaff.Instance.CallListStaffAIUpdateArrivesTarget();
             }
         }
 
@@ -174,8 +177,8 @@ namespace CuaHang.StaffAI
             {
                 ObjectPlant parcel = objPlant.GetComponent<ObjectPlant>();
                 if (!parcel) continue;
-                if (parcel._objPlantSO._name != "Parcel") continue;
-                if (!parcel._objPlantSO._listItem.Contains(null) && FindObjectPlant("Table")) return objPlant;
+                if (parcel._name != "Parcel") continue;
+                if (!parcel._listItem.Contains(null) && FindObjectPlant("Table")) return objPlant;
                 else return objPlant;
             }
             return null;
@@ -183,11 +186,12 @@ namespace CuaHang.StaffAI
 
         Transform FindTrash()
         {
+            Debug.Log("Nhân viên tìm thùng rác");
             foreach (Transform child in _objectPlantHolder)
             {
                 Trash trash = child.GetComponent<Trash>();
                 if (!trash) continue;
-                if (trash._objPlantSO._name != "Trash") continue;
+                if (trash._name != "Trash") continue;
                 if (trash.GetSlotEmpty() == null) continue;
                 return child;
             }
@@ -200,7 +204,7 @@ namespace CuaHang.StaffAI
             {
                 StorageRoom storage = child.GetComponent<StorageRoom>();
                 if (storage == null) continue;
-                if (storage._objPlantSO._name != "Storage") continue;
+                if (storage._name != "Storage") continue;
                 if (storage.GetSlotEmpty() == null) continue;
                 return child;
             }
@@ -214,8 +218,8 @@ namespace CuaHang.StaffAI
             {
                 ObjectPlant table = child.GetComponent<ObjectPlant>();
                 if (!table) continue;
-                if (table._objPlantSO._name != name) continue;
-                if (!table._objPlantSO._listItem.Contains(null)) continue;
+                if (table._name != name) continue;
+                if (!table._listItem.Contains(null)) continue;
                 return child;
             }
             return null;
@@ -230,8 +234,8 @@ namespace CuaHang.StaffAI
                 // thực hiện việc truyền đơn hàng
                 Debug.Log("Thực hiện việc truyền dữ liệu đơn hàng");
 
-                ObjectPlantSO parcelSO = _parcelHolding.GetComponent<ObjectPlant>()._objPlantSO;
-                ObjectPlantSO tableSO = _targetTransform.GetComponent<ObjectPlant>()._objPlantSO;
+                ObjectPlant parcelSO = _parcelHolding.GetComponent<ObjectPlant>();
+                ObjectPlant tableSO = _targetTransform.GetComponent<ObjectPlant>();
 
                 // chuyển item
                 for (int i = parcelSO._listItem.Count - 1; i >= 0; i--)
@@ -259,7 +263,7 @@ namespace CuaHang.StaffAI
         {
             if (_parcelHolding)
                 if (_parcelHolding.GetComponent<ObjectPlant>())
-                    foreach (var item in _parcelHolding.GetComponent<ObjectPlant>()._objPlantSO._listItem)
+                    foreach (var item in _parcelHolding.GetComponent<ObjectPlant>()._listItem)
                     {
                         if (item != null) return true;
                     }

@@ -4,19 +4,20 @@ using CuaHang;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class StaffMovement : MonoBehaviour
+namespace CuaHang
 {
-    public ObjectPlant _objectPlant;
-
-    NavMeshAgent _navMeshAgent;
-
-    private void Awake()
+    public class StaffMovement : MonoBehaviour
     {
-        _navMeshAgent = GetComponent<NavMeshAgent>();
-    }
+        NavMeshAgent _navMeshAgent;
 
-    public void MoveTo(Transform target)
-    {
-        _navMeshAgent.SetDestination(target.position);
+        private void Awake()
+        {
+            _navMeshAgent = GetComponent<NavMeshAgent>();
+        }
+
+        public void MoveTo(Transform target)
+        {
+            _navMeshAgent.SetDestination(target.position);
+        }
     }
 }

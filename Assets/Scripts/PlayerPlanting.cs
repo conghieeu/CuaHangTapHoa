@@ -60,8 +60,8 @@ namespace CuaHang
                 // thực hiện việc truyền đơn hàng
                 Debug.Log("Người chơi truyền Item" + objPlantHolding + " -> " + objPlantHit);
 
-                ObjectPlantSO parcelSO = objPlantHolding._objPlantSO;
-                ObjectPlantSO tableSO = objPlantHit._objPlantSO;
+                ObjectPlant parcelSO = objPlantHolding;
+                ObjectPlant tableSO = objPlantHit;
 
                 // chuyển item
                 for (int i = parcelSO._listItem.Count - 1; i >= 0; i--)
