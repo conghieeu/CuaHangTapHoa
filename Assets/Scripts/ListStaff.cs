@@ -13,11 +13,4 @@ public class ListStaff : MonoBehaviour
         if (Instance) Destroy(this); else { Instance = this; }
     }
 
-    public void CallListStaffAIUpdateArrivesTarget()
-    {
-        foreach (var staff in _listStaffAI)
-        {
-            staff.OnUpdateArrivesTarget();
-        }
-    }
 }

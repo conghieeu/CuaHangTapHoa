@@ -1,4 +1,5 @@
 using System;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CuaHang.StaffAI
@@ -7,27 +8,53 @@ namespace CuaHang.StaffAI
     {
         public BoxSensor _sensorForward;
         public StaffMovement _movement;
+        [Space]
         public Transform _targetTransform;  // Thứ mà cái này nhân viên hướng tới, không phải là thứ đang dữ trong người
         public Transform _parcelHolding; // objectPlant người chơi đã nhặt đc và đang giữ trong người
+        [Space]
         public Transform _objectPlantHolder; // Kho chứa các ObjectPlant ở trong world
         public Transform _targetModelHolding; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người
 
-        public bool _isMoveToTarget;
-        public bool _isPickedUpParcel;
-        public bool _isFindingParcel;
-        public bool _isDropParcelToTrash; // dat parcel rong vao thung rac, parcel thua vao kho
-
-        private void Start()
-        {
-            OnUpdateArrivesTarget();
-        }
-
         private void FixedUpdate()
         {
-            BehaviorAI();
+            BehaviorCtrl();
+
+            SetMovement();
         }
 
-        void BehaviorAI()
+        // Khi đáp ứng sự kiện hãy gọi vào đây nên nó đưa phán đoán hành vi tiếp theo nhân viên cần làm
+        public void BehaviorCtrl()
+        {
+            // Tìm parcel
+            if (!_parcelHolding)
+            {
+                _targetTransform = FindParcel();
+            }
+            // Nhặt parcel
+            if (_targetTransform && !_parcelHolding && GetObjPlantHit())
+            {
+                if (GetObjPlantHit().GetComponent<ObjectPlant>()._name == "Parcel")
+                {
+                    PickUpParcel();
+                    _parcelHolding = _targetTransform;
+                    _targetTransform = null;
+                }
+            }
+            // đang có parcel và parcel còn item trong người nên cần tìm cần cái kệ để đặt item
+            else if (FindObjectPlant("Table") && IsItemInParcel())
+            {
+                Debug.Log("Nhân viên tìm kệ còn trống hoặc cái kho để đặt parcel rỗng");
+                StateItemToTable();
+            }
+            // Đặt parcel vào kho hoặc thùng rác
+            else if (!FindObjectPlant("Table") || !IsItemInParcel())
+            {
+                Debug.Log("Tìm thùng rác hoặc kho để đặt parcel rỗng");
+                StateDropParcel();
+            }
+        }
+
+        void SetMovement()
         {
             if (_targetTransform != null)
             {
@@ -36,66 +63,30 @@ namespace CuaHang.StaffAI
             }
         }
 
-        // TODO: khi người chơi nhặt vật phẩm objectPlant mà thằng nhân viên đang hướng khi nó sẽ chuyển sang vật thể khác
-        public void OnUpdateArrivesTarget()
+        void StateItemToTable()
         {
-            if (_isPickedUpParcel) return;
-
-            _targetTransform = FindParcel();
-            if (_targetTransform) _movement.MoveTo(_targetTransform);
-            _sensorForward._eventTrigger.AddListener(OnArrivesTarget);
-        }
-
-        void OnArrivesTarget()
-        {
-            if (IsArrivesObjPlant())
+            if (!_targetTransform)
             {
-                SenderItems();
+                _targetTransform = FindObjectPlant("Table");
             }
-
-            // move to parcel and pickup parcel
-            if (_parcelHolding == null) StatePickParcel();
-
-            // giao hàng vào kệ
-            if (FindObjectPlant("Table") && IsItemInParcel())
+            else if (GetObjPlantHit())
             {
-                //  tìm chỗ để thả item
-                Debug.Log("Nhân viên tìm kệ còn trống hoặc cái kho để đặt parcel rỗng");
-                StateItemToTable();
-            }
-            // Tìm thùng rác còn trống đặt parcel vào trong đó
-            else if (!FindObjectPlant("Table") || !IsItemInParcel())
-            {
-                Debug.Log("Tìm thùng rác hoặc kho để đặt parcel rỗng");
-                StateDropParcel();
-            }
-        }
-
-        private void StatePickParcel()
-        {
-            if (IsArrivesObjPlant())
-            {
-                if (_targetTransform.GetComponent<ObjectPlant>()._name == "Parcel")
+                if (GetObjPlantHit().GetComponent<ObjectPlant>()._name == "Table")
                 {
-                    PickUpParcel();
-                    _parcelHolding = _targetTransform;
+                    SenderItems();
+
                     _targetTransform = null;
                 }
             }
         }
 
-        void StateItemToTable()
-        {
-            _targetTransform = FindObjectPlant("Table");
-        }
-
         /// <summary> Cần tìm đối tượng để AI có thể đạt parcel xuống </summary>
         void StateDropParcel()
         {
-            // Tìm kiện hàng hoặc thùng rác
-            Debug.Log((_parcelHolding != null) + "&&" + _isFindingParcel);
-            if (_parcelHolding != null && _isFindingParcel == false)
+            // Tìm kho hoặc thùng rác
+            if (_parcelHolding && !_targetTransform)
             {
+                Debug.Log("Co con item o trong parcel hay khong " + IsItemInParcel());
                 if (IsItemInParcel())
                 {
                     _targetTransform = FindStorageRoom();
@@ -105,25 +96,21 @@ namespace CuaHang.StaffAI
                     _targetTransform = FindTrash();
                 }
             }
-
-            // Đặt parcel vào đâu đó
-            if (IsArrivesStorage())
+            // Tới điểm cần tới
+            else if (IsArrivesStorage())
             {
                 Debug.Log("Đặt tới kho, hoặc thùng rác");
-
-                // Thêm parcel vào thùng rác để nó xoá
-                if (IsItemInParcel() == false)
+                if (_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty())
                 {
-                    _targetTransform.GetComponent<Trash>().AddDeleteItem(_parcelHolding);
-                }
+                    // Nếu là va vào thùng rác thì Thêm parcel vào list của thùng rác để nó xoá
+                    if (!IsItemInParcel())
+                    {
+                        _targetTransform.GetComponent<Trash>().AddDeleteItem(_parcelHolding);
+                    }
 
-                DropParcel(_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty());
+                    DropParcel(_targetTransform.GetComponent<StorageRoom>().GetSlotEmpty());
 
-                if (_parcelHolding == null)
-                {
-                    Debug.Log("Nhân viên tìm bưu kiện khác");
-                    _targetTransform = FindParcel();
-                    _isFindingParcel = true;
+                    _targetTransform = null;
                 }
             }
         }
@@ -134,7 +121,7 @@ namespace CuaHang.StaffAI
         }
 
         // AI biết nó chạm tới tứ nó cần
-        bool IsArrivesObjPlant()
+        Transform GetObjPlantHit()
         {
             return _sensorForward._hits.Find(hit => hit.transform == _targetTransform && hit.GetComponent<ObjectPlant>()); ;
         }
@@ -142,32 +129,22 @@ namespace CuaHang.StaffAI
         // AI nó sẽ nhặt lênh
         void PickUpParcel()
         {
-            if (!_isPickedUpParcel)
-            {
-                // AI ẩn cái ObjectPlant mà nó nhặt đi
-                _targetTransform.SetParent(_targetModelHolding);
-                _targetTransform.localPosition = Vector3.zero;
-                _targetTransform.localRotation = Quaternion.identity;
-
-                _isPickedUpParcel = true;
-                _isFindingParcel = false;
-
-                ListStaff.Instance.CallListStaffAIUpdateArrivesTarget();
-            }
+            // AI ẩn cái ObjectPlant mà nó nhặt đi
+            _targetTransform.SetParent(_targetModelHolding);
+            _targetTransform.localPosition = Vector3.zero;
+            _targetTransform.localRotation = Quaternion.identity;
         }
 
         void DropParcel(Transform location)
         {
-            if (_isPickedUpParcel)
-            {
-                // AI ẩn cái ObjectPlant mà nó nhặt đi
-                _parcelHolding.SetParent(location);
-                _parcelHolding.position = location.position;
-                _parcelHolding.rotation = location.rotation;
 
-                _isPickedUpParcel = false;
-                _parcelHolding = null;
-            }
+            // AI ẩn cái ObjectPlant mà nó nhặt đi
+            _parcelHolding.SetParent(location);
+            _parcelHolding.position = location.position;
+            _parcelHolding.rotation = location.rotation;
+
+            _parcelHolding = null;
+
         }
 
         // Tìm parcel còn item trước và parcel không còn item sau
@@ -229,25 +206,25 @@ namespace CuaHang.StaffAI
         void SenderItems()
         {
             // Nếu vật thể đã chạm được tới thực thể cần tới 
-            if (IsArrivesObjPlant() && _parcelHolding != null)
+            if (GetObjPlantHit() && _parcelHolding != null)
             {
                 // thực hiện việc truyền đơn hàng
                 Debug.Log("Thực hiện việc truyền dữ liệu đơn hàng");
 
-                ObjectPlant parcelSO = _parcelHolding.GetComponent<ObjectPlant>();
-                ObjectPlant tableSO = _targetTransform.GetComponent<ObjectPlant>();
+                ObjectPlant parcel = _parcelHolding.GetComponent<ObjectPlant>();
+                ObjectPlant table = _targetTransform.GetComponent<ObjectPlant>();
 
                 // chuyển item
-                for (int i = parcelSO._listItem.Count - 1; i >= 0; i--)
+                for (int i = parcel._listItem.Count - 1; i >= 0; i--)
                 {
-                    if (parcelSO._listItem[i] == null) continue;
+                    if (parcel._listItem[i] == null) continue;
 
-                    for (int j = 0; j < tableSO._listItem.Count; j++)
+                    for (int j = 0; j < table._listItem.Count; j++)
                     {
-                        if (tableSO._listItem[j] == null)
+                        if (table._listItem[j] == null)
                         {
-                            tableSO._listItem[j] = parcelSO._listItem[i];
-                            parcelSO._listItem[i] = null;
+                            table._listItem[j] = parcel._listItem[i];
+                            parcel._listItem[i] = null;
                         }
                     }
                 }

@@ -13,7 +13,6 @@ MonoBehaviour:
   m_Name: Table
   m_EditorClassIdentifier: 
   _name: Table
-  _nameID: Table01
   _price: 8
   _currency: USD
   _listItem:

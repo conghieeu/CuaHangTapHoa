@@ -54,9 +54,6 @@ namespace CuaHang
             }
 
             _isDragging = isDragging;
-
-            // gọi các nhân viên để nó cập nhập tình huống
-            ListStaff.Instance.CallListStaffAIUpdateArrivesTarget();
         }
 
         private void PlantObjPlant()

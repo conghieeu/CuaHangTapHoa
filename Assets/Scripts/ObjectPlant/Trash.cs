@@ -35,7 +35,6 @@ namespace CuaHang
                 if (_listTrash[i]._time <= 0f && _listTrash[i]._parcel)
                 {
                     Destroy(_listTrash[i]._parcel.gameObject);
-                    ListStaff.Instance.CallListStaffAIUpdateArrivesTarget();
                 }
             }
         }

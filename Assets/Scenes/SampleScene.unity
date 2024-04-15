@@ -141,7 +141,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2170220986683345571, guid: 18f0251649454ea47b3a38ec126b206e, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4820262868049286928, guid: 18f0251649454ea47b3a38ec126b206e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -266,10 +266,6 @@ MonoBehaviour:
   _parcelHolding: {fileID: 0}
   _objectPlantHolder: {fileID: 130429680}
   _targetModelHolding: {fileID: 1236150662}
-  _isMoveToTarget: 0
-  _isPickedUpParcel: 0
-  _isFindingParcel: 0
-  _isDropParcelToTrash: 1
 --- !u!1 &50978073
 GameObject:
   m_ObjectHideFlags: 0
@@ -450,10 +446,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9edc1275ad1d4547ba0a560ff5286e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objPlantSO: {fileID: 11400000, guid: 1813f208b5958574084a977df4ad8da2, type: 2}
+  _objPlantSO: {fileID: 0}
   _models: {fileID: 896870393}
   _tempPrefab: {fileID: 0}
-  _name: 
+  _name: Storage
   _price: 0
   _currency: 
   _listItem: []
@@ -885,21 +881,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 9528a5fdf460c044688c2caa60b6a87a, type: 2}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
+      propertyPath: _name
+      value: Parcel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 2034974516}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _objPlantSO
       value: 
-      objectReference: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _slots.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
+      propertyPath: _listItem.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _slots.Array.data[1]
       value: 
       objectReference: {fileID: 1367511463}
+    - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
+      propertyPath: _listItem.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
     - target: {fileID: 4040407322649033716, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: m_Name
       value: "B\u01B0u ki\u1EC7n_1"
@@ -1005,10 +1013,6 @@ MonoBehaviour:
   _parcelHolding: {fileID: 0}
   _objectPlantHolder: {fileID: 130429680}
   _targetModelHolding: {fileID: 860316736}
-  _isMoveToTarget: 0
-  _isPickedUpParcel: 0
-  _isFindingParcel: 0
-  _isDropParcelToTrash: 1
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -1843,6 +1847,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 868200816}
   m_LocalEulerAnglesHint: {x: 11, y: 0, z: 0}
+--- !u!4 &1163045435 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6026398636996592295, guid: f266e5f2a382fab4b83349db2d429cd3, type: 3}
+  m_PrefabInstance: {fileID: 2013485059697916783}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1190690548
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1862,7 +1871,7 @@ PrefabInstance:
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _objPlantSO
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _listItem.Array.size
       value: 2
@@ -1874,7 +1883,7 @@ PrefabInstance:
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _listItem.Array.data[1]
       value: 
-      objectReference: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 4040407322649033716, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: m_Name
       value: "B\u01B0u ki\u1EC7n"
@@ -2373,21 +2382,33 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2100000, guid: 9528a5fdf460c044688c2caa60b6a87a, type: 2}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
+      propertyPath: _name
+      value: Parcel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _player
       value: 
       objectReference: {fileID: 2034974516}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _objPlantSO
       value: 
-      objectReference: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
+      objectReference: {fileID: 0}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _slots.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
+      propertyPath: _listItem.Array.size
       value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: _slots.Array.data[1]
       value: 
       objectReference: {fileID: 50978074}
+    - target: {fileID: 3496233420650643066, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
+      propertyPath: _listItem.Array.data[0]
+      value: 
+      objectReference: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
     - target: {fileID: 4040407322649033716, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
       propertyPath: m_Name
       value: "B\u01B0u ki\u1EC7n_2"
@@ -2454,6 +2475,11 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8244113644130027767, guid: ff7589fdcb9850a4a83da1155cb99f06, type: 3}
   m_PrefabInstance: {fileID: 1870131961}
   m_PrefabAsset: {fileID: 0}
+--- !u!4 &1885022674 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6026398636996592295, guid: f266e5f2a382fab4b83349db2d429cd3, type: 3}
+  m_PrefabInstance: {fileID: 1899721982}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1899721982
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2474,6 +2500,10 @@ PrefabInstance:
       propertyPath: _objectInfoSO
       value: 
       objectReference: {fileID: 11400000, guid: e2d9977bc7d7d4843b199d5f0af03bcc, type: 2}
+    - target: {fileID: 1836203702789870301, guid: f266e5f2a382fab4b83349db2d429cd3, type: 3}
+      propertyPath: _slots.Array.data[3]
+      value: 
+      objectReference: {fileID: 1885022674}
     - target: {fileID: 7175583785774145046, guid: f266e5f2a382fab4b83349db2d429cd3, type: 3}
       propertyPath: m_Name
       value: "C\xE1i b\xE0n_1"
@@ -3170,6 +3200,10 @@ PrefabInstance:
       value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1836203702789870301, guid: f266e5f2a382fab4b83349db2d429cd3, type: 3}
+      propertyPath: _slots.Array.data[3]
+      value: 
+      objectReference: {fileID: 1163045435}
+    - target: {fileID: 1836203702789870301, guid: f266e5f2a382fab4b83349db2d429cd3, type: 3}
       propertyPath: _listItem.Array.data[0]
       value: 
       objectReference: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
@@ -3658,7 +3692,7 @@ MonoBehaviour:
   - {fileID: 988158318787685040}
   - {fileID: 1611375544584547144}
   _maxSlot: 1
-  _timeDelete: 9
+  _timeDelete: 20
   _listTrash:
   - _time: 0
     _parcel: {fileID: 0}
@@ -3676,10 +3710,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9edc1275ad1d4547ba0a560ff5286e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objPlantSO: {fileID: 11400000, guid: 1813f208b5958574084a977df4ad8da2, type: 2}
+  _objPlantSO: {fileID: 0}
   _models: {fileID: 3431642051607349710}
   _tempPrefab: {fileID: 0}
-  _name: 
+  _name: Storage
   _price: 0
   _currency: 
   _listItem: []
