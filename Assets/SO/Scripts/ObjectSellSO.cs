@@ -4,8 +4,9 @@ using UnityEngine;
 public class ObjectSellSO : ScriptableObject
 {
     public string _name;
-    public string _nameID;
+    public string _type;
     public float _price;
+    public float _priceMarketMin, _priceMarketMax;
     public string _currency;
-    public Transform _itemPrefabs; 
+    public Transform _itemPrefabs;
 }

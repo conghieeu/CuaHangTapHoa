@@ -8,11 +8,13 @@ namespace CuaHang
 {
     public class MayTinh : MonoBehaviour
     {
+        [Header("MayTinh")]
         public ObjectPlantSO _objectPlantSO;
         public Transform _objectPlantPrefabs;
         public Transform _objectPlantHolder;
         public Transform _spawnTrans;
-        string _pathSaveSO = Path.Combine(Application.dataPath, "SO");
+        public List<Transform> _slotsQueue;
+        public List<Transform> _slotsCustomer;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -23,16 +25,39 @@ namespace CuaHang
             }
         }
 
+        /// <summary> đăng ký slot hàng đợi </summary>
+        public void RegisterSlot(Transform customer)
+        {
+            _slotsCustomer.Add(customer.transform);
+        }
+
+        /// <summary> Rời slot hàng đợi </summary>
+        public void CancelRegisterSlot(Transform customer)
+        {
+            _slotsCustomer.Remove(customer);
+        }
+
+        /// <summary> Lấy hàng đợi </summary>
+        public Transform GetCustomerSlot(Transform customer)
+        {
+            for (int i = 0; i < _slotsCustomer.Count; i++)
+            {
+                if (customer == _slotsCustomer[i])
+                {
+                    return _slotsQueue[i].transform;
+                }
+            }
+            return null;
+        }
+
         // tạo vật thể với SO mới trùng vs SO mẫu nào đó
         [ContextMenu("CreateObjectPlant")]
-        public void CreateObjectPlant()
+        void CreateObjectPlant()
         {
             Transform objectPlant = Instantiate(_objectPlantPrefabs, _objectPlantHolder);
             objectPlant.position = _spawnTrans.position;
             objectPlant.rotation = _spawnTrans.rotation;
             objectPlant.GetComponent<ObjectPlant>()._objPlantSO = _objectPlantSO;
-            // Tạo So mới ở vị trí file cần lưu
-            Debug.Log(Application.dataPath + "/../AssetBundles");
         }
 
         // // Lưu lại những thay đổi của vật thể đó

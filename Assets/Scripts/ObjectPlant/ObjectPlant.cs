@@ -16,6 +16,7 @@ namespace CuaHang
 
         [Header("Value")]
         public string _name;
+        public string _type;
         public float _price;
         public string _currency;
         public List<ObjectSellSO> _listItem;
@@ -33,6 +34,7 @@ namespace CuaHang
             if(_objPlantSO == null) return;
 
             _name = _objPlantSO._name;
+            _type = _objPlantSO._type;
             _price = _objPlantSO._price;
             _currency = _objPlantSO._currency;
             _listItem = _objPlantSO._listItem;

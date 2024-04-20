@@ -13,6 +13,7 @@ MonoBehaviour:
   m_Name: Table
   m_EditorClassIdentifier: 
   _name: Table
+  _type: KeHang
   _price: 8
   _currency: USD
   _listItem:
