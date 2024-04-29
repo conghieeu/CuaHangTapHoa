@@ -57,7 +57,7 @@ namespace CuaHang
             Transform objectPlant = Instantiate(_objectPlantPrefabs, _objectPlantHolder);
             objectPlant.position = _spawnTrans.position;
             objectPlant.rotation = _spawnTrans.rotation;
-            objectPlant.GetComponent<ObjectPlant>()._objPlantSO = _objectPlantSO;
+            objectPlant.GetComponent<ObjectPlant>()._SO = _objectPlantSO;
         }
 
         // // Lưu lại những thay đổi của vật thể đó

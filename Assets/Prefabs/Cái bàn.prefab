@@ -252,8 +252,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9102101053388744392}
-  - component: {fileID: 1836203702789870301}
   - component: {fileID: 8642229747188441529}
+  - component: {fileID: 1836203702789870301}
   m_Layer: 0
   m_Name: "C\xE1i b\xE0n"
   m_TagString: Untagged
@@ -278,27 +278,6 @@ Transform:
   - {fileID: 4051336451858159394}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1836203702789870301
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7175583785774145046}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objPlantSO: {fileID: 11400000, guid: e2d9977bc7d7d4843b199d5f0af03bcc, type: 2}
-  _models: {fileID: 873961598218891685}
-  _tempPrefab: {fileID: 4482781145890553213, guid: 98760f73794a3e343b07bb227cfbb6b2, type: 3}
-  _player: {fileID: 0}
-  _slots:
-  - {fileID: 6972027028406560601}
-  - {fileID: 4896800099856672823}
-  - {fileID: 6189920424644314383}
-  - {fileID: 6026398636996592295}
 --- !u!65 &8642229747188441529
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -320,6 +299,37 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 2, y: 1, z: 2}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &1836203702789870301
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7175583785774145046}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _objPlantSO: {fileID: 11400000, guid: e2d9977bc7d7d4843b199d5f0af03bcc, type: 2}
+  _name: 
+  _type: 
+  _price: 0
+  _currency: 
+  _thisParent: {fileID: 0}
+  _models: {fileID: 873961598218891685}
+  _objectTemp: {fileID: 0}
+  _boolingItems: {fileID: 0}
+  _slots:
+  - _objectAssign: {fileID: 0}
+    _slot: {fileID: 0}
+  - _objectAssign: {fileID: 0}
+    _slot: {fileID: 0}
+  - _objectAssign: {fileID: 0}
+    _slot: {fileID: 0}
+  - _objectAssign: {fileID: 0}
+    _slot: {fileID: 0}
+  _coll: {fileID: 0}
 --- !u!1 &7275964991052790756
 GameObject:
   m_ObjectHideFlags: 0

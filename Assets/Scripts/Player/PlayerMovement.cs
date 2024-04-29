@@ -13,10 +13,10 @@ namespace Hieu.Player
         public Transform _cameraTransform;
         public Camera _camera;
 
-        [Space]
-        public PlayerCtrl _ctrl;
-        Rigidbody _rb;
         [SerializeField] Vector3 _inputVector;
+
+        Rigidbody _rb;
+        PlayerCtrl _ctrl;
 
         void Awake()
         {

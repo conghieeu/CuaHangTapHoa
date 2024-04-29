@@ -12,9 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
   m_Name: Parcel
   m_EditorClassIdentifier: 
+  _typeID: parcel_1
   _name: Parcel
+  _type: KeHang
   _price: 2
   _currency: USD
-  _listItem:
+  _items:
   - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
   - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}

@@ -154,8 +154,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8316895401818215847}
-  - component: {fileID: 3496233420650643066}
   - component: {fileID: 2169615597967291117}
+  - component: {fileID: 3496233420650643066}
   m_Layer: 0
   m_Name: ObjectPlant
   m_TagString: Untagged
@@ -180,25 +180,6 @@ Transform:
   - {fileID: 8244113644130027767}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3496233420650643066
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4040407322649033716}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _objPlantSO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
-  _models: {fileID: 2841091533384724584}
-  _tempPrefab: {fileID: 4482781145890553213, guid: 98760f73794a3e343b07bb227cfbb6b2, type: 3}
-  _player: {fileID: 0}
-  _slots:
-  - {fileID: 2010362936966502411}
-  - {fileID: 2264889751111772376}
 --- !u!65 &2169615597967291117
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -220,6 +201,32 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0.5, z: 0}
+--- !u!114 &3496233420650643066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4040407322649033716}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _SO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
+  _ID: 
+  _typeID: parcel_1
+  _name: 
+  _type: 
+  _price: 0
+  _currency: 
+  _parent: {fileID: 0}
+  _models: {fileID: 2841091533384724584}
+  _coll: {fileID: 0}
+  _items: []
+  _slots:
+  - {fileID: 2010362936966502411}
+  - {fileID: 2264889751111772376}
 --- !u!1 &4580135404923029575
 GameObject:
   m_ObjectHideFlags: 0

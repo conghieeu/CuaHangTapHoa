@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
   m_Name: Trash
   m_EditorClassIdentifier: 
+  _typeID: trash_1
   _name: Trash
-  _nameID: Table01
+  _type: 
   _price: 8
   _currency: USD
-  _listItem: []
+  _items: []

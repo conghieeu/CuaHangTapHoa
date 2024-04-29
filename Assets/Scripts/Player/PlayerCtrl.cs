@@ -8,8 +8,8 @@ namespace CuaHang
     public class PlayerCtrl : MonoBehaviour
     {
         public ObjectTemp _temp;
-        public Transform _modelTempHolding;
-        public BoxSensor _boxSensor;
+        public Transform _posHoldParcel; // vị trí đặt cái parcel này trên tay
+        public SensorCast _sensor;
 
         public static PlayerCtrl Instance { get; private set; }
 
@@ -19,5 +19,4 @@ namespace CuaHang
         }
 
     }
-
 }

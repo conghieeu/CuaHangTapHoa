@@ -15,17 +15,12 @@ namespace CuaHang
         public bool _isGetItem;
         public bool _isPayItem;
 
-        public List<ObjectSellSO> _listItem;
+        public List<ObjectSell> _listItem;
 
         /// <summary> 
         /// 0: Idle, 1: Find Item, 2: Payment, 3: go out market 
         /// </summary>
         public int _state = 0;
-
-        private void Awake()
-        {
-            _movement = GetComponent<AIMovement>();
-        }
 
         private void FixedUpdate()
         {
@@ -101,12 +96,12 @@ namespace CuaHang
         void PickUpItemInShelves()
         {
             // Lay target
-            Transform target = FindObjectPlantWithType("KeHang");
+            ObjectPlant target = GetObjPlaWithType("KeHang");
 
             if (target == null) return;
 
             // di chuyen den target
-            _targetTransform = target;
+            _objPlantTarget = target;
             Movement();
 
             // Kiem tra cham vao target
@@ -114,32 +109,25 @@ namespace CuaHang
             {
                 // dua item vao _listItem  
                 ObjectPlant table = target.GetComponent<ObjectPlant>();
-                GetItems(table, this);
+                GetItems(table);
             }
         }
-        /// <summary>  </summary>
-        void GetItems(ObjectPlant sender, CustomerAI receiver)
-        {
-            // van de la cai nay no lay het ma khach hang thi no lay thu can lay thoi
-
-            // thực hiện việc truyền đơn hàng
-
-            // chuyển item
-            for (int i = sender._listItem.Count - 1; i >= 0; i--)
+        
+        /// <summary> Khách hàng lấy objectSell(Transform) Từ objectPlant </summary>
+        public virtual void GetItems(ObjectPlant sender)
+        {  
+            for (int i = sender._slots.Count - 1; i >= 0; i--)
             {
-                if (sender._listItem[i] == null) continue;
+                if (sender._items[i] == null) continue;
 
-                for (int j = 0; j < receiver._listItem.Count; j++)
+                for (int j = 0; j < _listItem.Count; j++)
                 {
-                    if (receiver._listItem[j] == null)
+                    if (_listItem[j] == null)
                     {
-                        receiver._listItem[j] = sender._listItem[i];
-                        sender._listItem[i] = null;
+                        _listItem[j] = sender._items[i];
+                        sender.RemoveItem(sender._items[i]);
                     }
                 }
-
-                // Load lại các item hiển thị
-                sender.LoadItemsSlot();
             }
         }
 

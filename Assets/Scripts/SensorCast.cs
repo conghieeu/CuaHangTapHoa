@@ -1,0 +1,62 @@
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Linq;
+using UnityEngine;
+using UnityEngine.Events;
+
+namespace CuaHang
+{
+    /// <summary> Sử dụng Physics.BoxCastAll để phát hiện va chạm </summary>
+    public class SensorCast : MonoBehaviour
+    {
+        public List<Transform> _hits;
+        public UnityEvent _eventTrigger;
+        [SerializeField] protected Vector3 _size;
+
+        private void Update()
+        {
+            DetectTarget();
+        }
+
+        public ObjectPlant GetObjectPlantHit()
+        {
+            foreach (var hit in _hits)
+            {
+                // kiểm tra chạm
+                if (hit.GetComponent<ObjectPlant>())
+                {
+                    return hit.GetComponent<ObjectPlant>();
+                }
+            }
+            return null;
+        }
+
+        /// <summary> Trigger va chạm thi chạm đối tượng, có sự thay đổi mới trong đối tượng va chạm mới thì event gọi các đối tượng đăng ký </summary>
+        private void DetectTarget()
+        {
+            if (!GetHits().SequenceEqual(_hits))
+            {
+                Debug.Log("BoxSensor: _eventTrigger.Invoke đã được gọi");
+                _hits = GetHits();
+                _eventTrigger.Invoke();
+            }
+        }
+
+        /// <summary> Gọi liên tục để lấy va chạm </summary>
+        private List<Transform> GetHits()
+        {
+            RaycastHit[] hits = Physics.BoxCastAll(transform.position, _size / 2f, transform.forward, transform.rotation, 0f);
+
+            return hits.Select(x => x.transform).ToList();
+        }
+
+        // Vẽ box hit ra khi click vào thì thấy được box hit
+        private void OnDrawGizmosSelected()
+        {
+            Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, _size);
+            Gizmos.matrix = rotationMatrix;
+            Gizmos.DrawWireCube(Vector3.zero, _size);
+        }
+    }
+}

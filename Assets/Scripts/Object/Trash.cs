@@ -12,9 +12,9 @@ namespace CuaHang
         public Transform _parcel;
     }
 
-    public class Trash : StorageRoom
+    public class Trash : ObjectPlant
     {
-        [Header("           Trash")]
+        [Header("Trash")]
         public float _timeDelete; // thời gian để xoá đi đối tượng bênh trong kho
         public List<ParcelTrash> _listTrash; // thời gian để xoá đi đối tượng bênh trong kho
 
@@ -39,8 +39,9 @@ namespace CuaHang
             }
         }
 
-        public void AddDeleteItem(Transform objectPlant)
+        public override void AddDeleteItem(Transform objectPlant)
         {
+            base.AddDeleteItem(objectPlant);
             foreach (var trash in _listTrash)
             {
                 if (trash._parcel == null)

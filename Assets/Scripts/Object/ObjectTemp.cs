@@ -5,11 +5,11 @@ using UnityEngine;
 
 namespace CuaHang
 {
+    /// <summary> ObjectTemp là đối tượng đại diện cho object Plant khi di dời đối tượng </summary>
     public class ObjectTemp : MonoBehaviour
     {
         [Space]
-        public Transform _objPlantHolder;
-        public Transform _objPlantOnDrag;
+        public ObjectPlant _objectPlantDragging;
         [Space]
         public bool _isDragging;
         public bool _isDistance;
@@ -21,8 +21,8 @@ namespace CuaHang
         [SerializeField] Material _green, _red;
 
         [Space]
-        [SerializeField] BoxSensor _sensorAround;
-        [SerializeField] BoxSensor _sensorGround;
+        [SerializeField] SensorCast _sensorAround;
+        [SerializeField] SensorCast _sensorGround;
 
         private void FixedUpdate()
         {
@@ -32,35 +32,28 @@ namespace CuaHang
 
         private void Update()
         {
-            PlantObjPlant();
+            DropObjectPlant();
         }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
-        public void OnDragging(bool isDragging)
+        public void PickUpObjectPlant()
         {
-            if (isDragging)
-            {
-                _objPlantOnDrag.SetParent(PlayerCtrl.Instance._modelTempHolding);
-                _objPlantOnDrag.localPosition = Vector3.zero;
-                _objPlantOnDrag.localRotation = Quaternion.identity;
-            }
-            else
-            {
-                _objPlantOnDrag.transform.position = this.transform.position;
-                _objPlantOnDrag.transform.rotation = this.transform.rotation;
-                _objPlantOnDrag.GetComponent<ObjectPlant>()._models.transform.rotation = _models.rotation;
-                _objPlantOnDrag.SetParent(_objPlantHolder);
-                gameObject.SetActive(false);
-            }
-
-            _isDragging = isDragging;
+            _objectPlantDragging.SetThisParent(PlayerCtrl.Instance._posHoldParcel);
+            _objectPlantDragging._coll.enabled = false;
+            _isDragging = true;
         }
 
-        private void PlantObjPlant()
+        private void DropObjectPlant()
         {
             if (Input.GetMouseButtonDown(0) && _canPlant)
             {
-                OnDragging(false);
+                _objectPlantDragging.transform.position = transform.position;
+                _objectPlantDragging.transform.rotation = transform.rotation;
+                _objectPlantDragging._models.transform.rotation = _models.rotation;
+                _objectPlantDragging.SetThisParent(null);
+                _objectPlantDragging._coll.enabled = true;
+                _isDragging = false;
+                gameObject.SetActive(false);
             }
         }
 

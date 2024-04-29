@@ -1,13 +1,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "ObjectPlantSO", menuName = "ScriptableObjects/ObjectPlant")]
-public class ObjectPlantSO : ScriptableObject
+namespace CuaHang
 {
-    public string _name;
-    public string _type;
-    public float _price;
-    public string _currency;
-    public List<ObjectSellSO> _listItem;
+    [CreateAssetMenu(fileName = "ObjectPlantSO", menuName = "ScriptableObjects/ObjectPlant")]
+    public class ObjectPlantSO : ObjectSO
+    {
+        public string _name;
+        public string _type;
+        public float _price;
+        public string _currency;
+        public List<ObjectSellSO> _items; /// <summary> Items sẽ được nạp vào objectPlant theo trình tự nên không được để rỗng </summary>
+    }
 }
-

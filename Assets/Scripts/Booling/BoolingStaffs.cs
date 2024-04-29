@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using CuaHang.StaffAI;
 using UnityEngine;
 
-public class ListStaff : MonoBehaviour
+public class BoolingStaffs : BoolingObjects
 {
-    public List<StaffAI> _listStaffAI;
+    public static BoolingStaffs Instance;
 
-    public static ListStaff Instance;
-
-    private void Awake() {
+    private void Awake()
+    {
         if (Instance) Destroy(this); else { Instance = this; }
     }
 

@@ -55,11 +55,12 @@ namespace CuaHang
 
             if (Physics.Raycast(ray, out _hit, 100, _layerMask))
             {
-                if (Input.GetKeyDown(KeyCode.E) && _hit.transform.GetComponent<ObjectPlant>())
+                ObjectPlant objPHit = _hit.transform.GetComponent<ObjectPlant>();
+                if (Input.GetKeyDown(KeyCode.E) && objPHit)
                 {
                     // Nếu chạm phải là vật thể object có thể đem đi dặt thì biến nó thành dạng temp, để có thể đem đi đặt
-                    _hit.transform.GetComponent<ObjectPlant>().InstantTemp();
-                    _temp.OnDragging(true);
+                    objPHit.ActiveTempState();
+                    _temp.PickUpObjectPlant();
                 }
             }
         }
