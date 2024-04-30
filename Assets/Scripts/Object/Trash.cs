@@ -34,7 +34,9 @@ namespace CuaHang
 
                 if (_listTrash[i]._time <= 0f && _listTrash[i]._parcel)
                 {
-                    Destroy(_listTrash[i]._parcel.gameObject);
+                    _listTrash[i]._parcel.GetComponent<ObjectPlant>().SetThisParent(null);
+                    _listTrash[i]._parcel.gameObject.SetActive(false);
+                    _listTrash[i]._parcel = null;
                 }
             }
         }

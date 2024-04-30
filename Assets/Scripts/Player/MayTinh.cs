@@ -6,12 +6,10 @@ using UnityEngine;
 
 namespace CuaHang
 {
-    public class MayTinh : MonoBehaviour
+    public class MayTinh : ObjectPlant
     {
         [Header("MayTinh")]
         public ObjectPlantSO _objectPlantSO;
-        public Transform _objectPlantPrefabs;
-        public Transform _objectPlantHolder;
         public Transform _spawnTrans;
         public List<Transform> _slotsQueue;
         public List<Transform> _slotsCustomer;
@@ -54,10 +52,7 @@ namespace CuaHang
         [ContextMenu("CreateObjectPlant")]
         void CreateObjectPlant()
         {
-            Transform objectPlant = Instantiate(_objectPlantPrefabs, _objectPlantHolder);
-            objectPlant.position = _spawnTrans.position;
-            objectPlant.rotation = _spawnTrans.rotation;
-            objectPlant.GetComponent<ObjectPlant>()._SO = _objectPlantSO;
+            BoolingObjPlants.Instance.CreateObject("parcel_1", null, _spawnTrans);
         }
 
         // // Lưu lại những thay đổi của vật thể đó

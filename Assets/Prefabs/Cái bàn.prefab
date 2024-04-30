@@ -311,25 +311,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objPlantSO: {fileID: 11400000, guid: e2d9977bc7d7d4843b199d5f0af03bcc, type: 2}
+  _SO: {fileID: 11400000, guid: 4fb482ab6e3fd7e48ada9954b06b0331, type: 2}
+  _ID: 
+  _typeID: 
   _name: 
   _type: 
   _price: 0
   _currency: 
-  _thisParent: {fileID: 0}
+  _parent: {fileID: 0}
   _models: {fileID: 873961598218891685}
-  _objectTemp: {fileID: 0}
-  _boolingItems: {fileID: 0}
-  _slots:
-  - _objectAssign: {fileID: 0}
-    _slot: {fileID: 0}
-  - _objectAssign: {fileID: 0}
-    _slot: {fileID: 0}
-  - _objectAssign: {fileID: 0}
-    _slot: {fileID: 0}
-  - _objectAssign: {fileID: 0}
-    _slot: {fileID: 0}
   _coll: {fileID: 0}
+  _items: []
+  _slots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &7275964991052790756
 GameObject:
   m_ObjectHideFlags: 0

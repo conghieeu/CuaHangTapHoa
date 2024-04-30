@@ -19,68 +19,93 @@ public class BoolingObjPlants : BoolingObjects
 
     /// <summary> Lấy đối tượng có trong ao, nếu không có thì tạo ra </summary>
     /// <returns> điểm spawn , cha của đối tượng, kiểu objectPlant muốn lấy </returns>
-    public virtual ObjectPlant GetObject(String typeID, Transform parentSet, Transform parentFind)
+    public virtual ObjectPlant GetObject(String typeID, Transform parentSet, Transform parentFind, Transform spawnPos)
     {
         // Tìm/tạo đối tượng
-        ObjectPlant objNew = null;
-        objNew = FindObject(typeID, parentFind);
-        if (!objNew) objNew = CreateObject(typeID, parentSet);
-
-        OnCreateNewObjSell(parentSet, objNew);
-
-        return objNew;
+        ObjectPlant o = null;
+        o = FindObject(typeID, parentFind);
+        if (!o) o = CreateObject(typeID, parentSet, spawnPos);
+        if (o) OnGetObject(parentSet, o);
+        return o;
     }
 
     /// <summary> Tạo objectPlant mới </summary>
     /// <returns> Điểm spawn, kiểu objectPlant muốn tạo </returns>
-    public virtual ObjectPlant CreateObject(String typeID, Transform parentSet)
+    public virtual ObjectPlant CreateObject(String typeID, Transform parentSet, Transform spawnPos)
     {
         ObjectPlant objNew = null;
+        // Tìm objectPlant có trong kho
+        objNew = GetObjectDisable(typeID);
 
         // Tìm kiểu prefabs muốn tạo có trong kho
-        foreach (var i in _objectsPrefab)
+        if (objNew == null)
         {
-            ObjectPlant oPlant = i.GetComponent<ObjectPlant>();
-            if (!oPlant) continue;
-            if (oPlant._SO._type == typeID)
+            foreach (var i in _objectsPrefab)
             {
-                objNew = Instantiate(oPlant).GetComponent<ObjectPlant>();
-                break;
+                ObjectPlant oPlant = i.GetComponent<ObjectPlant>();
+                if (!oPlant) continue;
+                if (oPlant._SO._typeID == typeID)
+                {
+                    objNew = Instantiate(oPlant, transform).GetComponent<ObjectPlant>();
+                    break;
+                }
             }
         }
+        else
+        {
+            objNew.gameObject.SetActive(true);
+            if (spawnPos)
+            {
+                objNew.transform.position = spawnPos.position;
+                objNew.transform.rotation = spawnPos.rotation;
+            }
+            return objNew;
+        }
 
-        OnCreateNewObjSell(parentSet, objNew);
+        if (objNew) OnGetObject(parentSet, objNew);
 
         return objNew;
     }
 
-    private void OnCreateNewObjSell(Transform parentSet, ObjectPlant objNew)
+    private ObjectPlant GetObjectDisable(String typeID)
+    {
+        foreach (var i in _objects)
+        {
+            if (i._typeID == typeID && i.gameObject.activeSelf == false) return i;
+        }
+        return null;
+    }
+
+    private void OnGetObject(Transform parentSet, ObjectPlant objNew)
     {
         // Đặt lại giá trị 
-        if (objNew)
+        if (!objNew) return;
+
+        if (parentSet)
         {
             objNew.SetThisParent(parentSet);
             objNew.transform.localPosition = Vector3.zero;
             objNew.transform.localRotation = Quaternion.identity;
-
-            // thêm vào kho
-            if (_objects.Contains(objNew) == false)
-            {
-                _objects.Add(objNew);
-            }
         }
+
+        // thêm vào kho
+        if (_objects.Contains(objNew) == false)
+        {
+            _objects.Add(objNew);
+        }
+
     }
 
     /// <summary> Tìm đối tượng có trong ao </summary>
     /// <returns> cha của đối tượng đang giữ, kiểu objectPlant muốn tìm</returns>
-    public virtual ObjectPlant FindObject(String typeID)
+    public virtual ObjectPlant FindObject(bool activeSelf, String typeID)
     {
         // Tìm trong hồ
         foreach (var i in _objects)
         {
             if (!i) continue;
-            if (i._typeID == typeID && i._Parent == null)
-                return i;
+            Debug.Log(i.gameObject.activeSelf);
+            if (i._typeID == typeID && i._Parent == null && i.gameObject.activeSelf == activeSelf) return i;
         }
         return null;
     }

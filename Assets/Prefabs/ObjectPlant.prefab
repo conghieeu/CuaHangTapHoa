@@ -223,7 +223,9 @@ MonoBehaviour:
   _parent: {fileID: 0}
   _models: {fileID: 2841091533384724584}
   _coll: {fileID: 0}
-  _items: []
+  _items:
+  - {fileID: 0}
+  - {fileID: 0}
   _slots:
   - {fileID: 2010362936966502411}
   - {fileID: 2264889751111772376}

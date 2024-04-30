@@ -21,7 +21,7 @@ namespace CuaHang.StaffAI
             // Tìm parcel
             if (!_parcelHolding)
             {
-                _objPlantTarget = BoolingObjPlants.Instance.FindObject("parcel_1");
+                _objPlantTarget = BoolingObjPlants.Instance.FindObject(true, "parcel_1");
             }
 
             // Nhặt parcel
@@ -109,6 +109,7 @@ namespace CuaHang.StaffAI
                 Transform dropPos = _objPlantTarget.GetSlotEmpty();
                 if (dropPos)
                 {
+                    // _objPlantTarget.AddItem
                     DropParcel(dropPos);
                     _objPlantTarget = null;
                 }
