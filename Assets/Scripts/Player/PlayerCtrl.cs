@@ -5,9 +5,9 @@ using UnityEngine;
 
 namespace CuaHang
 {
-    public class PlayerCtrl : MonoBehaviour
+    public class PlayerCtrl : HieuBehavior
     {
-        public ObjectTemp _temp;
+        public ObjectDrag _temp;
         public Transform _posHoldParcel; // vị trí đặt cái parcel này trên tay
         public SensorCast _sensor;
 

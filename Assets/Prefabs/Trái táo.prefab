@@ -146,7 +146,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5093278088282058274}
-  - component: {fileID: 8310668356116206631}
+  - component: {fileID: 8043737353531079182}
   m_Layer: 0
   m_Name: "Tr\xE1i t\xE1o"
   m_TagString: Untagged
@@ -163,14 +163,14 @@ Transform:
   m_GameObject: {fileID: 8212941320521889809}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.8772784, y: 1.177, z: -7.626768}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1458852929344473839}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8310668356116206631
+--- !u!114 &8043737353531079182
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -179,12 +179,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 8212941320521889809}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 01fab0b6aa5a82f43bb9a704d5a3ce1e, type: 3}
+  m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _SO: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
-  _thisParent: {fileID: 0}
-  _typeID: type_1
-  _name: Apple
+  _ID: 
+  _typeID: apple_1
+  _name: 
   _type: 
-  _parent: {fileID: 0}
+  _price: 0
+  _currency: 
+  _thisParent: {fileID: 0}
+  _models: {fileID: 0}
+  _coll: {fileID: 0}
+  _itemSlot: {fileID: 0}
+  _itemPooler: {fileID: 0}

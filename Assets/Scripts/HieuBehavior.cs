@@ -4,8 +4,8 @@ using UnityEngine;
 
 namespace CuaHang
 {
-    public class StorageRoom : Item
+    public class HieuBehavior : MonoBehaviour
     {
-        // [Header("StorageRoom")]
     }
+
 }

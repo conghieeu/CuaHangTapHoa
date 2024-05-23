@@ -7,7 +7,7 @@ namespace CuaHang
     /// <summary> Aim con trỏ, drag temp và có thể snap khi drag temp </summary>
     public class Snapping : MonoBehaviour
     {
-        public ObjectTemp _temp;
+        public ObjectDrag _temp;
         public bool _enableSnapping; // bật chế độ snapping
         public float _snapDistance = 6f; // Khoảng cách cho phép đặt 
         public float tilesize = 1;
@@ -41,11 +41,11 @@ namespace CuaHang
             // khoảng cách bị quá dài
             if (Vector3.Distance(cam.transform.position, _hit.point) < _snapDistance)
             {
-                _temp.GetComponent<ObjectTemp>()._isDistance = true;
+                _temp.GetComponent<ObjectDrag>()._isDistance = true;
             }
             else
             {
-                _temp.GetComponent<ObjectTemp>()._isDistance = false;
+                _temp.GetComponent<ObjectDrag>()._isDistance = false;
             }
         }
 
@@ -55,11 +55,11 @@ namespace CuaHang
 
             if (Physics.Raycast(ray, out _hit, 100, _layerMask))
             {
-                ObjectPlant objPHit = _hit.transform.GetComponent<ObjectPlant>();
+                Item objPHit = _hit.transform.GetComponent<Item>();
                 if (Input.GetKeyDown(KeyCode.E) && objPHit)
                 {
                     // Nếu chạm phải là vật thể object có thể đem đi dặt thì biến nó thành dạng temp, để có thể đem đi đặt
-                    objPHit.ActiveTempState();
+                    objPHit.DragItem();
                     _temp.PickUpObjectPlant();
                 }
             }
@@ -78,7 +78,6 @@ namespace CuaHang
 
             Vector3 snappedPosition = new Vector3(snappedX, snappedY, snappedZ);
             _temp.transform.position = snappedPosition;
-
         }
 
         // Giúp xoay temp

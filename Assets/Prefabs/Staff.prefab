@@ -69,10 +69,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2393195cce1dcdd4db948f4ff9bc42dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _targetTransform: {fileID: 0}
-  _parcelHolding: {fileID: 0}
-  _targetModelHolding: {fileID: 2067472075676956964}
-  _isPickupItem: 0
+  _itemHolding: {fileID: 0}
+  _itemHoldingPoint: {fileID: 2067472075676956964}
+  _itemPooler: {fileID: 0}
   _boxSensor: {fileID: 454957066413587912}
   _navMeshAgent: {fileID: 0}
 --- !u!1 &2341116670659753144
@@ -356,7 +355,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2067472075676956964}
   m_Layer: 0
-  m_Name: Parcel
+  m_Name: Item Holding Point
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

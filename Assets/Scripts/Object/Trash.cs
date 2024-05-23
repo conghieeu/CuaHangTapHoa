@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CuaHang.Pooler;
 using UnityEngine;
 
 namespace CuaHang
@@ -9,10 +10,10 @@ namespace CuaHang
     public class ParcelTrash
     {
         public float _time = 0;
-        public Transform _parcel;
+        public Item _item;
     }
 
-    public class Trash : ObjectPlant
+    public class Trash : Item
     {
         [Header("Trash")]
         public float _timeDelete; // thời gian để xoá đi đối tượng bênh trong kho
@@ -23,38 +24,41 @@ namespace CuaHang
             CountDownRemove();
         }
 
+        /// <summary> thùng rác đếm ngược về 0 sẽ xoá item </summary>
         private void CountDownRemove()
         {
             for (int i = 0; i < _listTrash.Count; i++)
             {
+                // đếm ngược
                 if (_listTrash[i]._time > 0f)
                 {
                     _listTrash[i]._time -= Time.fixedDeltaTime;
                 }
 
-                if (_listTrash[i]._time <= 0f && _listTrash[i]._parcel)
+                Item item = _listTrash[i]._item;
+                
+                // xoá item
+                if (_listTrash[i]._time <= 0f && item)
                 {
-                    _listTrash[i]._parcel.GetComponent<ObjectPlant>().SetThisParent(null);
-                    _listTrash[i]._parcel.gameObject.SetActive(false);
-                    _listTrash[i]._parcel = null;
+                    item.SetPosition(null);
+                    _itemSlot.DeleteItem(_listTrash[i]._item);
+                    _listTrash[i]._item = null;
                 }
             }
         }
 
-        public override void AddDeleteItem(Transform objectPlant)
+        /// <summary> Thêm item rác vào thùng rác </summary>
+        public void AddItemToTrash(Item item)
         {
-            base.AddDeleteItem(objectPlant);
             foreach (var trash in _listTrash)
             {
-                if (trash._parcel == null)
+                if (trash._item == null)
                 {
                     trash._time = _timeDelete;
-                    trash._parcel = objectPlant;
+                    trash._item = item;
                     break;
                 }
             }
         }
-
     }
-
 }

@@ -6,15 +6,14 @@ using UnityEngine;
 namespace CuaHang
 {
     /// <summary> ObjectTemp là đối tượng đại diện cho object Plant khi di dời đối tượng </summary>
-    public class ObjectTemp : MonoBehaviour
+    public class ObjectDrag : MonoBehaviour
     {
         [Space]
-        public ObjectPlant _objectPlantDragging;
+        public Item _itemDragging;
         [Space]
         public bool _isDragging;
         public bool _isDistance;
-        public bool _canPlant;
-        public bool _isCheckGround;
+        public bool _isCanPlant;
         [Space]
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
@@ -38,20 +37,20 @@ namespace CuaHang
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
         public void PickUpObjectPlant()
         {
-            _objectPlantDragging.SetThisParent(PlayerCtrl.Instance._posHoldParcel);
-            _objectPlantDragging._coll.enabled = false;
+            _itemDragging.SetPosition(PlayerCtrl.Instance._posHoldParcel);
+            _itemDragging._coll.enabled = false;
             _isDragging = true;
         }
 
         private void DropObjectPlant()
         {
-            if (Input.GetMouseButtonDown(0) && _canPlant)
+            if (Input.GetMouseButtonDown(0) && _isCanPlant)
             {
-                _objectPlantDragging.transform.position = transform.position;
-                _objectPlantDragging.transform.rotation = transform.rotation;
-                _objectPlantDragging._models.transform.rotation = _models.rotation;
-                _objectPlantDragging.SetThisParent(null);
-                _objectPlantDragging._coll.enabled = true;
+                _itemDragging.transform.position = transform.position;
+                _itemDragging.transform.rotation = transform.rotation;
+                _itemDragging._models.transform.rotation = _models.rotation;
+                _itemDragging.SetPosition(null);
+                _itemDragging._coll.enabled = true;
                 _isDragging = false;
                 gameObject.SetActive(false);
             }
@@ -59,7 +58,7 @@ namespace CuaHang
 
         private void SetMaterial()
         {
-            if (_canPlant)
+            if (_isCanPlant)
             {
                 _models.GetComponent<Renderer>().material = _green;
             }
@@ -73,19 +72,17 @@ namespace CuaHang
         {
             if (_sensorAround._hits.Count == 0 && IsTouchGround() && _isDistance)
             {
-                _canPlant = true;
+                _isCanPlant = true;
             }
             else
             {
-                _canPlant = false;
+                _isCanPlant = false;
 
             }
         }
 
         bool IsTouchGround()
         {
-            if (_isCheckGround == false) return true;
-
             // Làm thế nào để cái sensor check ở dưới
             foreach (var obj in _sensorGround._hits)
             {

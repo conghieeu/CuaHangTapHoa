@@ -19,14 +19,14 @@ namespace CuaHang
             DetectTarget();
         }
 
-        public ObjectPlant GetObjectPlantHit()
+        public Item GetObjectPlantHit()
         {
             foreach (var hit in _hits)
             {
                 // kiểm tra chạm
-                if (hit.GetComponent<ObjectPlant>())
+                if (hit.GetComponent<Item>())
                 {
-                    return hit.GetComponent<ObjectPlant>();
+                    return hit.GetComponent<Item>();
                 }
             }
             return null;
