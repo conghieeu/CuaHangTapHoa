@@ -146,8 +146,8 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2548321792603076469}
-  - {fileID: 5563910363181462376}
   - {fileID: 4619929495920305256}
+  - {fileID: 5563910363181462376}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &789076334258901974
@@ -162,12 +162,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc615dbe83bf3f94a95346cf2724da06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _objectPlantSO: {fileID: 11400000, guid: 4fb482ab6e3fd7e48ada9954b06b0331, type: 2}
-  _objectPlant: {fileID: 0}
-  _objectContactHolder: {fileID: 0}
-  _canPlant: 0
+  _itemDragging: {fileID: 0}
+  _isDragging: 0
   _isDistance: 0
-  _isCheckGround: 1
+  _isCanPlant: 0
   _groundTag: Ground
   _models: {fileID: 2869998791410652833}
   _green: {fileID: 2100000, guid: 930ecfa0fd0df3e4ba5493b0e3fecf35, type: 2}
@@ -219,6 +217,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hits: []
+  _eventTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   _size: {x: 0.97, y: 0.97, z: 0.97}
 --- !u!1 &8536296582548421078
 GameObject:
@@ -265,4 +266,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _hits: []
+  _eventTrigger:
+    m_PersistentCalls:
+      m_Calls: []
   _size: {x: 0.4, y: 0.4, z: 0.4}

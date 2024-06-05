@@ -7,6 +7,8 @@ namespace CuaHang.AI
 {
     public class Staff : AIBehavior
     {
+        public Transform _itemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người
+        
         private void FixedUpdate()
         {
             BehaviorCtrl();
@@ -26,7 +28,7 @@ namespace CuaHang.AI
 
             if (_itemHolding) isParcelHasItem = _itemHolding._itemSlot.IsAnyItem();
 
-            Debug.Log("Nhân viên chạm vào " + GetItemHit(), transform);
+            // Debug.Log("Nhân viên chạm vào " + GetItemHit(), transform);
             // Nhặt parcel
             if (_ItemTarget && !_itemHolding && GetItemHit())
             {
@@ -55,7 +57,7 @@ namespace CuaHang.AI
             if (GetItemHit() == _ItemTarget)
             {
                 _itemHolding = _ItemTarget;
-                _itemHolding.SetPosition(_itemHoldingPoint);
+                _itemHolding.SetThisParent(_itemHoldingPoint);
                 _ItemTarget = null;
             }
         }
@@ -63,14 +65,13 @@ namespace CuaHang.AI
         /// <summary> Đặt item vào cái table </summary>
         protected virtual void PlaceItemOnTable()
         {
-            Debug.Log("Nhân viên tìm cái bàn");
             Item target = FindItemWithTypeID("table_1");
             if (_ItemTarget != target) _ItemTarget = target;
 
             // Tới được cái bàn chưa
-            if (target && GetItemHit()) if (GetItemHit().transform == target.transform && target._itemSlot.IsAnyEmptyItem())
+            if (target && GetItemHit()) if (GetItemHit().transform == target.transform && target._itemSlot.IsAnyEmptyItem() && _itemHolding != null)
                 {
-                    SenderItem(_itemHolding.GetComponent<Item>(), target.GetComponent<Item>());
+                    target.GetComponent<Item>()._itemSlot.ReceiverItems(_itemHolding.GetComponent<Item>()._itemSlot);
                     _ItemTarget = null;
                     return;
                 }
@@ -113,5 +114,7 @@ namespace CuaHang.AI
                     _ItemTarget = null;
                 }
         }
+
+        
     }
 }

@@ -17,6 +17,7 @@ namespace CuaHang
         [Space]
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
+        [SerializeField] Transform _modelsHolding;
         [SerializeField] Material _green, _red;
 
         [Space]
@@ -31,25 +32,37 @@ namespace CuaHang
 
         private void Update()
         {
-            DropObjectPlant();
+            DropItem();
+
+            if (_itemDragging)
+            {
+                Vector3 sensorSize = _itemDragging.GetComponent<BoxCollider>().size;
+
+            }
         }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
         public void PickUpObjectPlant()
         {
-            _itemDragging.SetPosition(PlayerCtrl.Instance._posHoldParcel);
+            _itemDragging.SetThisParent(PlayerCtrl.Instance._posHoldParcel);
             _itemDragging._coll.enabled = false;
             _isDragging = true;
         }
 
-        private void DropObjectPlant()
+        public void CreateModel(Transform otherModel)
         {
-            if (Input.GetMouseButtonDown(0) && _isCanPlant)
+            _modelsHolding = Instantiate(otherModel, _models, false);
+        }
+
+        private void DropItem()
+        {
+            if (Input.GetMouseButtonDown(0) && _isCanPlant && _itemDragging)
             {
+                Destroy(_modelsHolding.gameObject); // Delete model item
+                _itemDragging.SetThisParent(null);
                 _itemDragging.transform.position = transform.position;
                 _itemDragging.transform.rotation = transform.rotation;
                 _itemDragging._models.transform.rotation = _models.rotation;
-                _itemDragging.SetPosition(null);
                 _itemDragging._coll.enabled = true;
                 _isDragging = false;
                 gameObject.SetActive(false);
@@ -60,11 +73,19 @@ namespace CuaHang
         {
             if (_isCanPlant)
             {
-                _models.GetComponent<Renderer>().material = _green;
+                SetMaterialModel(_green);
             }
             else
             {
-                _models.GetComponent<Renderer>().material = _red;
+                SetMaterialModel(_red);
+            }
+        }
+
+        private void SetMaterialModel(Material color)
+        {
+            foreach (Renderer model in _models.GetComponentsInChildren<Renderer>())
+            {
+                model.material = color;
             }
         }
 
@@ -81,7 +102,7 @@ namespace CuaHang
             }
         }
 
-        bool IsTouchGround()
+        private bool IsTouchGround()
         {
             // Làm thế nào để cái sensor check ở dưới
             foreach (var obj in _sensorGround._hits)

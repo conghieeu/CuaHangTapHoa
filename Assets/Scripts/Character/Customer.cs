@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -8,166 +9,216 @@ namespace CuaHang.AI
     public class Customer : AIBehavior
     {
         [Header("CustomerAI")]
-        public Transform _slotWaiting;
-        public MayTinh _mayTinh;
-        [Space]
-        public bool _isGetItem;
-        public bool _isPayItem;
+        public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
+        public Transform _outShopPoint; // Là điểm sẽ tới nếu rời shop
+        public bool _isNotNeedBuy; // Không cần mua gì nữa
 
-        public List<Item> _listItem;
+        [SerializeField] private bool _playerConfirmPay; // Player xác nhận thanh toán
 
-        /// <summary> 
-        /// 0: Idle, 1: Find Item, 2: Payment, 3: go out market 
-        /// </summary>
-        public int _state = 0;
+        public ItemSlot _itemSlot; // Dùng để lưu item va check item da lay duoc
+        public List<Item> _itemsNeed; // Cac item can lay, giới hạn là 15 item
+
+        bool _isConfirmPay;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _itemSlot = GetComponentInChildren<ItemSlot>();
+        }
+
+        protected override void Start()
+        {
+            base.Start();
+            SetItemNeed();
+        }
 
         private void FixedUpdate()
         {
-            SetState();
-
-            // Run State
-            switch (_state)
-            {
-                case 0:
-                    StateIdle();
-                    break;
-                case 1:
-                    StateFindItem();
-                    break;
-                case 2:
-                    StatePayment();
-                    break;
-                case 3:
-                    StateGoOutMarket();
-                    break;
-            }
+            Behavior();
         }
 
-        void SetState()
+        void Behavior()
         {
-            // Tìm hàng
-            if (!_isGetItem)
+            if (!_itemSlot.ItemsSequenceEqual(_itemsNeed)) // Kiểm tra item cần mua
             {
-                _state = 1;
-            }
-            // khi nhặt được hàng cần tìm Tới quầy đợi thanh toán,  
-            else if (!_isPayItem && _isGetItem)
-            {
-                _state = 2;
-            }
-            // Điều kiện để khách hàng rời cửa hàng (Đã trả xong tiền, đã có vật phẩm cần mua)
-            else if (_isPayItem && _isPayItem)
-            {
-                _state = 3;
+                if (GoToItemNeed())
+                {
+                    if (IsAgreeItem())
+                    {
+                        Debug.Log("1.1: Lấy danh sách items");
+                        GetItem();
+                    }
+                    else if (!IsAgreeItem() && _itemSlot.IsAnyItem()) // mua được vài thứ nên đi về 
+                    {
+                        Debug.Log("1.2: Thanh toan vi hang dom, thanh toan nhung mon do dang co");
+                        if (GoPayItem()) GoOutShop();
+                    }
+                }
+                else if (_isNotNeedBuy && _itemSlot.IsAnyItem() == false) // không mua được gì nên đi về
+                {
+                    Debug.Log("1.3: Đồ quá mắt không mua được gì đi về");
+                    GoOutShop();
+                }
             }
             else
             {
-                _state = 0;
+                Debug.Log("2: Thanh toan hang mua");
+                if (GoPayItem()) GoOutShop();
+                Debug.Log(GoPayItem());
             }
         }
 
-        // khách hàng xuất hiện như nào ? Cần xử lý sự xuất hiện khách hàng
-        void StateIdle()
+        /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
+        public void SetPlayerConfirmPay()
         {
-
+            _playerConfirmPay = true;
+            _isNotNeedBuy = true;
+            _mayTinh._waitingLine.CancelRegisterSlot(transform);
+            Debug.Log("Player thanh toán cho khách hàng ở slot 1");
         }
 
-        void StateFindItem()
+        /// <summary> Lấy item từ Shelf đưa vào this._itemSlot </summary> 
+        void GetItem()
         {
-            // mức độ hài lòng của khách hàng, khách hàng chê sản phẩm đắt rẻ không ?
-            if (TryComplainItem()) return;
+            if (ItemNeedGet() == null) return;
 
-            // Nếu hài lòng về sản phẩm thì nhặt item đó lênh
-            PickUpItemInShelves();
+            Item itemNeedGet = ItemNeedGet();
+            Item shelf = _itemPooler.FindItemContentProduct(ItemNeedGet());
+
+            for (int i = 0; i < shelf._itemSlot._listItem.Count; i++)
+            {
+                Item shelfItem = shelf._itemSlot._listItem[i]._item;
+                if (shelfItem == itemNeedGet)
+                {
+                    shelf._itemSlot.RemoveItemInList(shelfItem);
+                    _itemSlot.AddItemToSlot(shelfItem);
+                    _itemSlot.HideAllItems();
+                }
+            }
         }
 
-        /// <summary> Nhân vật bình luận về vật phẩm </summary>
-        /// <returns> True: nhân vật có phàn nàn về sản phẩmf </returns>
-        bool TryComplainItem()
+        /// <summary> Đi thanh toán item </summary>
+        bool GoPayItem()
         {
-            // TODO: khách hàng chọn nhiều loại mặt hàng ngẫu nhiên nhưng tuỳ theo giá cả
-            // item lởm hoặc giá quá cao thì phàn nàng và bảo về không thì thôi
-            // Vậy là phải có thang đo quy chuẩn về giá cả, phải có giá thị thường
-
-            return true;
+            if (GoSlotPayment())   // tìm hàng chờ
+                if (PayItem()) // thanh toán item
+                    return true;
+            return false;
         }
-        // khách hàng chạy tới mua hàng thì truyền item từ kệ hàng sang khách hàng như nào ?
-        void PickUpItemInShelves()
+
+        /// <summary> Chạy tới vị trí item cần lấy </summary>
+        bool GoToItemNeed()
         {
             // Lay target
-            Item target = FindItemWithTypeID("KeHang");
+            Item itemGet = ItemNeedGet(); // lấy quả táo trong thế giới
+            if (itemGet == null || _isNotNeedBuy) return false;
 
-            if (target == null) return;
+            Item shelf = _itemPooler.FindItemContentProduct(ItemNeedGet()); // lấy cái bàn chứa quả táo
 
-            // di chuyen den target
-            _ItemTarget = target;
-            MoveToTarget();
+            if (shelf == null) return false;
 
-            // Kiem tra cham vao target
-            if (GetItemHit() == target && _listItem.Count == 0)
+            // Kiem tra cham vao shelf
+            if (GetItemHit() == shelf)
             {
-                // dua item vao _listItem  
-                Item table = target.GetComponent<Item>();
-                GetItems(table);
+                Debug.Log("Dung di chuyen");
+                _ItemTarget = null; // Dừng di chuyển
+                return true;
             }
-        }
-        
-        /// <summary> Khách hàng lấy objectSell(Transform) Từ objectPlant </summary>
-        public virtual void GetItems(Item sender)
-        {  
-            // for (int i = sender._itemSlot._slots.Count - 1; i >= 0; i--)
-            // {
-            //     if (sender._itemSlot._items[i] == null) continue;
+            else
+            {
+                _ItemTarget = shelf; // di chuyển đến target
+                MoveToTarget();
+            }
 
-            //     for (int j = 0; j < _listItem.Count; j++)
-            //     {
-            //         if (_listItem[j] == null)
-            //         {
-            //             _listItem[j] = sender._itemSlot._items[i];
-            //             sender._itemSlot.RemoveItem(sender._itemSlot._items[i]);
-            //         }
-            //     }
-            // }
+            return false;
         }
 
-
-        // khách hàng thanh toán như nào
-        void StatePayment()
+        /// <summary> Ra về khách tìm điểm đến là ngoài ở shop </summary>
+        void GoOutShop()
         {
-            // khách hàng chạy tới quầy thanh toán để thanh toán, thanh toán thì cần người thanh toán
-            // Đứng vào khu vực thanh toán là tự động thanh toán
-            // Khi đặt cầm được vật phẩm trong tay thì khách hàng này tới quầy thanh toán
-            FindSlotPayment();
-
-            // Đưa tiền cho PlayerProperty
-            ShellOutItem();
-
-            // Khi đi thì khách hàng sẽ đánh giá về sản phẩm này
-            StoreReviews();
+            MoveToTarget(_outShopPoint);
         }
-        // Khách hàng phải biết xếp hàng 
-        // + Có các điểm set sẵn khi khách hàng thanh toán thì đứng vào các điểm slot đó
-        // + TODO: phải code thêm nâng cấp địa điểm máy tính thanh toán
-        void FindSlotPayment()
+
+        /// <summary> Chọn ngẫu nhiên item mà khách hàng này muốn lấy </summary>
+        void SetItemNeed()
         {
+            // Lấy danh sách item mà cửa hàng đang có
+            List<Item> shopItems = _itemPooler.GetAllItemsCanSell();
+            Debug.Log("So item dang co the mua: " + shopItems.Count);
+            if (shopItems.Count == 0) return;
 
+            // Giới hạn là < 14
+            int itemCount = Random.Range(1, 14);
+            for (int i = 0; i < itemCount; i++)
+            {
+                int indexItemPick = Random.Range(0, shopItems.Count - 1);
+                _itemsNeed.Add(shopItems[indexItemPick]);
+            }
+            Debug.Log("So item can mua: " + _itemsNeed.Count);
         }
-        // Khách hàng tiến hành thanh toán
-        void ShellOutItem()
+
+        /// <summary> Giá quá cao thì không đồng ý mua </summary>
+        bool IsAgreeItem()
         {
-            // đưa tiền cho PlayerProperty
-            // khi khách hàng hoàn thành thanh toán xong thì cộng thêm tiền với các item mà khách hàng mua
+            if (ItemNeedGet()._price < ItemNeedGet()._SO._priceMarketMax) return true;
+            else
+            {
+                ExpressedComplaintsItem();
+                _isNotNeedBuy = true;
+            }
+            return false;
         }
-        void StoreReviews()
+
+        /// <summary> TODO: expressed complaints because this product is too expensive </summary>
+        void ExpressedComplaintsItem()
         {
-
+            Debug.Log("Bán gì mắt vậy cha");
         }
 
-        // Khách hàng ra về
-        void StateGoOutMarket()
+        /// <summary> Tìm slot đợi thanh toán </summary>
+        bool GoSlotPayment()
         {
-            // sẽ có các điểm ở ngoài cửa hàng và set điểm đó ở AI để AI rời khỏi cửa hàng
+            if(_isConfirmPay) return true; // thanh toán rồi thì không cần đén hàng chờ 
+
+            _mayTinh._waitingLine.RegisterSlot(transform); // Đăng ký slot
+            Transform slotWait = _mayTinh._waitingLine.GetCustomerSlot(transform); // tìm vị trí slot
+            return MoveToTarget(slotWait);
         }
 
+        /// <summary> Thanh toán tiền, trả true nếu thanh toán thành công </summary>
+        bool PayItem()
+        {
+            if (_playerConfirmPay && !_isConfirmPay)
+            {
+                _gameManager.AddCoin(TotalCoinPay());
+                _isConfirmPay = true;
+                return true;
+            }
+            else if (_isConfirmPay) return true;
+            return false;
+        }
+
+        /// <summary> Tổng số tiền cần trả </summary>
+        float TotalCoinPay()
+        {
+            float total = 0;
+            foreach (var item in _itemSlot._listItem)
+            {
+                if (item._item != null)
+                {
+                    total += item._item._price;
+                }
+            }
+            return total;
+        }
+
+        /// <summary> chọn tiem cần lấy theo thứ tự </summary>
+        Item ItemNeedGet()
+        {
+            // Tìm item đang không có
+            for (int i = 0; i < _itemsNeed.Count; i++)
+                if (!_itemSlot.IsContentItem(_itemsNeed[i])) return _itemsNeed[i];
+            return null;
+        }
     }
 }

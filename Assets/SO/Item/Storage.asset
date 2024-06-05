@@ -14,7 +14,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _typeID: storage_1
   _name: Storage
-  _type: 
+  _type: Shelf
   _price: 8
+  _priceMarketMin: 0
+  _priceMarketMax: 33
+  _isCanSell: 0
   _currency: USD
+  _thisPrefabs: {fileID: 0}
   _items: []

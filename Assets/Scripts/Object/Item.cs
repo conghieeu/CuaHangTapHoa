@@ -14,9 +14,11 @@ namespace CuaHang
         public float _price;
         public string _currency;
 
-        [Header("ObjectPlant")]
-        public Transform _objFollowedThis; // Đối tượng này có được AI nào đặt là mục tiêu không
+        [Header("Item")]
+        public bool _isCanSell;
+        public Transform _follower; // Đối tượng này có được AI nào đặt là mục tiêu không
         public Transform _thisParent;
+        public ItemSlot _itemHoldThis;
         public Transform _models;
         public BoxCollider _coll;
         public ItemSlot _itemSlot;
@@ -25,11 +27,12 @@ namespace CuaHang
         {
             _coll = GetComponent<BoxCollider>();
             _itemSlot = GetComponentInChildren<ItemSlot>();
+            SetValueSO();
         }
 
         private void Start()
         {
-            SetValueSO();
+            LoadSlotSO();
         }
 
         /// <summary> Set value với SO có đang gáng </summary>
@@ -42,7 +45,11 @@ namespace CuaHang
             _type = _SO._type;
             _price = _SO._price;
             _currency = _SO._currency;
+            _isCanSell = _SO._isCanSell;
+        }
 
+        private void LoadSlotSO()
+        {
             // Load Slot SO
             if (_itemSlot)
                 for (int i = 0; i < _itemSlot._listItem.Count && i < _SO._items.Count; i++)
@@ -52,7 +59,7 @@ namespace CuaHang
         }
 
         /// <returns> set cha của đối tượng này</returns>
-        public void SetPosition(Transform parent)
+        public void SetThisParent(Transform parent)
         {
             if (parent)
             {
@@ -72,10 +79,17 @@ namespace CuaHang
         public void DragItem()
         {
             // Set Temp 
-            ObjectDrag temp = PlayerCtrl.Instance._temp;
-            temp.gameObject.SetActive(true);
-            temp._itemDragging = this;
+            ObjectDrag itemDrag = PlayerCtrl.Instance._temp;
+            itemDrag.gameObject.SetActive(true);
+            itemDrag._itemDragging = this;
+            itemDrag.CreateModel(_models);
         }
 
+        /// <summary> Item này có đang tồn tại và là vô chủ hay không </summary>
+        public bool IsThisItemFreedom()
+        {
+            return gameObject.activeSelf == true && _thisParent == null;
+        }
+        
     }
 }

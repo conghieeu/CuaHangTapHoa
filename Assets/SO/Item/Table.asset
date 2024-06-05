@@ -13,11 +13,12 @@ MonoBehaviour:
   m_Name: Table
   m_EditorClassIdentifier: 
   _typeID: table_1
-  _name: Table
-  _type: KeHang
+  _name: Table_01
+  _type: Shelf
   _price: 8
   _priceMarketMin: 0
-  _priceMarketMax: 0
+  _priceMarketMax: 33
+  _isCanSell: 0
   _currency: USD
   _thisPrefabs: {fileID: 0}
   _items:

@@ -1,4 +1,6 @@
+using System;
 using System.Collections.Generic;
+using CuaHang.AI;
 using CuaHang.Pooler;
 using UnityEngine;
 
@@ -6,11 +8,16 @@ namespace CuaHang
 {
     public class MayTinh : Item
     {
+
         [Header("MayTinh")]
         public ItemSO _objectPlantSO;
         public Transform _spawnTrans;
-        public List<Transform> _slotsQueue;
-        public List<Transform> _slotsCustomer;
+        public WaitingLine _waitingLine;
+
+        private void Awake()
+        {
+            _waitingLine = GetComponentInChildren<WaitingLine>();
+        }
 
         private void OnTriggerEnter(Collider other)
         {
@@ -18,40 +25,17 @@ namespace CuaHang
             {
                 Debug.Log("Player đã chạm máy tính: Tạo 1 vật phẩm");
                 CreateObjectPlant();
+
+                if (_waitingLine._waitingSlots[0]._customer)
+                    _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().SetPlayerConfirmPay();
             }
-        }
-
-        /// <summary> đăng ký slot hàng đợi </summary>
-        public void RegisterSlot(Transform customer)
-        {
-            _slotsCustomer.Add(customer.transform);
-        }
-
-        /// <summary> Rời slot hàng đợi </summary>
-        public void CancelRegisterSlot(Transform customer)
-        {
-            _slotsCustomer.Remove(customer);
-        }
-
-        /// <summary> Lấy hàng đợi </summary>
-        public Transform GetCustomerSlot(Transform customer)
-        {
-            for (int i = 0; i < _slotsCustomer.Count; i++)
-            {
-                if (customer == _slotsCustomer[i])
-                {
-                    return _slotsQueue[i].transform;
-                }
-            }
-            return null;
         }
 
         // tạo vật thể với SO mới trùng vs SO mẫu nào đó
         [ContextMenu("CreateObjectPlant")]
         void CreateObjectPlant()
         {
-            ItemPooler.Instance.CreateObject("parcel_1", null, _spawnTrans);
+            ItemPooler.Instance.CreateItem("parcel_1", null, _spawnTrans);
         }
-
     }
 }

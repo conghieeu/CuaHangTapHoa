@@ -17,7 +17,7 @@ namespace CuaHang
         void OnTriggerEnter(Collider other)
         {
             Debug.Log("IT HIT SOMETHING!");
-            _eventTrigger.Invoke();  
+            _eventTrigger.Invoke();
         }
     }
 

@@ -5,7 +5,7 @@ using UnityEngine;
 namespace CuaHang
 {
     /// <summary> Aim con trỏ, drag temp và có thể snap khi drag temp </summary>
-    public class Snapping : MonoBehaviour
+    public class RaycastSnapping : MonoBehaviour
     {
         public ObjectDrag _temp;
         public bool _enableSnapping; // bật chế độ snapping
@@ -49,19 +49,19 @@ namespace CuaHang
             }
         }
 
+        /// <summary> Chiếu tia raycast khi nhấn E thì có thể drag item </summary>
         private void GetHitForward()
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out _hit, 100, _layerMask))
             {
-                Item objPHit = _hit.transform.GetComponent<Item>();
-                if (Input.GetKeyDown(KeyCode.E) && objPHit)
-                {
-                    // Nếu chạm phải là vật thể object có thể đem đi dặt thì biến nó thành dạng temp, để có thể đem đi đặt
-                    objPHit.DragItem();
-                    _temp.PickUpObjectPlant();
-                }
+                Item item = _hit.transform.GetComponent<Item>();
+                if (Input.GetKeyDown(KeyCode.E) && item) if (!item._thisParent)
+                    {
+                        item.DragItem();
+                        _temp.PickUpObjectPlant();
+                    }
             }
         }
 

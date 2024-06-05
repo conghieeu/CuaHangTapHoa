@@ -12,7 +12,7 @@ namespace CuaHang.Pooler
         {
             if (Instance) Destroy(this); else { Instance = this; }
         }
-
+        
 
     }
 

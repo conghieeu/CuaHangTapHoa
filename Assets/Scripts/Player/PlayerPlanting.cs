@@ -57,7 +57,7 @@ namespace CuaHang
                     if (item != null)
                     {
                         receiver._itemSlot.AddItemWithTypeID(item._typeID);
-                        _itemHolding._itemSlot.DeleteItem(item);
+                        _itemHolding._itemSlot.RemoveItemInWorld(item);
                     }
                 }
             }

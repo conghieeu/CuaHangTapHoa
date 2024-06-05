@@ -9,13 +9,15 @@ namespace CuaHang.AI
     public class AIBehavior : HieuBehavior
     {
         [Header("AIBehavior")]
-        [SerializeField] private Item _itemTarget;  // Thứ mà cái này nhân viên hướng tới, không phải là thứ đang dữ trong người
-        public Item _itemHolding; // objectPlant người chơi đã nhặt đc và đang giữ trong người
-        public Transform _itemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người
+        [SerializeField] private Item _itemTarget;  // Parcel mà nhân vật đang hướng tới
 
-        public ItemPooler _itemPooler;
-        public SensorCast _boxSensor;
-        public NavMeshAgent _navMeshAgent;
+        public Item _itemHolding; // Parcel đã nhặt và đang giữ trong người
+        public GameManager _gameManager;
+        public MayTinh _mayTinh;
+
+        protected ItemPooler _itemPooler;
+        protected SensorCast _boxSensor;
+        protected NavMeshAgent _navMeshAgent;
 
         public Item _ItemTarget
         {
@@ -26,45 +28,25 @@ namespace CuaHang.AI
                 if (_ItemTarget)
                     if (value)
                     {
-                        _ItemTarget._objFollowedThis = transform;
+                        _ItemTarget._follower = transform;
                     }
                     else
                     {
-                        _ItemTarget._objFollowedThis = null;
+                        _ItemTarget._follower = null;
                     }
             }
         }
 
         protected virtual void Awake()
         {
+            _boxSensor = GetComponentInChildren<SensorCast>();
             _navMeshAgent = GetComponent<NavMeshAgent>();
         }
 
-        private void Start()
+        protected virtual void Start()
         {
             _itemPooler = ItemPooler.Instance;
-        }
-
-        // Nó sẽ đưa cái item từ slot này sang slot kia của cái bàn, false là còn kiện hàng đơn hàng chưa giao hết
-        protected virtual void SenderItem(Item sender, Item receiver)
-        {
-            // Nếu vật thể đã chạm được tới thực thể cần tới 
-            if (GetItemHit() && _itemHolding != null)
-            {
-                // thực hiện việc truyền đơn hàng
-                Debug.Log("Thực hiện việc truyền dữ liệu đơn hàng");
-
-                // chuyển item 
-                for (int i = sender._itemSlot._listItem.Count - 1; i >= 0; i--)
-                {
-                    Item item = sender._itemSlot._listItem[i]._item;
-                    if (item != null && receiver._itemSlot.IsAnyEmptyItem())
-                    {
-                        sender._itemSlot.DeleteItem(item);
-                        receiver._itemSlot.AddItemWithTypeID(item._typeID);
-                    }
-                }
-            }
+            _gameManager = GameManager.Instance;
         }
 
         /// <summary> AI biết nó chạm tới tứ nó cần </summary>
@@ -81,12 +63,33 @@ namespace CuaHang.AI
             return null;
         }
 
+        /// <summary> Di chuyển tới property _ItemTarget </summary>
         protected virtual void MoveToTarget()
         {
+
             if (_ItemTarget != null)
             {
                 _navMeshAgent.SetDestination(_ItemTarget.transform.position);
             }
+        }
+
+        /// <summary> Di chuyển đến target và trả đúng nếu đến được đích </summary>
+        protected virtual bool MoveToTarget(Transform target)
+        {
+            _navMeshAgent.SetDestination(target.transform.position);
+
+            // Kiểm tra tới được điểm target
+            if (!_navMeshAgent.pathPending)
+            {
+                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
+                {
+                    if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
         }
 
         protected virtual Item FindItemWithTypeID(string typeID) => _itemPooler.FindItemWithTypeID(typeID, true);
