@@ -40,7 +40,7 @@ namespace CuaHang
                 // xoá item
                 if (_listTrash[i]._time <= 0f && item)
                 {
-                    item.SetThisParent(null);
+                    item._ThisParent = null;
                     _itemSlot.RemoveItemInWorld(_listTrash[i]._item);
                     _listTrash[i]._item = null;
                 }

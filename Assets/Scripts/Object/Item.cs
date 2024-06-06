@@ -17,11 +17,32 @@ namespace CuaHang
         [Header("Item")]
         public bool _isCanSell;
         public Transform _follower; // Đối tượng này có được AI nào đặt là mục tiêu không
-        public Transform _thisParent;
-        public ItemSlot _itemHoldThis;
+        private Transform _thisParent; // là cha của item này
+        public Transform _itemParent; // Item là cha đang chứa item này
         public Transform _models;
         public BoxCollider _coll;
         public ItemSlot _itemSlot;
+
+        /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
+        public Transform _ThisParent
+        {
+            get => _thisParent;
+            set
+            {
+                if (value)
+                {
+                    transform.SetParent(value);
+                    transform.localPosition = Vector3.zero;
+                    transform.localRotation = Quaternion.identity;
+                    _thisParent = value;
+                }
+                else
+                {
+                    transform.SetParent(ItemPooler.Instance.transform);
+                    _thisParent = null;
+                }
+            }
+        }
 
         private void Awake()
         {
@@ -48,6 +69,7 @@ namespace CuaHang
             _isCanSell = _SO._isCanSell;
         }
 
+        /// <summary> Tạo item có thể mua với list item SO </summary>
         private void LoadSlotSO()
         {
             // Load Slot SO
@@ -56,23 +78,6 @@ namespace CuaHang
                 {
                     if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID);
                 }
-        }
-
-        /// <returns> set cha của đối tượng này</returns>
-        public void SetThisParent(Transform parent)
-        {
-            if (parent)
-            {
-                transform.SetParent(parent);
-                transform.localPosition = Vector3.zero;
-                transform.localRotation = Quaternion.identity;
-                _thisParent = parent;
-            }
-            else
-            {
-                transform.SetParent(ItemPooler.Instance.transform);
-                _thisParent = null;
-            }
         }
 
         /// <summary> Con trỏ gọi vào hàm này để kích hoạt object Temp  </summary>
@@ -88,8 +93,8 @@ namespace CuaHang
         /// <summary> Item này có đang tồn tại và là vô chủ hay không </summary>
         public bool IsThisItemFreedom()
         {
-            return gameObject.activeSelf == true && _thisParent == null;
+            return gameObject.activeSelf == true && _ThisParent == null;
         }
-        
+
     }
 }

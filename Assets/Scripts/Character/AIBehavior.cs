@@ -9,9 +9,8 @@ namespace CuaHang.AI
     public class AIBehavior : HieuBehavior
     {
         [Header("AIBehavior")]
-        [SerializeField] private Item _itemTarget;  // Parcel mà nhân vật đang hướng tới
-
-        public Item _itemHolding; // Parcel đã nhặt và đang giữ trong người
+        [SerializeField] protected Item _itemTarget;  // Parcel mà nhân vật đang hướng tới
+        [SerializeField] private Item _itemHolding; // Parcel đã nhặt và đang giữ trong người
         public GameManager _gameManager;
         public MayTinh _mayTinh;
 
@@ -24,16 +23,20 @@ namespace CuaHang.AI
             get => _itemTarget;
             set
             {
+                if (_itemTarget && !value) _itemTarget._follower = null;
+                else if (value) value._follower = transform;
                 _itemTarget = value;
-                if (_ItemTarget)
-                    if (value)
-                    {
-                        _ItemTarget._follower = transform;
-                    }
-                    else
-                    {
-                        _ItemTarget._follower = null;
-                    }
+            }
+        }
+
+        public Item _ItemHolding
+        {
+            get => _itemHolding;
+            set
+            {
+                if (_itemHolding && !value) _itemHolding._follower = null;
+                else if (value) value._follower = transform;
+                _itemHolding = value;
             }
         }
 
@@ -50,17 +53,17 @@ namespace CuaHang.AI
         }
 
         /// <summary> AI biết nó chạm tới tứ nó cần </summary>
-        protected virtual Item GetItemHit()
+        protected virtual bool IsHitItemTarget()
         {
+            if (_ItemTarget == null) return false;
             foreach (var item in _boxSensor._hits)
             {
-                if (_ItemTarget)
-                    if (item == _ItemTarget.transform)
-                    {
-                        return item.GetComponent<Item>();
-                    }
+                if (item == _ItemTarget.transform)
+                {
+                    return true;
+                }
             }
-            return null;
+            return false;
         }
 
         /// <summary> Di chuyển tới property _ItemTarget </summary>

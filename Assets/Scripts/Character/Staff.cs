@@ -7,8 +7,8 @@ namespace CuaHang.AI
 {
     public class Staff : AIBehavior
     {
-        public Transform _itemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người
-        
+        public Transform _ItemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người
+
         private void FixedUpdate()
         {
             BehaviorCtrl();
@@ -19,18 +19,18 @@ namespace CuaHang.AI
         void BehaviorCtrl()
         {
             // Find the parcel
-            if (!_itemHolding)
+            if (!_ItemHolding)
             {
-                _ItemTarget = _itemPooler.FindItemTarget("parcel_1", true, transform);
+                _itemTarget = _itemPooler.FindItemTarget("parcel_1", true, transform);
             }
 
             bool isParcelHasItem = false;
 
-            if (_itemHolding) isParcelHasItem = _itemHolding._itemSlot.IsAnyItem();
+            if (_ItemHolding) isParcelHasItem = _ItemHolding._itemSlot.IsAnyItem();
 
             // Debug.Log("Nhân viên chạm vào " + GetItemHit(), transform);
             // Nhặt parcel
-            if (_ItemTarget && !_itemHolding && GetItemHit())
+            if (_itemTarget && !_ItemHolding && IsHitItemTarget())
             {
                 PickUpParcel();
             }
@@ -41,12 +41,12 @@ namespace CuaHang.AI
                 PlaceItemOnTable();
             }
             // Đặt ObjectPlant vào kho
-            else if (!FindItemWithTypeID("table_1") && _itemHolding && isParcelHasItem)
+            else if (!FindItemWithTypeID("table_1") && _ItemHolding && isParcelHasItem)
             {
                 PlaceParcelInStorage();
             }
             // Đặt ObjectPlant vào thùng rác
-            else if (_itemHolding && !isParcelHasItem)
+            else if (_ItemHolding && !isParcelHasItem)
             {
                 PlaceParcelInTrash();
             }
@@ -54,11 +54,11 @@ namespace CuaHang.AI
 
         private void PickUpParcel()
         {
-            if (GetItemHit() == _ItemTarget)
+            if (IsHitItemTarget() == _itemTarget)
             {
-                _itemHolding = _ItemTarget;
-                _itemHolding.SetThisParent(_itemHoldingPoint);
-                _ItemTarget = null;
+                _ItemHolding = _itemTarget;
+                _ItemHolding._ThisParent = _ItemHoldingPoint;
+                _itemTarget = null;
             }
         }
 
@@ -66,13 +66,13 @@ namespace CuaHang.AI
         protected virtual void PlaceItemOnTable()
         {
             Item target = FindItemWithTypeID("table_1");
-            if (_ItemTarget != target) _ItemTarget = target;
+            if (_itemTarget != target) _itemTarget = target;
 
             // Tới được cái bàn chưa
-            if (target && GetItemHit()) if (GetItemHit().transform == target.transform && target._itemSlot.IsAnyEmptyItem() && _itemHolding != null)
+            if (target && IsHitItemTarget()) if (IsHitItemTarget() && target._itemSlot.IsAnyEmptyItem() && _ItemHolding != null)
                 {
-                    target.GetComponent<Item>()._itemSlot.ReceiverItems(_itemHolding.GetComponent<Item>()._itemSlot);
-                    _ItemTarget = null;
+                    target.GetComponent<Item>()._itemSlot.ReceiverItems(_ItemHolding.GetComponent<Item>()._itemSlot);
+                    _itemTarget = null;
                     return;
                 }
         }
@@ -82,18 +82,18 @@ namespace CuaHang.AI
         {
             Debug.Log("Nhân viên tìm cái thùng rác: " + FindItemWithTypeID("trash_1"));
             Item target = FindItemWithTypeID("trash_1");
-            if (_ItemTarget != target) _ItemTarget = target;
+            if (_itemTarget != target) _itemTarget = target;
 
             // Tới điểm cần tới
-            if (target && GetItemHit())
-                if (GetItemHit().transform == target.transform && target._itemSlot.IsAnyEmptyItem() && target.GetComponent<Trash>())
+            if (target && IsHitItemTarget())
+                if (IsHitItemTarget() && target._itemSlot.IsAnyEmptyItem() && target.GetComponent<Trash>())
                 {
                     Debug.Log("Chạm vào cái thùng rác");
-                    target._itemSlot.AddItemToSlot(_itemHolding);
-                    target.GetComponent<Trash>().AddItemToTrash(_itemHolding);
+                    target._itemSlot.AddItemToSlot(_ItemHolding);
+                    target.GetComponent<Trash>().AddItemToTrash(_ItemHolding);
 
-                    _itemHolding = null;
-                    _ItemTarget = null;
+                    _itemTarget = null;
+                    _ItemHolding = null;
                 }
         }
 
@@ -102,19 +102,19 @@ namespace CuaHang.AI
         {
             Debug.Log("Nhân viên tìm cái kho " + FindItemWithTypeID("storage_1"));
             Item target = FindItemWithTypeID("storage_1");
-            if (_ItemTarget != target) _ItemTarget = target;
+            if (_itemTarget != target) _itemTarget = target;
 
             // Tới điểm cần tới
-            if (target && GetItemHit()) if (GetItemHit().transform == target.transform && target._itemSlot.IsAnyEmptyItem())
+            if (target && IsHitItemTarget()) if (IsHitItemTarget() && target._itemSlot.IsAnyEmptyItem())
                 {
                     Debug.Log("Chạm vào cái kho");
-                    target._itemSlot.AddItemToSlot(_itemHolding);
+                    target._itemSlot.AddItemToSlot(_ItemHolding);
 
-                    _itemHolding = null;
-                    _ItemTarget = null;
+                    _itemTarget = null;
+                    _ItemHolding = null;
                 }
         }
 
-        
+
     }
 }

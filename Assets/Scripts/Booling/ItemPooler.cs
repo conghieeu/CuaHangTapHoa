@@ -33,7 +33,7 @@ namespace CuaHang.Pooler
             Item item = null;
             item = FindItemWithTypeID(typeID, thisParent);
             if (!item) item = CreateItem(typeID, setParent, spawnPoint);
-            if (item) item.SetThisParent(setParent);
+            if (item) item._ThisParent = setParent;
             return item;
         }
 
@@ -48,7 +48,7 @@ namespace CuaHang.Pooler
                     rItem.gameObject.SetActive(true);
                 }
             }
-            if (item) item.SetThisParent(setParent);
+            if (item) item._ThisParent = setParent;
             return rItem;
         }
 
@@ -72,7 +72,7 @@ namespace CuaHang.Pooler
             }
 
             if (!_items.Contains(item)) _items.Add(item); // thêm item vào kho
-            if (item) item.SetThisParent(setParent);
+            if (item) item._ThisParent = setParent;
 
             return item;
         }
@@ -82,7 +82,7 @@ namespace CuaHang.Pooler
         {
             foreach (var i in _items)
             {
-                if (i.name == name && i.gameObject.activeSelf == false && i._thisParent == null) return i;
+                if (i.name == name && i.gameObject.activeSelf == false && i._ThisParent == null) return i;
             }
             return null;
         }
@@ -106,7 +106,7 @@ namespace CuaHang.Pooler
             {
                 if (!item) continue;
                 if (item._follower) if (item._follower != whoFindThis) continue; // tránh việc 2 nhân viên đều muốn nhặt 1 bưu kiện 
-                if (item._typeID == typeID && item._thisParent == null && item.gameObject.activeSelf == activeSelf) return item;
+                if (item._typeID == typeID && item._ThisParent == null && item.gameObject.activeSelf == activeSelf) return item;
             }
             return null;
         }
@@ -119,7 +119,7 @@ namespace CuaHang.Pooler
                 if (!item) continue;
                 if (!item._itemSlot) continue;
                 if (item._itemSlot.IsAnyEmptyItem() != isAnyEmptySlot) continue;
-                if (item._typeID == typeID && item._thisParent == null) return item;
+                if (item._typeID == typeID && item._ThisParent == null) return item;
             }
             return null;
         }
@@ -134,15 +134,15 @@ namespace CuaHang.Pooler
                 if (!item) continue;
                 if (!item._itemSlot) continue;
                 if (item._itemSlot.IsAnyEmptyItem() != isAnyEmptySlot) continue;
-                if (item._typeID == typeID && item._thisParent == null) itemsOk.Add(item);
+                if (item._typeID == typeID && item._ThisParent == null) itemsOk.Add(item);
             }
 
             int randomIndex = UnityEngine.Random.Range(0, itemsOk.Count);
             return itemsOk[randomIndex];
         }
 
-        /// <summary> Tìm item có itemSlot có chứa item cần lấy </summary>
-        public virtual Item FindItemContentProduct(Item itemProduct)
+        /// <summary> Tìm item có itemSlot có chứa itemProduct cần lấy </summary>
+        public virtual Item FindShelfContentItem(Item itemProduct)
         {
             foreach (var item in _items)
             {
@@ -153,18 +153,47 @@ namespace CuaHang.Pooler
             return null;
         }
 
-        /// <returns> Danh sách item có thể bán </returns>
+        /// <summary> Danh sách item có thể bán </summary>
         public List<Item> GetAllItemsCanSell()
         {
             List<Item> items = new List<Item>();
             foreach (var item in _items)
             {
-                if (!item) continue;
-                if (item._isCanSell && item.gameObject.activeSelf && item._thisParent) items.Add(item);
+                if (item == null) continue;
+                if (item._isCanSell && item.gameObject.activeSelf && item._ThisParent) items.Add(item);
             }
             return items;
         }
 
+        /// <summary> Lấy danh sách shelf có chứa item </summary>
+        public List<Item> GetAllShelfContentItem()
+        {
+            List<Item> listShelf = new List<Item>();
+            foreach (var shelf in _items)
+            {
+                if (shelf == null) continue;
+                if (!shelf._itemSlot) continue;
+                if (!shelf._isCanSell && !shelf._ThisParent && shelf._itemSlot.IsAnyItem()) listShelf.Add(shelf);
+            }
+            return listShelf;
+        }
 
+        /// <summary> Lấy danh sách ngẫu nhiên shelf có chứa item </summary>
+        public List<Item> GetRandomShelfContentItem()
+        {
+            List<Item> listShelf = GetAllShelfContentItem();
+            int maxShelf = 9;
+
+            // chọn ngẫu nhiên shelf giới hạn từ 1 -> 6
+            int shelfCount = UnityEngine.Random.Range(3, maxShelf);
+
+            // Xoá ngẫu nhiên tới khi đặt số lượng shelfCount và phải nhỏ hơn số lượng max
+            for (int i = 0; i < listShelf.Count && i < shelfCount; i++)
+            {
+                listShelf.RemoveAt(UnityEngine.Random.Range(0, listShelf.Count - 1));
+            }
+
+            return listShelf;
+        }
     }
 }

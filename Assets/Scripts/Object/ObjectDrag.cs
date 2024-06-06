@@ -44,11 +44,12 @@ namespace CuaHang
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
         public void PickUpObjectPlant()
         {
-            _itemDragging.SetThisParent(PlayerCtrl.Instance._posHoldParcel);
+            _itemDragging._ThisParent = PlayerCtrl.Instance._posHoldParcel;
             _itemDragging._coll.enabled = false;
             _isDragging = true;
         }
-
+        
+        /// <summary> Tạo model giống otherModel ở vị trí _models</summary>
         public void CreateModel(Transform otherModel)
         {
             _modelsHolding = Instantiate(otherModel, _models, false);
@@ -59,7 +60,7 @@ namespace CuaHang
             if (Input.GetMouseButtonDown(0) && _isCanPlant && _itemDragging)
             {
                 Destroy(_modelsHolding.gameObject); // Delete model item
-                _itemDragging.SetThisParent(null);
+                _itemDragging._ThisParent = null;
                 _itemDragging.transform.position = transform.position;
                 _itemDragging.transform.rotation = transform.rotation;
                 _itemDragging._models.transform.rotation = _models.rotation;

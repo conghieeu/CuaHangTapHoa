@@ -1,7 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using CuaHang.Pooler;
 using Unity.VisualScripting;
+using UnityEditorInternal.VersionControl;
 using UnityEngine;
 
 namespace CuaHang.AI
@@ -43,6 +45,7 @@ namespace CuaHang.AI
             {
                 if (GoToItemNeed())
                 {
+                    Debug.Log(IsAgreeItem());
                     if (IsAgreeItem())
                     {
                         Debug.Log("1.1: Lấy danh sách items");
@@ -64,15 +67,70 @@ namespace CuaHang.AI
             {
                 Debug.Log("2: Thanh toan hang mua");
                 if (GoPayItem()) GoOutShop();
-                Debug.Log(GoPayItem());
             }
+        }
+
+        /// <summary> Chọn ngẫu nhiên item mà khách hàng này muốn lấy </summary>
+        void SetItemNeed()
+        {
+            // Lấy danh sách item mà cửa hàng đang có
+            List<Item> allItems = _itemPooler.GetAllItemsCanSell(); 
+            if (allItems.Count == 0) return;
+
+            // Giới hạn là < 10
+            int itemCount = Random.Range(1, 10);
+            for (int i = 0; i < itemCount; i++)
+            {
+                int r = Random.Range(0, allItems.Count - 1); // random trong allItems
+                if(!_itemsNeed.Contains(allItems[r]))
+                    _itemsNeed.Add(allItems[r]);
+            } 
+
+            // // Lấy danh sách item mà cửa hàng đang có
+            // List<Item> listShelf = _itemPooler.GetRandomShelfContentItem();
+            // if (listShelf.Count == 0) return;
+
+            // foreach (var item in listShelf)
+            // {
+            //     Debug.Log(item, item.transform);
+            // }
+
+            // int itemCount = Random.Range(1, 14); // Giới item lấy < 14
+            // Debug.Log("Gioi han item lay " + itemCount);
+            // for (int i = 0, j = 0; i < itemCount && j < listShelf.Count; j++)
+            // {
+            //     ItemSlot shelfItemSlot = listShelf[j].GetComponentInChildren<ItemSlot>();
+            //     if (shelfItemSlot)
+            //     {
+            //         for (int s = 0; ; s++)
+            //         {
+            //             int indexI = 0;
+            //             if (shelfItemSlot._listItem.Count > 1)
+            //                 indexI = Random.Range(1, shelfItemSlot._listItem.Count - 1);
+            //             else if (shelfItemSlot._listItem.Count == 0)
+            //                 indexI = Random.Range(0, shelfItemSlot._listItem.Count - 1);
+
+            //             if (s > indexI) break;
+
+            //             Item itemAdd = shelfItemSlot._listItem[indexI]._item;
+            //             if (!_itemsNeed.Contains(itemAdd) && itemAdd)
+            //             {
+            //                 _itemsNeed.Add(itemAdd);
+            //                 i++;
+            //             }
+
+            //         }
+            //     }
+
+            // }
+
         }
 
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
         public void SetPlayerConfirmPay()
         {
-            _playerConfirmPay = true;
             _isNotNeedBuy = true;
+            _playerConfirmPay = true;
             _mayTinh._waitingLine.CancelRegisterSlot(transform);
             Debug.Log("Player thanh toán cho khách hàng ở slot 1");
         }
@@ -83,7 +141,7 @@ namespace CuaHang.AI
             if (ItemNeedGet() == null) return;
 
             Item itemNeedGet = ItemNeedGet();
-            Item shelf = _itemPooler.FindItemContentProduct(ItemNeedGet());
+            Item shelf = _itemPooler.FindShelfContentItem(ItemNeedGet());
 
             for (int i = 0; i < shelf._itemSlot._listItem.Count; i++)
             {
@@ -113,12 +171,13 @@ namespace CuaHang.AI
             Item itemGet = ItemNeedGet(); // lấy quả táo trong thế giới
             if (itemGet == null || _isNotNeedBuy) return false;
 
-            Item shelf = _itemPooler.FindItemContentProduct(ItemNeedGet()); // lấy cái bàn chứa quả táo
+            Item shelf = _itemPooler.FindShelfContentItem(ItemNeedGet()); // lấy cái bàn chứa quả táo
 
-            if (shelf == null) return false;
+            // Huỷ target nếu target có chứa parent
+            if (shelf) if (shelf._ThisParent) shelf = null;
 
-            // Kiem tra cham vao shelf
-            if (GetItemHit() == shelf)
+            // Kiem tra cham vao itemTarget đang hướng tới không
+            if (IsHitItemTarget())
             {
                 Debug.Log("Dung di chuyen");
                 _ItemTarget = null; // Dừng di chuyển
@@ -129,7 +188,6 @@ namespace CuaHang.AI
                 _ItemTarget = shelf; // di chuyển đến target
                 MoveToTarget();
             }
-
             return false;
         }
 
@@ -137,24 +195,6 @@ namespace CuaHang.AI
         void GoOutShop()
         {
             MoveToTarget(_outShopPoint);
-        }
-
-        /// <summary> Chọn ngẫu nhiên item mà khách hàng này muốn lấy </summary>
-        void SetItemNeed()
-        {
-            // Lấy danh sách item mà cửa hàng đang có
-            List<Item> shopItems = _itemPooler.GetAllItemsCanSell();
-            Debug.Log("So item dang co the mua: " + shopItems.Count);
-            if (shopItems.Count == 0) return;
-
-            // Giới hạn là < 14
-            int itemCount = Random.Range(1, 14);
-            for (int i = 0; i < itemCount; i++)
-            {
-                int indexItemPick = Random.Range(0, shopItems.Count - 1);
-                _itemsNeed.Add(shopItems[indexItemPick]);
-            }
-            Debug.Log("So item can mua: " + _itemsNeed.Count);
         }
 
         /// <summary> Giá quá cao thì không đồng ý mua </summary>
@@ -178,7 +218,7 @@ namespace CuaHang.AI
         /// <summary> Tìm slot đợi thanh toán </summary>
         bool GoSlotPayment()
         {
-            if(_isConfirmPay) return true; // thanh toán rồi thì không cần đén hàng chờ 
+            if (_isConfirmPay) return true; // thanh toán rồi thì không cần đén hàng chờ 
 
             _mayTinh._waitingLine.RegisterSlot(transform); // Đăng ký slot
             Transform slotWait = _mayTinh._waitingLine.GetCustomerSlot(transform); // tìm vị trí slot
@@ -220,5 +260,7 @@ namespace CuaHang.AI
                 if (!_itemSlot.IsContentItem(_itemsNeed[i])) return _itemsNeed[i];
             return null;
         }
+
+
     }
 }

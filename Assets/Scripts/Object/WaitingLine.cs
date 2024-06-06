@@ -27,7 +27,7 @@ namespace CuaHang
         {
             LoadSlots();
         }
-
+ 
         private void FixedUpdate()
         {
             PushCustomerNextSlot();
@@ -60,7 +60,7 @@ namespace CuaHang
         {
             foreach (var slot in _waitingSlots)
             {
-                if(slot._customer == customer) return true;
+                if (slot._customer == customer) return true;
             }
             return false;
         }
@@ -68,7 +68,7 @@ namespace CuaHang
         /// <summary> đăng ký slot hàng đợi </summary> 
         public Transform RegisterSlot(Transform customer)
         {
-            if(IsSlotContentCustomer(customer)) return null;
+            if (IsSlotContentCustomer(customer)) return null;
 
             for (int i = 0; i < _waitingSlots.Count; i++)
             {
@@ -105,6 +105,8 @@ namespace CuaHang
             }
             return null;
         }
+
+
 
     }
 

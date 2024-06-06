@@ -47,7 +47,7 @@ namespace CuaHang
         {
             foreach (var item in items)
             {
-                if(!IsContentItem(item)) return false;
+                if (!IsContentItem(item)) return false;
             }
             return true;
         }
@@ -127,7 +127,7 @@ namespace CuaHang
                 if (_listItem[i]._item == null)
                 {
                     _listItem[i]._item = item;
-                    item.SetThisParent(_listItem[i]._slot);
+                    item._ThisParent = _listItem[i]._slot; 
                     return _listItem[i]._slot;
                 }
             }
@@ -181,20 +181,18 @@ namespace CuaHang
             }
         }
 
-        /// <summary> Lấy toàn bộ item từ sender đang có nạp vào item slot này </summary>
+        /// <summary> Lấy toàn bộ item từ sender đang có nạp vào _itemSlot này </summary>
         public virtual void ReceiverItems(ItemSlot sender)
         {
             for (int i = sender._listItem.Count - 1; i >= 0; i--)
             {
-                Item item = sender._listItem[i]._item;
-                if (item != null && IsAnyEmptyItem())
+                if (sender._listItem[i]._item != null)
                 {
-                    sender.RemoveItemInWorld(item);
-                    AddItemWithTypeID(item._typeID);
+                    AddItemToSlot(sender._listItem[i]._item);
+                    sender.RemoveItemInList(sender._listItem[i]._item);
                 }
             }
         }
-
-
+        
     }
 }
