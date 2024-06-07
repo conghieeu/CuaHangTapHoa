@@ -27,10 +27,10 @@ namespace CuaHang
         {
             LoadSlots();
         }
- 
+
         private void FixedUpdate()
         {
-            // PushCustomerNextSlot();
+            SetCustomerEmptySlot();
         }
 
         /// <summary> Slot load </summary>
@@ -43,15 +43,16 @@ namespace CuaHang
             }
         }
 
-        void PushCustomerNextSlot()
+        /// <summary> Đẩy khách hàng sau vào chỗ trống dư </summary>        
+        void SetCustomerEmptySlot()
         {
             for (int i = 0; i < _waitingSlots.Count - 1; i++)
             {
-                // Đẩy khách hàng sau vào chỗ trống dư
-                if (_waitingSlots[i]._customer != null)
+                if (_waitingSlots[i + 1]._customer != null && _waitingSlots[i]._customer == null)
                 {
                     _waitingSlots[i]._customer = _waitingSlots[i + 1]._customer;
                     _waitingSlots[i + 1]._customer = null;
+                    i = 0;
                 }
             }
         }
@@ -93,7 +94,7 @@ namespace CuaHang
             }
         }
 
-        /// <summary> Lấy hàng đợi </summary>
+        /// <summary> Lấy hàng đợi của bản thân khách hàng </summary>
         public Transform GetCustomerSlot(Transform customer)
         {
             for (int i = 0; i < _waitingSlots.Count; i++)

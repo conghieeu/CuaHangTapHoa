@@ -122,8 +122,6 @@ namespace CuaHang.AI
         {
             _isNotNeedBuy = true;
             _playerConfirmPay = true;
-            _mayTinh._waitingLine.CancelRegisterSlot(transform);
-            Debug.Log("Player thanh toán cho khách hàng ở slot 1");
         }
 
         /// <summary> Lấy item từ Shelf đưa vào this._itemSlot </summary> 
@@ -221,8 +219,9 @@ namespace CuaHang.AI
         {
             if (_playerConfirmPay && !_isConfirmPay)
             {
-                _gameManager.AddCoin(TotalCoinPay());
                 _isConfirmPay = true;
+                _gameManager.AddCoin(TotalCoinPay());
+                _mayTinh._waitingLine.CancelRegisterSlot(transform);
                 return true;
             }
             else if (_isConfirmPay) return true;
