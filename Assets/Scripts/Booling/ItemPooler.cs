@@ -26,6 +26,11 @@ namespace CuaHang.Pooler
             }
         }
 
+        /// <summary> 2 item đầu vào có cùng 1 shelf không ? </summary> 
+        public bool IsSameShelf(Item itemA, Item itemB) {
+            return FindShelfContentItem(itemA) == FindShelfContentItem(itemB);
+        }
+
         /// <summary> Lấy đối tượng có trong ao, nếu không có thì tạo ra </summary>
         public virtual Item GetItemWithTypeID(String typeID, Transform setParent, Transform thisParent, Transform spawnPoint)
         {

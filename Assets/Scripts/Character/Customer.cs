@@ -74,55 +74,46 @@ namespace CuaHang.AI
         void SetItemNeed()
         {
             // Lấy danh sách item mà cửa hàng đang có
-            List<Item> allItems = _itemPooler.GetAllItemsCanSell(); 
+            List<Item> allItems = _itemPooler.GetAllItemsCanSell();
             if (allItems.Count == 0) return;
+
+            List<Item> itemGets = new List<Item>();
 
             // Giới hạn là < 10
             int itemCount = Random.Range(1, 10);
             for (int i = 0; i < itemCount; i++)
             {
                 int r = Random.Range(0, allItems.Count - 1); // random trong allItems
-                if(!_itemsNeed.Contains(allItems[r]))
-                    _itemsNeed.Add(allItems[r]);
-            } 
+                if (!itemGets.Contains(allItems[r]))
+                    itemGets.Add(allItems[r]);
+            }
 
-            // // Lấy danh sách item mà cửa hàng đang có
-            // List<Item> listShelf = _itemPooler.GetRandomShelfContentItem();
-            // if (listShelf.Count == 0) return;
+            Debug.Log("Số lượng khác hàng " + this.name + " muốn lấy là: " + itemGets.Count);
 
-            // foreach (var item in listShelf)
-            // {
-            //     Debug.Log(item, item.transform);
-            // }
-
-            // int itemCount = Random.Range(1, 14); // Giới item lấy < 14
-            // Debug.Log("Gioi han item lay " + itemCount);
-            // for (int i = 0, j = 0; i < itemCount && j < listShelf.Count; j++)
-            // {
-            //     ItemSlot shelfItemSlot = listShelf[j].GetComponentInChildren<ItemSlot>();
-            //     if (shelfItemSlot)
-            //     {
-            //         for (int s = 0; ; s++)
-            //         {
-            //             int indexI = 0;
-            //             if (shelfItemSlot._listItem.Count > 1)
-            //                 indexI = Random.Range(1, shelfItemSlot._listItem.Count - 1);
-            //             else if (shelfItemSlot._listItem.Count == 0)
-            //                 indexI = Random.Range(0, shelfItemSlot._listItem.Count - 1);
-
-            //             if (s > indexI) break;
-
-            //             Item itemAdd = shelfItemSlot._listItem[indexI]._item;
-            //             if (!_itemsNeed.Contains(itemAdd) && itemAdd)
-            //             {
-            //                 _itemsNeed.Add(itemAdd);
-            //                 i++;
-            //             }
-
-            //         }
-            //     }
-
-            // }
+            for (int i = 0; i < itemGets.Count; i++) // 
+            {
+                // Thêm item đầu tiên vào trước
+                if (!_itemsNeed.Contains(itemGets[i]) && _itemsNeed.Count == 0)
+                {
+                    _itemsNeed.Add(itemGets[i]);
+                    i = 0;
+                    continue;
+                }
+                // if2: Từ item đã thêm ở vị trí cuối , lấy các item khác cùng liên quan 
+                if (!_itemsNeed.Contains(itemGets[i]) && _itemPooler.IsSameShelf(_itemsNeed[_itemsNeed.Count - 1], itemGets[i]))
+                {
+                    _itemsNeed.Add(itemGets[i]);
+                    i = 0;
+                    continue;
+                }
+                // Thêm item mới vào để thực hiện lại if2
+                if (!_itemsNeed.Contains(itemGets[i]))
+                {
+                    _itemsNeed.Add(itemGets[i]);
+                    i = 0;
+                    continue;
+                }
+            }
 
         }
 

@@ -18,10 +18,10 @@ namespace CuaHang
         public bool _isCanSell;
         public Transform _follower; // Đối tượng này có được AI nào đặt là mục tiêu không
         private Transform _thisParent; // là cha của item này
-        public Transform _itemParent; // Item là cha đang chứa item này
+        public Transform _itemParent; //  là Item cha đang chứa item này
         public Transform _models;
         public BoxCollider _coll;
-        public ItemSlot _itemSlot;
+        public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
 
         /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
         public Transform _ThisParent

@@ -30,7 +30,7 @@ namespace CuaHang
  
         private void FixedUpdate()
         {
-            PushCustomerNextSlot();
+            // PushCustomerNextSlot();
         }
 
         /// <summary> Slot load </summary>
