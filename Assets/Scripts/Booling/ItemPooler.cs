@@ -92,17 +92,6 @@ namespace CuaHang.Pooler
             return null;
         }
 
-        /// <summary> Lấy item trong _items đk là không có follower (item trùng) </summary>
-        public Item GetItem(Item itemI)
-        {
-            foreach (var item in _items)
-            {
-                if (item._follower == false && itemI == item) return item;
-            }
-            return null;
-        }
-
-
         /// <summary> Nhân viên tìm bưu kiện </summary>
         public virtual Item FindItemTarget(String typeID, bool activeSelf, Transform whoFindThis)
         {
@@ -110,7 +99,6 @@ namespace CuaHang.Pooler
             foreach (var item in _items)
             {
                 if (!item) continue;
-                if (item._follower) if (item._follower != whoFindThis) continue; // tránh việc 2 nhân viên đều muốn nhặt 1 bưu kiện 
                 if (item._typeID == typeID && item._ThisParent == null && item.gameObject.activeSelf == activeSelf) return item;
             }
             return null;

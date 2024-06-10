@@ -14,8 +14,9 @@ namespace CuaHang
         public Transform _spawnTrans;
         public WaitingLine _waitingLine;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _waitingLine = GetComponentInChildren<WaitingLine>();
         }
 

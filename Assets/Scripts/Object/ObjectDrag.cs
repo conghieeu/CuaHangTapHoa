@@ -14,10 +14,11 @@ namespace CuaHang
         public bool _isDragging;
         public bool _isDistance;
         public bool _isCanPlant;
+        
         [Space]
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
-        [SerializeField] Transform _modelsHolding;
+        public Transform _modelsHolding;
         [SerializeField] Material _green, _red;
 
         [Space]
@@ -37,7 +38,6 @@ namespace CuaHang
             if (_itemDragging)
             {
                 Vector3 sensorSize = _itemDragging.GetComponent<BoxCollider>().size;
-
             }
         }
 

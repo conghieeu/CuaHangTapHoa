@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using CuaHang.AI;
 using UnityEngine;
 
 namespace CuaHang
@@ -10,11 +11,11 @@ namespace CuaHang
         [Serializable]
         public class WaitingSlot
         {
-            public Transform _customer; // object đang gáng trong boolingObject đó
+            public Customer _customer; // object đang gáng trong boolingObject đó
             public Transform _slot;
 
             // Constructor với tham số
-            public WaitingSlot(Transform customer, Transform slot)
+            public WaitingSlot(Customer customer, Transform slot)
             {
                 _customer = customer;
                 _slot = slot;
@@ -28,11 +29,6 @@ namespace CuaHang
             LoadSlots();
         }
 
-        private void FixedUpdate()
-        {
-            SetCustomerEmptySlot();
-        }
-
         /// <summary> Slot load </summary>
         void LoadSlots()
         {
@@ -43,9 +39,10 @@ namespace CuaHang
             }
         }
 
-        /// <summary> Đẩy khách hàng sau vào chỗ trống dư </summary>        
-        void SetCustomerEmptySlot()
+        /// <summary> cho khách hàng vào slot trống và đưa thông tin slot cho khách hàng </summary>
+        void UpdateSlots()
         {
+            // Đẩy khách  vào chỗ trống dư
             for (int i = 0; i < _waitingSlots.Count - 1; i++)
             {
                 if (_waitingSlots[i + 1]._customer != null && _waitingSlots[i]._customer == null)
@@ -55,9 +52,15 @@ namespace CuaHang
                     i = 0;
                 }
             }
+
+            // Thông báo slot đợi lại cho khách hàng
+            foreach (var s in _waitingSlots)
+            {
+                if (s._customer) s._customer._slotWaiting = s._slot;
+            }
         }
 
-        public bool IsSlotContentCustomer(Transform customer)
+        public bool IsSlotContentCustomer(Customer customer)
         {
             foreach (var slot in _waitingSlots)
             {
@@ -67,35 +70,40 @@ namespace CuaHang
         }
 
         /// <summary> đăng ký slot hàng đợi </summary> 
-        public Transform RegisterSlot(Transform customer)
+        public void RegisterSlot(Customer customer)
         {
-            if (IsSlotContentCustomer(customer)) return null;
+            if (IsSlotContentCustomer(customer)) return;
 
             for (int i = 0; i < _waitingSlots.Count; i++)
             {
                 if (_waitingSlots[i]._customer == null)
                 {
                     _waitingSlots[i]._customer = customer;
-                    return _waitingSlots[i]._slot;
+                    break;
                 }
             }
-            return null;
+
+            UpdateSlots();
         }
 
         /// <summary> Rời slot hàng đợi </summary>
-        public void CancelRegisterSlot(Transform customer)
+        public void CancelRegisterSlot(Customer customer)
         {
             foreach (var slot in _waitingSlots)
             {
                 if (slot._customer == customer)
                 {
+                    customer.GetComponent<Customer>()._slotWaiting = null;
                     slot._customer = null;
+                    break;
                 }
             }
+
+            UpdateSlots();
         }
 
         /// <summary> Lấy hàng đợi của bản thân khách hàng </summary>
-        public Transform GetCustomerSlot(Transform customer)
+        public Transform GetCustomerSlot(Customer customer)
         {
             for (int i = 0; i < _waitingSlots.Count; i++)
             {

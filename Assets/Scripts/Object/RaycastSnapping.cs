@@ -57,7 +57,8 @@ namespace CuaHang
             if (Physics.Raycast(ray, out _hit, 100, _layerMask))
             {
                 Item item = _hit.transform.GetComponent<Item>();
-                if (Input.GetKeyDown(KeyCode.E) && item) if (!item._ThisParent)
+                if (Input.GetKeyDown(KeyCode.E) && item)
+                    if (!item._ThisParent && !_temp._modelsHolding)
                     {
                         item.DragItem();
                         _temp.PickUpObjectPlant();
