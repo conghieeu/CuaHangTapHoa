@@ -51,9 +51,9 @@ namespace CuaHang
             if (_itemHolding && receiver)
             {
                 // chuyển item
-                for (int i = _itemHolding._itemSlot._listItem.Count - 1; i >= 0; i--)
+                for (int i = _itemHolding._itemSlot._itemsSlots.Count - 1; i >= 0; i--)
                 {
-                    Item item = _itemHolding._itemSlot._listItem[i]._item;
+                    Item item = _itemHolding._itemSlot._itemsSlots[i]._item;
                     if (item != null)
                     {
                         receiver._itemSlot.AddItemWithTypeID(item._typeID);

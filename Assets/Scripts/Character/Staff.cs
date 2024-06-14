@@ -35,7 +35,7 @@ namespace CuaHang.AI
             }
             // đang có parcel và parcel còn item trong người nên cần tìm cần cái kệ để đặt item
             else if (FindItemWithTypeID("table_1") && isParcelHasItem)
-            { 
+            {
                 PlaceItemOnTable();
             }
             // Đặt ObjectPlant vào kho
@@ -67,9 +67,10 @@ namespace CuaHang.AI
             if (_itemTarget != target) _itemTarget = target;
 
             // Tới được cái bàn chưa
-            if (target && IsHitItemTarget()) if (IsHitItemTarget() && target._itemSlot.IsAnyEmptyItem() && _itemHolding != null)
+            if (_itemHolding && IsHitItemTarget())
+                if (target._itemSlot.IsAnySlot())
                 {
-                    target.GetComponent<Item>()._itemSlot.ReceiverItems(_itemHolding.GetComponent<Item>()._itemSlot);
+                    target._itemSlot.ReceiverItems(_itemHolding._itemSlot);
                     _itemTarget = null;
                     return;
                 }
@@ -77,14 +78,14 @@ namespace CuaHang.AI
 
         /// <summary> Cần tìm đối tượng để AI có thể đạt parcel xuống </summary>
         protected virtual void PlaceParcelInTrash()
-        { 
+        {
             Item target = FindItemWithTypeID("trash_1");
             if (_itemTarget != target) _itemTarget = target;
 
             // Tới điểm cần tới
             if (target && IsHitItemTarget())
-                if (IsHitItemTarget() && target._itemSlot.IsAnyEmptyItem() && target.GetComponent<Trash>())
-                { 
+                if (IsHitItemTarget() && target._itemSlot.IsAnySlot() && target.GetComponent<Trash>())
+                {
                     target._itemSlot.AddItemToSlot(_itemHolding);
                     target.GetComponent<Trash>().AddItemToTrash(_itemHolding);
 
@@ -96,12 +97,12 @@ namespace CuaHang.AI
         /// <summary> Đặt item vào kho </summary>
         protected virtual void PlaceParcelInStorage()
         {
-            Print("Nhân viên tìm cái kho " + FindItemWithTypeID("storage_1"));
+            Log("Nhân viên tìm cái kho " + FindItemWithTypeID("storage_1"));
             Item target = FindItemWithTypeID("storage_1");
             if (_itemTarget != target) _itemTarget = target;
 
             // Tới điểm cần tới
-            if (target && IsHitItemTarget()) if (IsHitItemTarget() && target._itemSlot.IsAnyEmptyItem())
+            if (target && IsHitItemTarget()) if (IsHitItemTarget() && target._itemSlot.IsAnySlot())
                 {
                     Debug.Log("Chạm vào cái kho");
                     target._itemSlot.AddItemToSlot(_itemHolding);

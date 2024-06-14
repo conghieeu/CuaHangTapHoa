@@ -57,24 +57,24 @@ namespace CuaHang.AI
                 {
                     if (IsAgreeItem())
                     {
-                        Debug.Log("1.1: Lấy danh sách items");
+                        Log("1.1: Lấy danh sách items");
                         GetItem();
                     }
                     else if (!IsAgreeItem() && _itemSlot.IsAnyItem()) // mua được vài thứ nên đi về 
                     {
-                        Debug.Log("1.2: Thanh toan vi hang dom, thanh toan nhung mon do dang co");
+                        Log("1.2: Thanh toan vi hang dom, thanh toan nhung mon do dang co");
                         if (GoPayItem()) GoOutShop();
                     }
                 }
                 else if (_isNotNeedBuy && _itemSlot.IsAnyItem() == false) // không mua được gì nên đi về
                 {
-                    Debug.Log("1.3: Đồ quá mắt không mua được gì đi về");
+                    Log("1.3: Đồ quá mắt không mua được gì đi về");
                     GoOutShop();
                 }
             }
             else
             {
-                Debug.Log("2: Thanh toan hang mua");
+                Log("2: Thanh toan hang mua");
                 if (GoPayItem()) GoOutShop();
             }
         }
@@ -97,7 +97,7 @@ namespace CuaHang.AI
                     itemGets.Add(allItems[r]);
             }
 
-            Debug.Log("Số lượng khác hàng " + this.name + " muốn lấy là: " + itemGets.Count);
+            Log("Số lượng khác hàng " + this.name + " muốn lấy là: " + itemGets.Count);
 
             for (int i = 0; i < itemGets.Count; i++) // 
             {
@@ -134,9 +134,9 @@ namespace CuaHang.AI
             Item itemNeedGet = ItemNeedGet();
             Item shelf = _itemPooler.FindShelfContentItem(ItemNeedGet());
 
-            for (int i = 0; i < shelf._itemSlot._listItem.Count; i++)
+            for (int i = 0; i < shelf._itemSlot._itemsSlots.Count; i++)
             {
-                Item shelfItem = shelf._itemSlot._listItem[i]._item;
+                Item shelfItem = shelf._itemSlot._itemsSlots[i]._item;
                 if (shelfItem == itemNeedGet)
                 {
                     shelf._itemSlot.RemoveItemInList(shelfItem);
@@ -234,7 +234,7 @@ namespace CuaHang.AI
         float TotalCoinPay()
         {
             float total = 0;
-            foreach (var item in _itemSlot._listItem)
+            foreach (var item in _itemSlot._itemsSlots)
             {
                 if (item._item != null)
                 {

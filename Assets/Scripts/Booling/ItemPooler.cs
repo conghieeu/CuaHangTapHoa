@@ -27,67 +27,45 @@ namespace CuaHang.Pooler
         }
 
         /// <summary> 2 item đầu vào có cùng 1 shelf không ? </summary> 
-        public bool IsSameShelf(Item itemA, Item itemB) {
+        public bool IsSameShelf(Item itemA, Item itemB)
+        {
             return FindShelfContentItem(itemA) == FindShelfContentItem(itemB);
         }
 
-        /// <summary> Lấy đối tượng có trong ao, nếu không có thì tạo ra </summary>
-        public virtual Item GetItemWithTypeID(String typeID, Transform setParent, Transform thisParent, Transform spawnPoint)
-        {
-            // Tìm/tạo đối tượng
-            Item item = null;
-            item = FindItemWithTypeID(typeID, thisParent);
-            if (!item) item = CreateItem(typeID, setParent, spawnPoint);
-            if (item) item._ThisParent = setParent;
-            return item;
-        }
-
-        public virtual Item FindItemInPooler(Item item, Transform setParent, Transform thisParent, Transform spawnPoint)
-        {
-            Item rItem = null;
-            for (int i = 0; i < _items.Count; i++)
-            {
-                if (_items[i].transform == item.transform && item.gameObject.activeSelf == false)
-                {
-                    rItem = _items[i];
-                    rItem.gameObject.SetActive(true);
-                }
-            }
-            if (item) item._ThisParent = setParent;
-            return rItem;
-        }
-
-        /// <summary> Tạo objectPlant mới </summary>
-        /// <returns> Điểm spawn, kiểu objectPlant muốn tạo </returns>
-        public virtual Item CreateItem(String typeID, Transform setParent, Transform spawnPoint)
+        /// <summary> Tạo objectPlant mới, setParent == null thì vị trí sẽ set theo spawnPoint, và được set parent = ItemPooer </summary> 
+        public virtual Item GetItemWithTypeID(String typeID, Transform setParent, Transform spawnPoint)
         {
             Item item = GetItemDisable(typeID);
 
             if (item == null)
             {
-                foreach (var objP in _objectsPrefab)
+                foreach (var objPrefab in _objectsPrefab)
                 {
-                    Item i = objP.GetComponent<Item>();
-                    if (i) if (i._SO._typeID == typeID)
+                    Item itemPrefab = objPrefab.GetComponent<Item>();
+                    if (itemPrefab) if (itemPrefab._SO._typeID == typeID)
                         {
-                            item = Instantiate(i).GetComponent<Item>();
+                            item = Instantiate(itemPrefab, transform).GetComponent<Item>();
+                            _items.Add(item); // thêm item vào kho
                             break;
                         }
                 }
             }
-
-            if (!_items.Contains(item)) _items.Add(item); // thêm item vào kho
-            if (item) item._ThisParent = setParent;
+            
+            if (item)
+            {
+                item._ThisParent = setParent;
+                if (spawnPoint) item.transform.position = spawnPoint.transform.position;
+            }
 
             return item;
         }
 
         /// <summary> Lấy item đang nhàn rỗi </summary>
-        private Item GetItemDisable(String name)
+        private Item GetItemDisable(String typeID)
         {
-            foreach (var i in _items)
+            foreach (var item in _items)
             {
-                if (i.name == name && i.gameObject.activeSelf == false && i._ThisParent == null) return i;
+                if (item._typeID == typeID && !item.gameObject.activeSelf) return item;
             }
             return null;
         }
@@ -111,7 +89,7 @@ namespace CuaHang.Pooler
             {
                 if (!item) continue;
                 if (!item._itemSlot) continue;
-                if (item._itemSlot.IsAnyEmptyItem() != isAnyEmptySlot) continue;
+                if (item._itemSlot.IsAnySlot() != isAnyEmptySlot) continue;
                 if (item._typeID == typeID && item._ThisParent == null) return item;
             }
             return null;
@@ -126,7 +104,7 @@ namespace CuaHang.Pooler
             {
                 if (!item) continue;
                 if (!item._itemSlot) continue;
-                if (item._itemSlot.IsAnyEmptyItem() != isAnyEmptySlot) continue;
+                if (item._itemSlot.IsAnySlot() != isAnyEmptySlot) continue;
                 if (item._typeID == typeID && item._ThisParent == null) itemsOk.Add(item);
             }
 

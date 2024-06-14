@@ -24,7 +24,7 @@ namespace CuaHang
         {
             if (other.CompareTag("Player"))
             {
-                Debug.Log("Player đã chạm máy tính: Tạo 1 vật phẩm");
+                Log("Player đã chạm máy tính: Tạo 1 vật phẩm");
                 CreateObjectPlant();
 
                 if (_waitingLine._waitingSlots[0]._customer)
@@ -36,7 +36,7 @@ namespace CuaHang
         [ContextMenu("CreateObjectPlant")]
         void CreateObjectPlant()
         {
-            ItemPooler.Instance.CreateItem("parcel_1", null, _spawnTrans);
+            ItemPooler.Instance.GetItemWithTypeID("parcel_1", null, _spawnTrans);
         }
     }
 }

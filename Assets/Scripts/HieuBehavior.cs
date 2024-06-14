@@ -8,11 +8,11 @@ namespace CuaHang
     public class HieuBehavior : MonoBehaviour
     {
         [Header("HieuBehavior")]
-        [SerializeField] private bool enablePrint;
+        [SerializeField] private bool enableDebugLog;
 
-        protected void Print(String value)
+        protected void Log(String value)
         {
-            if (enablePrint) Debug.Log(value);
+            if (enableDebugLog) Debug.Log(value);
         }
     }
 

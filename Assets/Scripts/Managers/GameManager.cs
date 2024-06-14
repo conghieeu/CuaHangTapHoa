@@ -7,7 +7,7 @@ namespace CuaHang
 {
     public class GameManager : MonoBehaviour
     {
-        public float _coin;
+        [SerializeField] protected float _coin;
 
         public static GameManager Instance { get; private set; }
 

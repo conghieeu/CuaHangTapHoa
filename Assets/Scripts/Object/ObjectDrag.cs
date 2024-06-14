@@ -13,8 +13,7 @@ namespace CuaHang
         [Space]
         public bool _isDragging;
         public bool _isDistance;
-        public bool _isCanPlant;
-        
+
         [Space]
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
@@ -27,18 +26,12 @@ namespace CuaHang
 
         private void FixedUpdate()
         {
-            CheckPlant();
             SetMaterial();
         }
 
         private void Update()
         {
             DropItem();
-
-            if (_itemDragging)
-            {
-                Vector3 sensorSize = _itemDragging.GetComponent<BoxCollider>().size;
-            }
         }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
@@ -48,16 +41,16 @@ namespace CuaHang
             _itemDragging._coll.enabled = false;
             _isDragging = true;
         }
-        
+
         /// <summary> Tạo model giống otherModel ở vị trí _models</summary>
         public void CreateModel(Transform otherModel)
         {
             _modelsHolding = Instantiate(otherModel, _models, false);
         }
 
-        private void DropItem()
+        void DropItem()
         {
-            if (Input.GetMouseButtonDown(0) && _isCanPlant && _itemDragging)
+            if (Input.GetMouseButtonDown(0) && IsCanPlant() && _itemDragging)
             {
                 Destroy(_modelsHolding.gameObject); // Delete model item
                 _itemDragging._ThisParent = null;
@@ -70,9 +63,9 @@ namespace CuaHang
             }
         }
 
-        private void SetMaterial()
+        void SetMaterial()
         {
-            if (_isCanPlant)
+            if (IsCanPlant())
             {
                 SetMaterialModel(_green);
             }
@@ -82,7 +75,7 @@ namespace CuaHang
             }
         }
 
-        private void SetMaterialModel(Material color)
+        void SetMaterialModel(Material color)
         {
             foreach (Renderer model in _models.GetComponentsInChildren<Renderer>())
             {
@@ -90,20 +83,12 @@ namespace CuaHang
             }
         }
 
-        private void CheckPlant()
+        bool IsCanPlant()
         {
-            if (_sensorAround._hits.Count == 0 && IsTouchGround() && _isDistance)
-            {
-                _isCanPlant = true;
-            }
-            else
-            {
-                _isCanPlant = false;
-
-            }
+            return _sensorAround._hits.Count == 0 && IsTouchGround() && _isDistance;
         }
 
-        private bool IsTouchGround()
+        bool IsTouchGround()
         {
             // Làm thế nào để cái sensor check ở dưới
             foreach (var obj in _sensorGround._hits)

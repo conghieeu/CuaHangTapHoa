@@ -37,7 +37,6 @@ namespace CuaHang
         {
             if (!GetHits().SequenceEqual(_hits))
             {
-                Debug.Log("BoxSensor: _eventTrigger.Invoke đã được gọi");
                 _hits = GetHits();
                 _eventTrigger.Invoke();
             }

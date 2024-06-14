@@ -6,6 +6,6 @@ namespace CuaHang
 {
     public class StorageRoom : Item
     {
-        // [Header("StorageRoom")]
+        
     }
 }

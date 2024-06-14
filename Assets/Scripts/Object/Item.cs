@@ -15,11 +15,13 @@ namespace CuaHang
         public string _currency;
 
         [Header("Item")]
+        public bool _isCanDrag = true;
         public bool _isCanSell;
-        private Transform _thisParent; // là cha của item này 
         public Transform _models;
         public BoxCollider _coll;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
+        [SerializeField] private Transform _thisParent; // là cha của item này 
+        
 
         /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
         public Transform _ThisParent
@@ -72,7 +74,7 @@ namespace CuaHang
         {
             // Load Slot SO
             if (_itemSlot)
-                for (int i = 0; i < _itemSlot._listItem.Count && i < _SO._items.Count; i++)
+                for (int i = 0; i < _itemSlot._itemsSlots.Count && i < _SO._items.Count; i++)
                 {
                     if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID);
                 }
@@ -80,7 +82,7 @@ namespace CuaHang
 
         /// <summary> Con trỏ gọi vào hàm này để kích hoạt object Temp  </summary>
         public void DragItem()
-        {
+        { 
             // Set Temp 
             ObjectDrag itemDrag = PlayerCtrl.Instance._temp;
             itemDrag.gameObject.SetActive(true);
