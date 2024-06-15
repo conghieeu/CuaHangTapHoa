@@ -33,7 +33,7 @@ namespace CuaHang.Pooler
         }
 
         /// <summary> Tạo objectPlant mới, setParent == null thì vị trí sẽ set theo spawnPoint, và được set parent = ItemPooer </summary> 
-        public virtual Item GetItemWithTypeID(String typeID, Transform setParent, Transform spawnPoint)
+        public virtual Item GetItemWithTypeID(String typeID, Transform setParent)
         {
             Item item = GetItemDisable(typeID);
 
@@ -50,12 +50,8 @@ namespace CuaHang.Pooler
                         }
                 }
             }
-            
-            if (item)
-            {
-                item._ThisParent = setParent;
-                if (spawnPoint) item.transform.position = spawnPoint.transform.position;
-            }
+
+            if (item) item._ThisParent = setParent;
 
             return item;
         }
@@ -65,7 +61,7 @@ namespace CuaHang.Pooler
         {
             foreach (var item in _items)
             {
-                if (item._typeID == typeID && !item.gameObject.activeSelf) return item;
+                if (item._typeID == typeID && !item.gameObject.activeSelf && !item._ThisParent) return item;
             }
             return null;
         }

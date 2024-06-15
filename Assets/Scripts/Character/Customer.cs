@@ -201,12 +201,15 @@ namespace CuaHang.AI
         /// <summary> Giá quá cao thì không đồng ý mua </summary>
         bool IsAgreeItem()
         {
+            if (ItemNeedGet() == null) return false;
+
             if (ItemNeedGet()._price < ItemNeedGet()._SO._priceMarketMax) return true;
             else
             {
                 ExpressedComplaintsItem();
                 _isNotNeedBuy = true;
             }
+            
             return false;
         }
 

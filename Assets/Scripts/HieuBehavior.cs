@@ -12,7 +12,7 @@ namespace CuaHang
 
         protected void Log(String value)
         {
-            if (enableDebugLog) Debug.Log(value);
+            if (enableDebugLog) Debug.Log(value, transform);
         }
     }
 

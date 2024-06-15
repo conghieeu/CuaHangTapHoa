@@ -1,5 +1,6 @@
 using UnityEngine;
 using CuaHang.Pooler;
+using System.Collections;
 
 namespace CuaHang
 {
@@ -21,7 +22,7 @@ namespace CuaHang
         public BoxCollider _coll;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         [SerializeField] private Transform _thisParent; // là cha của item này 
-        
+
 
         /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
         public Transform _ThisParent
@@ -51,9 +52,9 @@ namespace CuaHang
             SetValueSO();
         }
 
-        private void Start()
+        private void OnEnable()
         {
-            LoadSlotSO();
+            StartCoroutine(LoadSlotSO());
         }
 
         /// <summary> Set value với SO có đang gáng </summary>
@@ -70,19 +71,26 @@ namespace CuaHang
         }
 
         /// <summary> Tạo item có thể mua với list item SO </summary>
-        private void LoadSlotSO()
+        IEnumerator LoadSlotSO()
         {
-            // Load Slot SO
+            while (ItemPooler.Instance == null || _itemSlot == null || _itemSlot._itemsSlots.Count == 0)
+            {
+                yield return null;
+            }
+
             if (_itemSlot)
+            {
                 for (int i = 0; i < _itemSlot._itemsSlots.Count && i < _SO._items.Count; i++)
                 {
+                        Log("Khởi tạo item SO từ SO có sẵn " + i);
                     if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID);
                 }
+            }
         }
 
         /// <summary> Con trỏ gọi vào hàm này để kích hoạt object Temp  </summary>
         public void DragItem()
-        { 
+        {
             // Set Temp 
             ObjectDrag itemDrag = PlayerCtrl.Instance._temp;
             itemDrag.gameObject.SetActive(true);

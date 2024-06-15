@@ -105,10 +105,10 @@ namespace CuaHang
             for (int i = 0; i < _itemsSlots.Count; i++)
             {
                 // tạo object đưa vào slot
-                if (_itemsSlots[i]._item == null && typeID != "")
+                if (_itemsSlots[i]._item == null)
                 {
                     // thêm item vào vị trí đặt sẵn trong slot
-                    Item item = ItemPooler.Instance.GetItemWithTypeID(typeID, _itemsSlots[i]._slot, _itemsSlots[i]._slot);
+                    Item item = ItemPooler.Instance.GetItemWithTypeID(typeID, _itemsSlots[i]._slot);
                     if (item)
                     {
                         _itemsSlots[i]._item = item;

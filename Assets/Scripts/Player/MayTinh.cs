@@ -36,7 +36,12 @@ namespace CuaHang
         [ContextMenu("CreateObjectPlant")]
         void CreateObjectPlant()
         {
-            ItemPooler.Instance.GetItemWithTypeID("parcel_1", null, _spawnTrans);
+            Item newItem = ItemPooler.Instance.GetItemWithTypeID("parcel_1", null);
+            if (newItem)
+            {
+                newItem.gameObject.SetActive(true);
+                newItem.transform.position = _spawnTrans.position;
+            }
         }
     }
 }
