@@ -22,8 +22,7 @@ namespace CuaHang
         public BoxCollider _coll;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         [SerializeField] private Transform _thisParent; // là cha của item này 
-
-
+        
         /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
         public Transform _ThisParent
         {

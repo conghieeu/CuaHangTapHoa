@@ -280,7 +280,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableDebugLog: 1
+  enableDebugLog: 0
   _SO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
   _ID: 
   _typeID: parcel_1

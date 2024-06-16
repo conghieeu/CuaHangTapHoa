@@ -1,13 +1,11 @@
-using System.Collections;
-using System.Collections.Generic;
-using System.Data.SqlTypes;
 using UnityEngine;
 
 namespace CuaHang
 {
     /// <summary> Aim con trỏ, có thể snap khi drag các item </summary>
-    public class RaycastCursor : MonoBehaviour
+    public class RaycastCursor : HieuBehavior
     {
+        [Header("RaycastCursor")]
         public ObjectDrag _objDrag;
         public Transform _itemFocus;
         public bool _enableSnapping; // bật chế độ snapping
@@ -26,10 +24,10 @@ namespace CuaHang
         void Update()
         {
             SetRayHit();
-
             SetItemFocus();
+            MoveItemDrag();
 
-            SetDragItem();
+            if (_hit.transform) Log($"Object đang hit là {_hit.transform.name}");
         }
 
         /// <summary> Chiếu tia raycast lấy dữ liệu cho _Hit </summary>
@@ -50,11 +48,10 @@ namespace CuaHang
             if (_hit.transform && Input.GetMouseButtonDown(0))
             {
                 // chuyển đói tượng focus
-                if (_itemFocus != _hit.transform && _itemFocus != null) 
-                    SetOutlines(_itemFocus, false); 
+                if (_itemFocus != _hit.transform && _itemFocus != null)
+                    SetOutlines(_itemFocus, false);
 
                 _itemFocus = _hit.transform;
-
                 SetOutlines(_itemFocus, true);
             }
 
@@ -75,7 +72,7 @@ namespace CuaHang
         }
 
         /// <summary> Cho phép đặt item xuống </summary>
-        private void DroppingObjectTemp()
+        void DroppingObjectTemp()
         {
             if (!_objDrag) return;
 
@@ -94,7 +91,7 @@ namespace CuaHang
         }
 
         /// <summary> Bật item drag với item được _Hit chiếu</summary>
-        private void SetDragItem()
+        void MoveItemDrag()
         {
             if (!_enableSnapping || !_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
 
@@ -112,7 +109,7 @@ namespace CuaHang
         }
 
         /// <summary> Làm tròn vị trí temp để nó giống snap </summary>
-        private void SetSnapping()
+        void SetSnapping()
         {
             Vector3 currentPosition = _objDrag.transform.position;
 
@@ -125,7 +122,7 @@ namespace CuaHang
         }
 
         // Giúp xoay temp
-        private void SetTempRotation()
+        void SetTempRotation()
         {
             _objDrag.transform.position = _hit.point;
             _objDrag.transform.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
