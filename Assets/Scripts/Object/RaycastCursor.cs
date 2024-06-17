@@ -6,11 +6,12 @@ namespace CuaHang
     public class RaycastCursor : HieuBehavior
     {
         [Header("RaycastCursor")]
+        public float rotationSpeed = 10.0f; // Tốc độ xoay
         public ObjectDrag _objDrag;
         public Transform _itemFocus;
         public bool _enableSnapping; // bật chế độ snapping
         public float _snapDistance = 6f; // Khoảng cách cho phép đặt 
-        public float tilesize = 1;
+        public float _tileSize = 1;
         public Vector3 tileOffset = Vector3.zero;
         public LayerMask _layerMask;
         public RaycastHit _hit;
@@ -25,7 +26,10 @@ namespace CuaHang
         {
             SetRayHit();
             SetItemFocus();
+            SetItemDrag();
+
             MoveItemDrag();
+            RotationItemDrag();
 
             if (_hit.transform) Log($"Object đang hit là {_hit.transform.name}");
         }
@@ -39,7 +43,7 @@ namespace CuaHang
 
         void FixedUpdate()
         {
-            DroppingObjectTemp();
+            CanNotPlant();
         }
 
         /// <summary> Tạo viền khi click vào đối tượng để nó focus </summary>
@@ -71,13 +75,10 @@ namespace CuaHang
             }
         }
 
-        /// <summary> Cho phép đặt item xuống </summary>
-        void DroppingObjectTemp()
+        /// <summary> Set thông số trường hợp cho không thể đặt </summary>
+        void CanNotPlant()
         {
             if (!_objDrag) return;
-
-            SetTempRotation();
-            SetSnapping();
 
             // khoảng cách bị quá dài
             if (Vector3.Distance(cam.transform.position, _hit.point) < _snapDistance)
@@ -91,7 +92,7 @@ namespace CuaHang
         }
 
         /// <summary> Bật item drag với item được _Hit chiếu</summary>
-        void MoveItemDrag()
+        void SetItemDrag()
         {
             if (!_enableSnapping || !_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
 
@@ -105,27 +106,44 @@ namespace CuaHang
                     _objDrag.PickUpObjectPlant();
                 }
             }
-
         }
 
-        /// <summary> Làm tròn vị trí temp để nó giống snap </summary>
-        void SetSnapping()
+        /// <summary> Di chuyen item </summary>
+        void MoveItemDrag()
         {
-            Vector3 currentPosition = _objDrag.transform.position;
+            //  Làm tròn vị trí temp để nó giống snap
+            if (_enableSnapping)
+            {
+                Vector3 _hitPoint = _hit.point;
 
-            float snappedX = Mathf.Round(currentPosition.x / tilesize) * tilesize + tileOffset.x;
-            float snappedZ = Mathf.Round(currentPosition.z / tilesize) * tilesize + tileOffset.z;
-            float snappedY = Mathf.Round(currentPosition.y / tilesize) * tilesize + tileOffset.y;
+                float sX = Mathf.Round(_hitPoint.x / _tileSize) * _tileSize + tileOffset.x;
+                float sZ = Mathf.Round(_hitPoint.z / _tileSize) * _tileSize + tileOffset.z;
+                float sY = Mathf.Round(_hitPoint.y / _tileSize) * _tileSize + tileOffset.y;
 
-            Vector3 snappedPosition = new Vector3(snappedX, snappedY, snappedZ);
-            _objDrag.transform.position = snappedPosition;
+                Vector3 snappedPosition = new Vector3(sX, sY, sZ);
+                _objDrag.transform.position = snappedPosition;
+            }
+            else
+            {
+                _objDrag.transform.position = _hit.point;
+            }
         }
 
-        // Giúp xoay temp
-        void SetTempRotation()
+        /// <summary> Xoay item </summary>
+        void RotationItemDrag()
         {
-            _objDrag.transform.position = _hit.point;
             _objDrag.transform.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
+
+            // rotate model
+            if (_objDrag)
+                if (_objDrag._modelsHolding)
+                {
+                    float scrollValue = Input.mouseScrollDelta.y;
+
+                    float rotationAngle = scrollValue * rotationSpeed;
+
+                    _objDrag._modelsHolding.Rotate(Vector3.up, rotationAngle);
+                }
         }
     }
 

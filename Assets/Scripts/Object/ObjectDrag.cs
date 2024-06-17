@@ -55,8 +55,7 @@ namespace CuaHang
                 Destroy(_modelsHolding.gameObject); // Delete model item
                 _itemDragging._ThisParent = null;
                 _itemDragging.transform.position = transform.position;
-                _itemDragging.transform.rotation = transform.rotation;
-                _itemDragging._models.transform.rotation = _models.rotation;
+                _itemDragging.transform.rotation = _modelsHolding.rotation;
                 _itemDragging._coll.enabled = true;
                 _isDragging = false;
                 gameObject.SetActive(false);

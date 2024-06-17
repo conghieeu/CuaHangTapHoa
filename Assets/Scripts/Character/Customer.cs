@@ -49,6 +49,7 @@ namespace CuaHang.AI
             _playerConfirmPay = true;
         }
 
+        /// <summary> Hành vi </summary>
         void Behavior()
         {
             if (!_itemSlot.ItemsSequenceEqual(_itemsNeed)) // Kiểm tra item cần mua
@@ -72,7 +73,7 @@ namespace CuaHang.AI
                     GoOutShop();
                 }
             }
-            else
+            else if(_itemSlot.ItemsSequenceEqual(_itemsNeed) && _itemSlot.IsAnyItem())
             {
                 Log("2: Thanh toan hang mua");
                 if (GoPayItem()) GoOutShop();
