@@ -46,6 +46,15 @@ namespace CuaHang
             }
         }
 
+        /// <summary> set tất cả các giá tiền trong item slot </summary>
+        public void SetPriceInItemSlot(float value)
+        {
+            foreach (var i in _itemsSlots)
+            {
+                if (i._item) i._item._price = value;
+            }
+        }
+
         /// <summary> Items đầu vào có những item giống với this._items </summary>
         public bool ItemsSequenceEqual(List<Item> items)
         {

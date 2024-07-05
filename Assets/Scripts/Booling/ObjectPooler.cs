@@ -7,7 +7,7 @@ namespace CuaHang.Pooler
     public class ObjectPooler : MonoBehaviour
     {
         [Header("BoolingObjects")]
-        [SerializeField] protected List<Transform> _objectsPrefab;
+        [SerializeField] protected List<Transform> _listPrefab;
 
         /// <summary> Xoá object trong hồ </summary>
         public virtual void DeleteObject(Transform objectR)

@@ -44,7 +44,7 @@ namespace CuaHang.Pooler
             }
             else
             {
-                foreach (var objPrefab in _objectsPrefab)
+                foreach (var objPrefab in _listPrefab)
                 {
                     Item itemPrefab = objPrefab.GetComponent<Item>();
                     if (itemPrefab)

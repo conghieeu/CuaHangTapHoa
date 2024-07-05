@@ -709,6 +709,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _name: KhachHang_1
   _itemTarget: {fileID: 0}
   _itemHolding: {fileID: 0}
   _gameManager: {fileID: 0}
@@ -871,6 +872,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f5616c7a8fd6a4897ba8fe3197ff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 0}
   _itemsSlots: []
 --- !u!1 &8811283832083553354
 GameObject:

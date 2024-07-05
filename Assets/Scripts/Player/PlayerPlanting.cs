@@ -24,7 +24,7 @@ namespace CuaHang
 
         private void Update()
         {
-            if (Input.GetKeyUp(KeyCode.T))
+            if (Input.GetKeyDown(KeyCode.T))
             {
                 SenderParcel();
                 SenderApple();

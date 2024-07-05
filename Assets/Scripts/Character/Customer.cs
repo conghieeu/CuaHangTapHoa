@@ -10,13 +10,12 @@ namespace CuaHang.AI
 {
     public class Customer : AIBehavior
     {
-        [Header("CustomerAI")]
+        [Header("Customer")]
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
         public Transform _outShopPoint; // Là điểm sẽ tới nếu rời shop
         public bool _isNotNeedBuy; // Không cần mua gì nữa
 
         [SerializeField] private bool _playerConfirmPay; // Player xác nhận thanh toán
-
         public ItemSlot _itemSlot; // Dùng để lưu item va check item da lay duoc
         public List<Item> _itemsNeed; // Cac item can lay, giới hạn là 15 item
 
@@ -31,6 +30,7 @@ namespace CuaHang.AI
         protected override void Start()
         {
             base.Start();
+            _outShopPoint = GameObject.Find("Point out shop").transform;
         }
 
         private void FixedUpdate()
@@ -73,7 +73,7 @@ namespace CuaHang.AI
                     GoOutShop();
                 }
             }
-            else if(_itemSlot.ItemsSequenceEqual(_itemsNeed) && _itemSlot.IsAnyItem())
+            else if (_itemSlot.ItemsSequenceEqual(_itemsNeed) && _itemSlot.IsAnyItem())
             {
                 In("2: Thanh toan hang mua");
                 if (GoPayItem()) GoOutShop();
@@ -185,7 +185,10 @@ namespace CuaHang.AI
         /// <summary> Ra về khách tìm điểm đến là ngoài ở shop </summary>
         void GoOutShop()
         {
-            MoveToTarget(_outShopPoint);
+            if (MoveToTarget(_outShopPoint))
+            {
+                CustomerPooler.Instance.DeleteObject(transform);
+            }
         }
 
         /// <summary> Tìm slot đợi thanh toán </summary>
@@ -210,7 +213,7 @@ namespace CuaHang.AI
                 ExpressedComplaintsItem();
                 _isNotNeedBuy = true;
             }
-            
+
             return false;
         }
 

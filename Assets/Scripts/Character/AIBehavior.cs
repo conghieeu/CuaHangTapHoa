@@ -9,6 +9,8 @@ namespace CuaHang.AI
     public class AIBehavior : HieuBehavior
     {
         [Header("AIBehavior")]
+        public string _name;
+
         [SerializeField] protected Item _itemTarget;  // Parcel mà nhân vật đang hướng tới
         [SerializeField] protected Item _itemHolding; // Parcel đã nhặt và đang giữ trong người
         public GameManager _gameManager;
@@ -28,6 +30,7 @@ namespace CuaHang.AI
         {
             _itemPooler = ItemPooler.Instance;
             _gameManager = GameManager.Instance;
+            _mayTinh = GameObject.FindObjectOfType<MayTinh>();
         }
 
         /// <summary> AI biết nó chạm tới tứ nó cần </summary>
@@ -46,7 +49,7 @@ namespace CuaHang.AI
 
         /// <summary> Di chuyển tới property _ItemTarget </summary>
         protected virtual void MoveToTarget()
-        { 
+        {
             if (_itemTarget != null)
             {
                 _navMeshAgent.SetDestination(_itemTarget.transform.position);
@@ -56,21 +59,17 @@ namespace CuaHang.AI
         /// <summary> Di chuyển đến target và trả đúng nếu đến được đích </summary>
         protected virtual bool MoveToTarget(Transform target)
         {
-            _navMeshAgent.SetDestination(target.transform.position); 
+            _navMeshAgent.SetDestination(target.transform.position);
 
             // Kiểm tra tới được điểm target
-            if (!_navMeshAgent.pathPending)
-            {
-                if (_navMeshAgent.remainingDistance <= _navMeshAgent.stoppingDistance)
-                {
-                    if (!_navMeshAgent.hasPath || _navMeshAgent.velocity.sqrMagnitude == 0f)
-                    {
-                        return true;
-                    }
-                }
+            float distance = Vector3.Distance(transform.position, target.position);
+
+            if(distance <= 0.5f) {
+                return true;
             }
+
             return false;
         }
- 
+
     }
 }

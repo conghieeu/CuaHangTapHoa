@@ -2,6 +2,7 @@ using UnityEngine;
 using CuaHang.Pooler;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 
 namespace CuaHang
 {
@@ -20,6 +21,7 @@ namespace CuaHang
         public bool _isCanDrag = true;
         public bool _isCanSell;
         public bool _isHasHolder; // có thằng nhân vật nào đó đang bưng bê cái này
+        public TextMeshProUGUI _txtPrice;
         public Transform _models;
         public BoxCollider _coll;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
@@ -87,6 +89,8 @@ namespace CuaHang
                     if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID, true);
                 }
             }
+
+            SetPrice(_price);
         }
 
         /// <summary> Con trỏ gọi vào hàm này để kích hoạt object Temp  </summary>
@@ -103,6 +107,13 @@ namespace CuaHang
         public bool IsThisItemFreedom()
         {
             return gameObject.activeSelf == true && GetParent == null;
+        }
+
+        public void SetPrice(float value)
+        {
+            _price = value;
+            _itemSlot.SetPriceInItemSlot(value);
+            if (_txtPrice) _txtPrice.text = $"{value.ToString()}c";
         }
 
     }
