@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
-  m_Name: Parcel
+  m_Name: Trash
   m_EditorClassIdentifier: 
-  _typeID: parcel_1
-  _name: Parcel
-  _type: Shelf
-  _price: 2
+  _typeID: 3
+  _name: Trash
+  _type: 3
+  _price: 8
   _priceMarketMin: 0
   _priceMarketMax: 33
   _isCanSell: 0
   _currency: USD
   _thisPrefabs: {fileID: 0}
-  _items:
-  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
-  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
+  _items: []

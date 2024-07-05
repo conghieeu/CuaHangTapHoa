@@ -15,6 +15,7 @@ namespace CuaHang
         public Vector3 tileOffset = Vector3.zero;
         public LayerMask _layerMask;
         public RaycastHit _hit;
+        public RaycastHit[] _hits;
         Camera cam;
 
         private void Awake()
@@ -30,8 +31,6 @@ namespace CuaHang
 
             MoveItemDrag();
             RotationItemDrag();
-
-            if (_hit.transform) Log($"Object đang hit là {_hit.transform.name}");
         }
 
         /// <summary> Chiếu tia raycast lấy dữ liệu cho _Hit </summary>
@@ -39,6 +38,8 @@ namespace CuaHang
         {
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out _hit, 100, _layerMask);
+            _hits = Physics.RaycastAll(ray, 100f, _layerMask);
+            In($"You Hit {_hit.transform}");
         }
 
         void FixedUpdate()
@@ -100,10 +101,16 @@ namespace CuaHang
 
             if (item)
             {
-                if (!item._ThisParent && !_objDrag._modelsHolding && item._isCanDrag)
+                if (!item._isHasHolder && !_objDrag._modelsHolding && item._isCanDrag) // 
                 {
                     item.DragItem();
-                    _objDrag.PickUpObjectPlant();
+                    _objDrag.PickUpItem(item);
+                }
+                else if (item._isHasHolder && item._itemParent)
+                {
+                    item._itemParent._itemSlot.RemoveItemInList(item);
+                    item.DragItem();
+                    _objDrag.PickUpItem(item);
                 }
             }
         }

@@ -182,15 +182,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDebugLog: 0
   _SO: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
   _ID: 
-  _typeID: apple_1
-  _name: 
-  _type: 
+  _typeID: 5
+  _name: "Qu\u1EA3 t\xE1o"
+  _type: 5
   _price: 0
   _currency: 
-  _thisParent: {fileID: 0}
+  _isCanDrag: 1
+  _isCanSell: 0
   _models: {fileID: 0}
   _coll: {fileID: 0}
   _itemSlot: {fileID: 0}
-  _itemPooler: {fileID: 0}
+  _itemParent: {fileID: 0}
+  _thisParent: {fileID: 0}

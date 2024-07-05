@@ -215,20 +215,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c9edc1275ad1d4547ba0a560ff5286e3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDebugLog: 0
   _SO: {fileID: 11400000, guid: ab6ae8750ede17642add04924cb1fcf6, type: 2}
   _ID: 
-  _typeID: 
-  _name: 
-  _type: 
+  _typeID: 4
+  _name: "Kho \u0111\u1EC3 b\u01B0u ki\u1EC7n"
+  _type: 3
   _price: 0
   _currency: 
-  _parent: {fileID: 0}
+  _isCanDrag: 1
+  _isCanSell: 0
   _models: {fileID: 0}
   _coll: {fileID: 0}
-  _items: []
-  _slots:
-  - {fileID: 6131632232510759992}
-  - {fileID: 5691857524630414784}
+  _itemSlot: {fileID: 0}
+  _itemParent: {fileID: 0}
+  _thisParent: {fileID: 0}
 --- !u!1 &9182353707892482726
 GameObject:
   m_ObjectHideFlags: 0

@@ -204,9 +204,9 @@ MonoBehaviour:
   enableDebugLog: 0
   _SO: {fileID: 11400000, guid: 4fb482ab6e3fd7e48ada9954b06b0331, type: 2}
   _ID: 
-  _typeID: 
-  _name: Table
-  _type: 
+  _typeID: 1
+  _name: "C\xE1i b\xE0n"
+  _type: 3
   _price: 22
   _currency: USD
   _isCanDrag: 1
@@ -214,6 +214,7 @@ MonoBehaviour:
   _models: {fileID: 514825223104718608}
   _coll: {fileID: 0}
   _itemSlot: {fileID: 0}
+  _itemParent: {fileID: 0}
   _thisParent: {fileID: 0}
 --- !u!1 &5870808444566335321
 GameObject:
@@ -326,6 +327,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f5616c7a8fd6a4897ba8fe3197ff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 0}
   _itemsSlots: []
 --- !u!1 &8425759560319917050
 GameObject:

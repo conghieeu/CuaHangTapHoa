@@ -58,24 +58,24 @@ namespace CuaHang.AI
                 {
                     if (IsAgreeItem())
                     {
-                        Log("1.1: Lấy danh sách items");
+                        In("1.1: Lấy danh sách items");
                         GetItem();
                     }
                     else if (!IsAgreeItem() && _itemSlot.IsAnyItem()) // mua được vài thứ nên đi về 
                     {
-                        Log("1.2: Thanh toan vi hang dom, thanh toan nhung mon do dang co");
+                        In("1.2: Thanh toan vi hang dom, thanh toan nhung mon do dang co");
                         if (GoPayItem()) GoOutShop();
                     }
                 }
                 else if (_isNotNeedBuy && _itemSlot.IsAnyItem() == false) // không mua được gì nên đi về
                 {
-                    Log("1.3: Đồ quá mắt không mua được gì đi về");
+                    In("1.3: Đồ quá mắt không mua được gì đi về");
                     GoOutShop();
                 }
             }
             else if(_itemSlot.ItemsSequenceEqual(_itemsNeed) && _itemSlot.IsAnyItem())
             {
-                Log("2: Thanh toan hang mua");
+                In("2: Thanh toan hang mua");
                 if (GoPayItem()) GoOutShop();
             }
         }
@@ -98,7 +98,7 @@ namespace CuaHang.AI
                     itemGets.Add(allItems[r]);
             }
 
-            Log("Số lượng khác hàng " + this.name + " muốn lấy là: " + itemGets.Count);
+            In("Số lượng khác hàng " + this.name + " muốn lấy là: " + itemGets.Count);
 
             for (int i = 0; i < itemGets.Count; i++) // 
             {
@@ -141,7 +141,7 @@ namespace CuaHang.AI
                 if (shelfItem == itemNeedGet)
                 {
                     shelf._itemSlot.RemoveItemInList(shelfItem);
-                    _itemSlot.AddItemToSlot(shelfItem);
+                    _itemSlot.TryAddItemToItemSlot(shelfItem, true);
                     _itemSlot.HideAllItems();
                 }
             }
@@ -164,7 +164,7 @@ namespace CuaHang.AI
             Item shelf = _itemPooler.FindShelfContentItem(itemGet); // lấy cái bàn chứa quả táo
 
             // Huỷ target nếu target có chứa parent
-            if (shelf) if (shelf._ThisParent) shelf = null;
+            if (shelf) if (shelf.GetParent) shelf = null;
             // Bỏ item này vì item đã có chủ
             if (!shelf) _itemsNeed.Remove(itemGet);
 

@@ -7,12 +7,9 @@ using UnityEngine.UIElements;
 
 namespace CuaHang
 {
-    public class PlayerPlanting : MonoBehaviour
+    public class PlayerPlanting : HieuBehavior
     {
-        // public Transform _posHoldParcel; // vị trí đặt cái parcel này trên tay
-        public Item _itemHolding; // bưu kiện đang giữ
         PlayerCtrl _ctrl;
-        // khi dragging object temp thì thằng này sẽ hiện model của object đang drag nớ ra
 
         private void Awake()
         {
@@ -21,47 +18,65 @@ namespace CuaHang
 
         private void FixedUpdate()
         {
-            if (_ctrl._temp._isDragging) TempAiming();
+            if (_ctrl._objectDrag._isDragging) TempAiming();
+
         }
 
         private void Update()
         {
-            // gửi item trong parcel vào kệ
             if (Input.GetKeyUp(KeyCode.T))
             {
-                // SenderItems();
-                SenderItemParcelToTable();
+                SenderParcel();
+                SenderApple();
+            }
+        }
 
+        /// <summary> chạm vào kệ, người chơi có thể truyền item từ parcel sang table đó </summary>
+        void SenderApple()
+        {
+            // có item ở cảm biến
+            Item shelf = _ctrl._sensorForward.GetItemTypeHit(Type.Shelf);
+            Item itemHold = _ctrl._objectDrag._itemDragging;
+
+            if (shelf && itemHold && !itemHold._isCanSell) // gửi các apple từ bưu kiện sang kệ
+            {
+                shelf._itemSlot.ReceiverItems(itemHold._itemSlot, false);
+            }
+            else if (shelf && itemHold && itemHold._isCanSell) // để apple lênh kệ
+            {
+                In($"Thử để quả táo lênh bàn xem thử có được hay không");
+                if (shelf._itemSlot.TryAddItemToItemSlot(itemHold, false))
+                {
+                    _ctrl._objectDrag.CancelDropItem();
+                }
+            }
+        }
+
+        /// <summary> Parcel đưa parcel vào thùng rác </summary>
+        void SenderParcel()
+        {
+            Item trash = _ctrl._sensorForward.GetItemTypeHit(Type.Storage);
+            Item parcel = _ctrl._objectDrag._itemDragging;
+
+            if (trash && parcel)
+            {
+                if (parcel._type == Type.Parcel)
+                {
+                    In($"Player thêm item {parcel} vào trash  {trash}");
+                    _ctrl._objectDrag.CancelDropItem();
+                    trash._itemSlot.TryAddItemToItemSlot(parcel, false);
+                }
             }
         }
 
         /// <summary> Khi mà drag object Temp thì player sẽ hướng về object Temp </summary>
         void TempAiming()
         {
-            var direction = _ctrl._temp.transform.position - transform.position;
+            var direction = _ctrl._objectDrag.transform.position - transform.position;
             direction.y = 0;
             transform.forward = direction;
         }
 
-        /// <summary> chạm vào kệ, người chơi có thể truyền item từ parcel sang table đó </summary>
-        void SenderItemParcelToTable()
-        {
-            Item receiver = _ctrl._sensor.GetObjectPlantHit();
-
-            if (_itemHolding && receiver)
-            {
-                // chuyển item
-                for (int i = _itemHolding._itemSlot._itemsSlots.Count - 1; i >= 0; i--)
-                {
-                    Item item = _itemHolding._itemSlot._itemsSlots[i]._item;
-                    if (item != null)
-                    {
-                        receiver._itemSlot.AddItemWithTypeID(item._typeID);
-                        _itemHolding._itemSlot.RemoveItemInWorld(item);
-                    }
-                }
-            }
-        }
 
 
     }

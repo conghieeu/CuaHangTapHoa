@@ -32,67 +32,72 @@ namespace CuaHang.Pooler
             return FindShelfContentItem(itemA) == FindShelfContentItem(itemB);
         }
 
-        /// <summary> Tạo objectPlant mới, setParent == null thì vị trí sẽ set theo spawnPoint, và được set parent = ItemPooer </summary> 
-        public virtual Item GetItemWithTypeID(String typeID, Transform setParent)
+        /// <summary> Tạo, lấy item theo typeID </summary> 
+        public virtual Item GetItemWithTypeID(TypeID typeID)
         {
             Item item = GetItemDisable(typeID);
 
-            if (item == null)
+            // Create New Item
+            if (item)
+            {
+                item.gameObject.SetActive(true);
+            }
+            else
             {
                 foreach (var objPrefab in _objectsPrefab)
                 {
                     Item itemPrefab = objPrefab.GetComponent<Item>();
-                    if (itemPrefab) if (itemPrefab._SO._typeID == typeID)
+                    if (itemPrefab)
+                    {
+                        if (itemPrefab._SO._typeID == typeID)
                         {
                             item = Instantiate(itemPrefab, transform).GetComponent<Item>();
                             _items.Add(item); // thêm item vào kho
                             break;
                         }
+                    }
                 }
             }
-
-            if (item) item._ThisParent = setParent;
 
             return item;
         }
 
         /// <summary> Lấy item đang nhàn rỗi </summary>
-        private Item GetItemDisable(String typeID)
+        private Item GetItemDisable(TypeID typeID)
         {
             foreach (var item in _items)
             {
-                if (item._typeID == typeID && !item.gameObject.activeSelf && !item._ThisParent) return item;
+                if (item._typeID == typeID && !item.gameObject.activeSelf && !item.GetParent) return item;
             }
             return null;
         }
 
         /// <summary> Nhân viên tìm bưu kiện </summary>
-        public virtual Item FindItemTarget(String typeID, bool activeSelf, Transform whoFindThis)
+        public virtual Item FindItemTarget(TypeID typeID, bool activeSelf, Transform whoFindThis)
         {
             // Tìm trong hồ
             foreach (var item in _items)
             {
                 if (!item) continue;
-                if (item._typeID == typeID && item._ThisParent == null && item.gameObject.activeSelf == activeSelf) return item;
+                if (item._typeID == typeID && !item.GetParent && item.gameObject.activeSelf == activeSelf) return item;
             }
             return null;
         }
 
         /// <summary> tìm item với typeID và item này phải còn slot trống </summary>
-        public virtual Item FindItemWithTypeID(String typeID, bool isAnyEmptySlot)
+        public virtual Item FindItemWithTypeID(TypeID typeID)
         {
             foreach (var item in _items)
             {
                 if (!item) continue;
                 if (!item._itemSlot) continue;
-                if (item._itemSlot.IsAnySlot() != isAnyEmptySlot) continue;
-                if (item._typeID == typeID && item._ThisParent == null) return item;
+                if (item._typeID == typeID && item.GetParent == null && item._itemSlot.IsHasSlotEmpty()) return item;
             }
             return null;
         }
 
         /// <summary> tìm item với typeID và item này phải còn slot trống </summary>
-        public virtual Item FindRandomItemWithTypeID(String typeID, bool isAnyEmptySlot)
+        public virtual Item FindRandomItemWithTypeID(TypeID typeID, bool isAnyEmptySlot)
         {
             // Lấy danh sách item thoa mãn
             List<Item> itemsOk = new List<Item>();
@@ -100,8 +105,8 @@ namespace CuaHang.Pooler
             {
                 if (!item) continue;
                 if (!item._itemSlot) continue;
-                if (item._itemSlot.IsAnySlot() != isAnyEmptySlot) continue;
-                if (item._typeID == typeID && item._ThisParent == null) itemsOk.Add(item);
+                if (item._itemSlot.IsHasSlotEmpty() != isAnyEmptySlot) continue;
+                if (item._typeID == typeID && !item.GetParent) itemsOk.Add(item);
             }
 
             int randomIndex = UnityEngine.Random.Range(0, itemsOk.Count);
@@ -127,7 +132,7 @@ namespace CuaHang.Pooler
             foreach (var item in _items)
             {
                 if (item == null) continue;
-                if (item._isCanSell && item.gameObject.activeSelf && item._ThisParent) items.Add(item);
+                if (item._isCanSell && item.gameObject.activeSelf && item.GetParent) items.Add(item);
             }
             return items;
         }
@@ -140,7 +145,7 @@ namespace CuaHang.Pooler
             {
                 if (shelf == null) continue;
                 if (!shelf._itemSlot) continue;
-                if (!shelf._isCanSell && !shelf._ThisParent && shelf._itemSlot.IsAnyItem()) listShelf.Add(shelf);
+                if (!shelf._isCanSell && !shelf.GetParent && shelf._itemSlot.IsAnyItem()) listShelf.Add(shelf);
             }
             return listShelf;
         }

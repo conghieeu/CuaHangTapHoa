@@ -36,11 +36,11 @@ namespace CuaHang
                 }
 
                 Item item = _listTrash[i]._item;
-                
+
                 // xoá item
                 if (_listTrash[i]._time <= 0f && item)
                 {
-                    item._ThisParent = null;
+                    item.SetParent(null, null, false);
                     _itemSlot.RemoveItemInWorld(_listTrash[i]._item);
                     _listTrash[i]._item = null;
                 }

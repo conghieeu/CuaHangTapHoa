@@ -10,9 +10,16 @@ namespace CuaHang
         [Header("HieuBehavior")]
         [SerializeField] private bool enableDebugLog;
 
-        protected void Log(String value)
+        protected void In(object value)
         {
             if (enableDebugLog) Debug.Log(value, transform);
+        }
+
+        /// <summary> Đặt địa điểm Item này </summary> 
+        public void SetLocation(Transform location)
+        {
+            transform.position = location.position;
+            transform.rotation = location.rotation;
         }
     }
 

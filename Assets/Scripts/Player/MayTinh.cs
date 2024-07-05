@@ -24,7 +24,7 @@ namespace CuaHang
         {
             if (other.CompareTag("Player"))
             {
-                Log("Player đã chạm máy tính: Tạo 1 vật phẩm");
+                In("Player đã chạm máy tính: Tạo 1 vật phẩm");
                 CreateObjectPlant();
 
                 if (_waitingLine._waitingSlots[0]._customer)
@@ -33,13 +33,11 @@ namespace CuaHang
         }
 
         // tạo vật thể với SO mới trùng vs SO mẫu nào đó
-        [ContextMenu("CreateObjectPlant")]
         void CreateObjectPlant()
         {
-            Item newItem = ItemPooler.Instance.GetItemWithTypeID("parcel_1", null);
+            Item newItem = ItemPooler.Instance.GetItemWithTypeID(TypeID.parcel_1);
             if (newItem)
             {
-                newItem.gameObject.SetActive(true);
                 newItem.transform.position = _spawnTrans.position;
             }
         }

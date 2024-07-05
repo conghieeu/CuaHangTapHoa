@@ -35,9 +35,14 @@ namespace CuaHang
         }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
-        public void PickUpObjectPlant()
+        public void PickUpItem(Item item)
         {
-            _itemDragging._ThisParent = PlayerCtrl.Instance._posHoldParcel;
+            // Set Temp
+            gameObject.SetActive(true);
+            _itemDragging = item;
+            CreateModel(item._models);
+
+            _itemDragging.SetParent(PlayerCtrl.Instance._posHoldParcel, null, true);
             _itemDragging._coll.enabled = false;
             _isDragging = true;
         }
@@ -48,17 +53,26 @@ namespace CuaHang
             _modelsHolding = Instantiate(otherModel, _models, false);
         }
 
+        /// <summary> Huỷ tôi không muốn đặt item nữa </summary>
+        public void CancelDropItem()
+        {
+            Destroy(_modelsHolding.gameObject); // Delete model item
+            _itemDragging._coll.enabled = true;
+            _itemDragging = null;
+            _isDragging = false;
+            gameObject.SetActive(false);
+        }
+
         void DropItem()
         {
             if (Input.GetMouseButtonDown(0) && IsCanPlant() && _itemDragging)
             {
-                Destroy(_modelsHolding.gameObject); // Delete model item
-                _itemDragging._ThisParent = null;
+                // Đặt vị trí cho item muốn đặt 
+                _itemDragging.SetParent(null, null, false);
                 _itemDragging.transform.position = transform.position;
                 _itemDragging.transform.rotation = _modelsHolding.rotation;
-                _itemDragging._coll.enabled = true;
-                _isDragging = false;
-                gameObject.SetActive(false);
+
+                CancelDropItem();
             }
         }
 

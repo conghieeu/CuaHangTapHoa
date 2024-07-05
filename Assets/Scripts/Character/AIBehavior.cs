@@ -71,7 +71,6 @@ namespace CuaHang.AI
             }
             return false;
         }
-
-        protected virtual Item FindItemWithTypeID(string typeID) => _itemPooler.FindItemWithTypeID(typeID, true);
+ 
     }
 }

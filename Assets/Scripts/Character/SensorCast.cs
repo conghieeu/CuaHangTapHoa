@@ -20,6 +20,24 @@ namespace CuaHang
             DetectTarget();
         }
 
+        /// <summary> Lấy đối tượng chạm đầu trong danh sách </summary>
+        public Item GetItemTypeHit(Type type)
+        {
+            foreach (Transform hit in _hits)
+            {
+                Item iHit = hit.GetComponent<Item>(); 
+                
+                if (iHit)
+                {
+                    if (iHit._type == type)
+                    {
+                        return iHit;
+                    }
+                }
+            }
+            return null;
+        }
+
         public Item GetObjectPlantHit()
         {
             foreach (var hit in _hits)

@@ -523,9 +523,9 @@ MonoBehaviour:
   enableDebugLog: 1
   _SO: {fileID: 0}
   _ID: 
-  _typeID: 
-  _name: 
-  _type: 
+  _typeID: computer_1
+  _name: "M\xE1y t\xEDnh"
+  _type: 2
   _price: 0
   _currency: 
   _isCanDrag: 1

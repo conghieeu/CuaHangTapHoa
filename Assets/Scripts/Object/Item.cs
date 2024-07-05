@@ -1,6 +1,7 @@
 using UnityEngine;
 using CuaHang.Pooler;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace CuaHang
 {
@@ -9,39 +10,40 @@ namespace CuaHang
         [Header("Settings")]
         public ItemSO _SO; // SO chỉ được load một lần
         public string _ID; // Mỗi đối tượng đc cấp 1 ID khác nhau
-        public string _typeID;
+        public TypeID _typeID;
         public string _name;
-        public string _type;
+        public Type _type;
         public float _price;
         public string _currency;
 
         [Header("Item")]
         public bool _isCanDrag = true;
         public bool _isCanSell;
+        public bool _isHasHolder; // có thằng nhân vật nào đó đang bưng bê cái này
         public Transform _models;
         public BoxCollider _coll;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
-        [SerializeField] private Transform _thisParent; // là cha của item này 
-        
+        public Item _itemParent; // item đang giữ item này
+        [SerializeField] private Transform _thisParent; // là cha của item này
+
         /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
-        public Transform _ThisParent
+        public Transform GetParent => _thisParent;
+        public void SetParent(Transform thisParent, Item itemParent, bool isHadHolder)
         {
-            get => _thisParent;
-            set
+            if (thisParent)
             {
-                if (value)
-                {
-                    transform.SetParent(value);
-                    transform.localPosition = Vector3.zero;
-                    transform.localRotation = Quaternion.identity;
-                    _thisParent = value;
-                }
-                else
-                {
-                    transform.SetParent(ItemPooler.Instance.transform);
-                    _thisParent = null;
-                }
+                transform.SetParent(thisParent);
+                transform.localPosition = Vector3.zero;
+                transform.localRotation = Quaternion.identity;
             }
+            else
+            {
+                transform.SetParent(ItemPooler.Instance.transform);
+            }
+
+            _thisParent = thisParent;
+            _itemParent = itemParent;
+            _isHasHolder = isHadHolder;
         }
 
         protected virtual void Awake()
@@ -81,8 +83,8 @@ namespace CuaHang
             {
                 for (int i = 0; i < _itemSlot._itemsSlots.Count && i < _SO._items.Count; i++)
                 {
-                        Log("Khởi tạo item SO từ SO có sẵn " + i);
-                    if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID);
+                    In("Khởi tạo item SO từ SO có sẵn " + i);
+                    if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID, true);
                 }
             }
         }
@@ -90,17 +92,17 @@ namespace CuaHang
         /// <summary> Con trỏ gọi vào hàm này để kích hoạt object Temp  </summary>
         public void DragItem()
         {
-            // Set Temp 
-            ObjectDrag itemDrag = PlayerCtrl.Instance._temp;
-            itemDrag.gameObject.SetActive(true);
-            itemDrag._itemDragging = this;
-            itemDrag.CreateModel(_models);
+            if (_itemParent)
+                if (_itemParent._itemSlot)
+                {
+                    _itemParent._itemSlot.RemoveItemInList(this);
+                }
         }
 
         /// <summary> Item này có đang tồn tại và là vô chủ hay không </summary>
         public bool IsThisItemFreedom()
         {
-            return gameObject.activeSelf == true && _ThisParent == null;
+            return gameObject.activeSelf == true && GetParent == null;
         }
 
     }

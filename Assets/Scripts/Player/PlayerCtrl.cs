@@ -7,9 +7,9 @@ namespace CuaHang
 {
     public class PlayerCtrl : HieuBehavior
     {
-        public ObjectDrag _temp;
+        public ObjectDrag _objectDrag;
         public Transform _posHoldParcel; // vị trí đặt cái parcel này trên tay
-        public SensorCast _sensor;
+        public SensorCast _sensorForward; // cảm biến đằng trước
 
         public static PlayerCtrl Instance { get; private set; }
 

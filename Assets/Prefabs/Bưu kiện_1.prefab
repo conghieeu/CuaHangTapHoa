@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f5616c7a8fd6a4897ba8fe3197ff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 0}
   _itemsSlots: []
 --- !u!1 &2623791704684918421
 GameObject:
@@ -283,9 +284,9 @@ MonoBehaviour:
   enableDebugLog: 0
   _SO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
   _ID: 
-  _typeID: parcel_1
-  _name: Parcel
-  _type: 
+  _typeID: 1
+  _name: "B\u01B0u ki\u1EC7n"
+  _type: 1
   _price: 0
   _currency: 
   _isCanDrag: 1
@@ -293,6 +294,7 @@ MonoBehaviour:
   _models: {fileID: 8084133237305432176}
   _coll: {fileID: 0}
   _itemSlot: {fileID: 0}
+  _itemParent: {fileID: 0}
   _thisParent: {fileID: 0}
 --- !u!1 &9165246386765471154
 GameObject:

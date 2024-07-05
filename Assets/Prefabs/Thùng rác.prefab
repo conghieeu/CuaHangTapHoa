@@ -102,9 +102,9 @@ MonoBehaviour:
   enableDebugLog: 0
   _SO: {fileID: 11400000, guid: 8d908801ee98d1c49a1c98e97249fd30, type: 2}
   _ID: 
-  _typeID: 
-  _name: 
-  _type: 
+  _typeID: 3
+  _name: "Th\xF9ng r\xE1c"
+  _type: 3
   _price: 0
   _currency: 
   _isCanDrag: 1
@@ -112,6 +112,7 @@ MonoBehaviour:
   _models: {fileID: 8366561270056147378}
   _coll: {fileID: 0}
   _itemSlot: {fileID: 0}
+  _itemParent: {fileID: 0}
   _thisParent: {fileID: 0}
   _timeDelete: 3
   _listTrash:
@@ -280,6 +281,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8f5616c7a8fd6a4897ba8fe3197ff98, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _item: {fileID: 0}
   _itemsSlots: []
 --- !u!1 &8314852061660539227
 GameObject:

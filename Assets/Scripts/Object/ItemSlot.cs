@@ -5,6 +5,7 @@ using CuaHang.Pooler;
 using OpenCover.Framework.Model;
 using System;
 using Unity.VisualScripting;
+using System.Xml.Schema;
 
 namespace CuaHang
 {
@@ -25,11 +26,14 @@ namespace CuaHang
             }
         }
 
+
         [Header("Item Slots")]
+        public Item _item;
         public List<ItemsSlots> _itemsSlots;
 
         void Awake()
         {
+            _item = GetComponentInParent<Item>();
             LoadSlots();
         }
 
@@ -66,7 +70,7 @@ namespace CuaHang
         }
 
         /// <summary> Item Slot này có chứa item typeIDProduct hay không </summary>
-        public bool IsContentItem(String typeIDProduct)
+        public bool IsContentItem(TypeID typeIDProduct)
         {
             foreach (var i in _itemsSlots)
             {
@@ -86,9 +90,15 @@ namespace CuaHang
         }
 
         /// <summary> Có slot nào đang trống không </summary>
-        public bool IsAnySlot()
+        public bool IsHasSlotEmpty()
         {
-            foreach (var s in _itemsSlots) if (s._item == null) return true;
+            foreach (var slot in _itemsSlots)
+            {
+                if (slot._item == null)
+                {
+                    return true;
+                }
+            }
             return false;
         }
 
@@ -100,38 +110,40 @@ namespace CuaHang
         }
 
         /// <summary> Thêm item vào slot với TypeID của Item </summary>
-        public bool AddItemWithTypeID(string typeID)
+        public bool AddItemWithTypeID(TypeID typeID, bool isHasHolder)
         {
-            for (int i = 0; i < _itemsSlots.Count; i++)
-            {
-                // tạo object đưa vào slot
-                if (_itemsSlots[i]._item == null)
-                {
-                    // thêm item vào vị trí đặt sẵn trong slot
-                    Item item = ItemPooler.Instance.GetItemWithTypeID(typeID, _itemsSlots[i]._slot);
-                    if (item)
-                    {
-                        _itemsSlots[i]._item = item;
-                        return true;
-                    }
-                }
-            }
-            return false;
+            Item item = ItemPooler.Instance.GetItemWithTypeID(typeID);
+            return TryAddItemToItemSlot(item, isHasHolder);
         }
 
-        /// <summary> Thêm item vào this._itemSLot </summary>
-        public Transform AddItemToSlot(Item item)
+        /// <summary> Thêm item list ItemSlot và set cha của item là vị trí slot </summary>
+        public bool TryAddItemToItemSlot(Item item, bool isHasHolder)
         {
             for (int i = 0; i < _itemsSlots.Count; i++)
             {
                 if (_itemsSlots[i]._item == null)
                 {
                     _itemsSlots[i]._item = item;
-                    item._ThisParent = _itemsSlots[i]._slot; 
-                    return _itemsSlots[i]._slot;
+                    item.SetParent(_itemsSlots[i]._slot, _item, isHasHolder);
+                    return true;
                 }
             }
-            return null;
+            return false;
+        }
+
+        /// <summary> Thêm item list ItemSlot và không set cha của item là vị trí slot </summary> 
+        public void AddItemToSlot(Item item)
+        {
+            for (int i = 0; i < _itemsSlots.Count; i++)
+            {
+                if (_itemsSlots[i]._item == null)
+                {
+                    _itemsSlots[i]._item = item;
+                    item.SetLocation(_itemsSlots[i]._slot);
+
+                    return;
+                }
+            }
         }
 
         /// <summary> Xoá item ra khỏi danh sách và ẩn item nó ở thế giới </summary>
@@ -182,17 +194,17 @@ namespace CuaHang
         }
 
         /// <summary> Lấy toàn bộ item từ sender đang có nạp vào _itemSlot này </summary>
-        public virtual void ReceiverItems(ItemSlot sender)
+        public virtual void ReceiverItems(ItemSlot sender, bool isHasHolder)
         {
             for (int i = 0; i < sender._itemsSlots.Count; i++)
             {
-                if (sender._itemsSlots[i]._item && IsAnySlot())
+                if (sender._itemsSlots[i]._item && IsHasSlotEmpty())
                 {
-                    AddItemToSlot(sender._itemsSlots[i]._item);
+                    TryAddItemToItemSlot(sender._itemsSlots[i]._item, isHasHolder);
                     sender.RemoveItemInList(sender._itemsSlots[i]._item);
                 }
             }
         }
-        
+
     }
 }

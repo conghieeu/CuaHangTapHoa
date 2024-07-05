@@ -46,7 +46,7 @@ namespace Hieu.Player
             if (_rb.velocity.magnitude > 0)
             {
                 direction.y = 0;
-                if (!_ctrl._temp._isDragging) transform.forward = direction;
+                if (!_ctrl._objectDrag._isDragging) transform.forward = direction;
             }
         }
 
