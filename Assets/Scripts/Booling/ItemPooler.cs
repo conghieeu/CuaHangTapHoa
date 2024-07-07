@@ -118,20 +118,7 @@ namespace CuaHang.Pooler
             }
             return null;
         }
-
-        /// <summary> Tìm item có itemSlot có chứa itemProduct cần lấy </summary>
-        public virtual Item FindShelfContentItem(TypeID typeID, Type type)
-        {
-            foreach (var item in _items)
-            {
-                if (!item) continue;
-                if (!item._itemSlot) continue;
-                if (item._type != Type.Shelf) continue;
-                if (item._itemSlot.GetItemWithTypeID(typeID) && item._itemSlot.GetItemWithType(type)) return item;
-            }
-            return null;
-        }
-
+        
         /// <summary> Danh sách item có thể bán </summary>
         public List<Item> GetAllItemsCanSell()
         {

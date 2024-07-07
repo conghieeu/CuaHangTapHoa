@@ -1676,6 +1676,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 130429680}
     m_Modifications:
     - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
+    - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
       propertyPath: m_Name
       value: "C\xE1i b\xE0n_3"
       objectReference: {fileID: 0}
@@ -2283,6 +2287,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: KhachHang_2
       objectReference: {fileID: 0}
+    - target: {fileID: 7622420916520961128, guid: a941f81bb804d8e46826d769a3bde517, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -2398,6 +2406,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
       propertyPath: m_Name
       value: "C\xE1i b\xE0n_2"
@@ -3393,6 +3405,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 342665302}
     - target: {fileID: 5153436174315995306, guid: a941f81bb804d8e46826d769a3bde517, type: 3}
+      propertyPath: enableDebugLog
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5153436174315995306, guid: a941f81bb804d8e46826d769a3bde517, type: 3}
       propertyPath: _itemsBuy.Array.size
       value: 0
       objectReference: {fileID: 0}
@@ -4020,6 +4036,10 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 9
       objectReference: {fileID: 0}
+    - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
+      propertyPath: m_Icon
+      value: 
+      objectReference: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
     - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
       propertyPath: m_Name
       value: "C\xE1i b\xE0n_1"
