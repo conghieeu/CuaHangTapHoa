@@ -28,7 +28,7 @@ namespace CuaHang
                 CreateObjectPlant();
 
                 if (_waitingLine._waitingSlots[0]._customer)
-                    _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().SetPlayerConfirmPay();
+                    _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().PlayerConfirmPay();
             }
         }
 

@@ -6,6 +6,7 @@ using OpenCover.Framework.Model;
 using System;
 using Unity.VisualScripting;
 using System.Xml.Schema;
+using TMPro;
 
 namespace CuaHang
 {
@@ -43,6 +44,40 @@ namespace CuaHang
             {
                 ItemsSlots newSlot = new ItemsSlots(null, transform.GetChild(i));
                 if (_itemsSlots.Count < transform.childCount) _itemsSlots.Add(newSlot);
+            }
+        }
+
+        /// <summary> Kháchh hàng lấy item nào đó trong danh sách </summary>
+        public void CustomerAddItem(Item item)
+        { 
+            RemoveItemInList(item);
+            item.gameObject.SetActive(false);
+        }
+
+        public Item GetItemWithTypeID(TypeID typeID)
+        {
+            foreach (var item in _itemsSlots)
+            {
+                if (item._item) if (item._item._typeID == typeID) return item._item;
+            }
+            return null;
+        }
+
+        public Item GetItemWithType(Type type)
+        {
+            foreach (var item in _itemsSlots)
+            {
+                if (item._item) if (item._item._type == type) return item._item;
+            }
+            return null;
+        }
+
+        /// <summary> Trong List item slot thì chỉnh tất cả các bool drag item </summary>
+        public void SetItemsDrag(bool value)
+        {
+            foreach (var i in _itemsSlots)
+            {
+                if (i._item) i._item._isCanDrag = value;
             }
         }
 
@@ -173,11 +208,13 @@ namespace CuaHang
         public bool RemoveItemInList(Item item)
         {
             for (int i = _itemsSlots.Count - 1; i >= 0; i--)
+            {
                 if (_itemsSlots[i]._item == item && _itemsSlots[i]._item != null)
                 {
                     _itemsSlots[i]._item = null;
                     return true;
                 }
+            }
             return false;
         }
 

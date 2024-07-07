@@ -31,7 +31,13 @@ namespace CuaHang
 
         private void Update()
         {
-            DropItem();
+            ClickToDropItem();
+        }
+
+        /// <summary> Tạo model giống otherModel ở vị trí _models</summary>
+        public void CreateModel(Transform otherModel)
+        {
+            _modelsHolding = Instantiate(otherModel, _models, false);
         }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
@@ -41,38 +47,25 @@ namespace CuaHang
             gameObject.SetActive(true);
             _itemDragging = item;
             CreateModel(item._models);
-
             _itemDragging.SetParent(PlayerCtrl.Instance._posHoldParcel, null, true);
-            _itemDragging._coll.enabled = false;
             _isDragging = true;
         }
 
-        /// <summary> Tạo model giống otherModel ở vị trí _models</summary>
-        public void CreateModel(Transform otherModel)
-        {
-            _modelsHolding = Instantiate(otherModel, _models, false);
-        }
-
         /// <summary> Huỷ tôi không muốn đặt item nữa </summary>
-        public void CancelDropItem()
+        public void OnDropItem()
         {
             Destroy(_modelsHolding.gameObject); // Delete model item
-            _itemDragging._coll.enabled = true;
+            _itemDragging.DropItem(_modelsHolding);
             _itemDragging = null;
             _isDragging = false;
             gameObject.SetActive(false);
         }
 
-        void DropItem()
+        void ClickToDropItem()
         {
             if (Input.GetMouseButtonDown(0) && IsCanPlant() && _itemDragging)
             {
-                // Đặt vị trí cho item muốn đặt 
-                _itemDragging.SetParent(null, null, false);
-                _itemDragging.transform.position = transform.position;
-                _itemDragging.transform.rotation = _modelsHolding.rotation;
-
-                CancelDropItem();
+                OnDropItem();
             }
         }
 

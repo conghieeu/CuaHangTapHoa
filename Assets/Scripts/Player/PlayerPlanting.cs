@@ -47,7 +47,7 @@ namespace CuaHang
                 In($"Thử để quả táo lênh bàn xem thử có được hay không");
                 if (shelf._itemSlot.TryAddItemToItemSlot(itemHold, false))
                 {
-                    _ctrl._objectDrag.CancelDropItem();
+                    _ctrl._objectDrag.OnDropItem();
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace CuaHang
                 if (parcel._type == Type.Parcel)
                 {
                     In($"Player thêm item {parcel} vào trash  {trash}");
-                    _ctrl._objectDrag.CancelDropItem();
+                    _ctrl._objectDrag.OnDropItem();
                     trash._itemSlot.TryAddItemToItemSlot(parcel, false);
                 }
             }

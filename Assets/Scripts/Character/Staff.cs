@@ -2,6 +2,7 @@ using System;
 using Unity.VisualScripting;
 using UnityEngine;
 using CuaHang.Pooler;
+using System.Collections.Generic;
 
 namespace CuaHang.AI
 {
@@ -18,12 +19,12 @@ namespace CuaHang.AI
         /// <summary>  Khi đáp ứng sự kiện hãy gọi vào đây nên nó đưa phán đoán hành vi tiếp theo nhân viên cần làm </summary>
         void BehaviorCtrl()
         {
-            In("Tìm cái bàn " + _itemPooler.FindItemWithTypeID(TypeID.table_1));
+            In("Tìm cái bàn " + FindItemHasSlotEmpty(TypeID.table_1));
 
             // Find the parcel
             if (!_itemHolding)
             {
-                _itemTarget = _itemPooler.FindItemTarget(TypeID.parcel_1, true, transform);
+                _itemTarget = FindItemCanDrag(TypeID.parcel_1);
             }
 
             bool isParcelHasItem = false;
@@ -37,13 +38,13 @@ namespace CuaHang.AI
                 PickUpParcel();
             }
             // đang có parcel và parcel còn item trong người nên cần tìm cần cái kệ để đặt item
-            else if (_itemPooler.FindItemWithTypeID(TypeID.table_1) && isParcelHasItem)
+            else if (FindItemHasSlotEmpty(TypeID.table_1) && isParcelHasItem)
             {
                 In("PlaceItemOnTable");
                 PlaceItemOnTable();
             }
             // Đặt ObjectPlant vào kho
-            else if (!_itemPooler.FindItemWithTypeID(TypeID.table_1) && _itemHolding && isParcelHasItem)
+            else if (!FindItemHasSlotEmpty(TypeID.table_1) && _itemHolding && isParcelHasItem)
             {
 
                 PlaceParcelInStorage();
@@ -68,24 +69,25 @@ namespace CuaHang.AI
         /// <summary> Đặt item vào cái table </summary>
         protected virtual void PlaceItemOnTable()
         {
-            Item target = _itemPooler.FindItemWithTypeID(TypeID.table_1); // tìm bàn còn trống
+            Item target = FindItemHasSlotEmpty(TypeID.table_1); // tìm bàn còn trống
 
             if (_itemTarget != target) _itemTarget = target;
 
             // Tới được cái bàn chưa
             if (_itemHolding && IsHitItemTarget())
+            {
                 if (target._itemSlot.IsHasSlotEmpty())
                 {
                     target._itemSlot.ReceiverItems(_itemHolding._itemSlot, false);
                     _itemTarget = null;
-                    return;
                 }
+            }
         }
 
         /// <summary> Cần tìm đối tượng để AI có thể đạt parcel xuống </summary>
         protected virtual void PlaceParcelInTrash()
         {
-            Item trash = _itemPooler.FindItemWithTypeID(TypeID.trash_1);
+            Item trash = FindItemHasSlotEmpty(TypeID.trash_1);
 
             if (_itemTarget != trash) _itemTarget = trash;
 
@@ -104,20 +106,47 @@ namespace CuaHang.AI
         /// <summary> Đặt item vào kho </summary>
         protected virtual void PlaceParcelInStorage()
         {
-            Item storage = _itemPooler.FindItemWithTypeID(TypeID.storage_1); // tìm kho trống
+            Item storage = FindItemHasSlotEmpty(TypeID.storage_1); // tìm kho trống
 
             if (_itemTarget != storage) _itemTarget = storage;
 
+            In($"STAFF HIT: {IsHitItemTarget()}");
+
             // Tới điểm cần tới
-            if (storage && IsHitItemTarget()) if (IsHitItemTarget() && storage._itemSlot.IsHasSlotEmpty())
+            if (storage && IsHitItemTarget())
+            {
+                if (IsHitItemTarget() && storage._itemSlot.IsHasSlotEmpty())
                 {
                     storage._itemSlot.TryAddItemToItemSlot(_itemHolding, false);
 
                     _itemTarget = null;
                     _itemHolding = null;
                 }
+            }
         }
 
+        /// <summary> Tìm item có item Slot và còn chỗ trống </summary>
+        Item FindItemHasSlotEmpty(TypeID typeID)
+        {
+            foreach (var item in ItemPooler.Instance.GetPoolItem)
+            {
+                if (!item) continue;
+                if (!item._itemSlot) continue;
+                if (item._typeID == typeID && item._itemSlot.IsHasSlotEmpty()) return item;
+            }
+            return null;
+        }
 
+        /// <summary> Tìm item có thể kéo drag </summary>
+        Item FindItemCanDrag(TypeID typeID)
+        {
+            foreach (var item in ItemPooler.Instance.GetPoolItem)
+            {
+                if (!item) continue;
+                if (item._typeID == typeID && !item.GetParent && item.gameObject.activeSelf) return item;
+            }
+
+            return null;
+        }
     }
 }

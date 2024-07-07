@@ -3,6 +3,25 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
+public static class IListExtensions
+{
+    /// <summary>
+    /// Shuffles the element order of the specified list.
+    /// </summary>
+    public static void Shuffle<T>(this IList<T> ts)
+    {
+        var count = ts.Count;
+        var last = count - 1;
+        for (var i = 0; i < last; ++i)
+        {
+            var r = UnityEngine.Random.Range(i, count);
+            var tmp = ts[i];
+            ts[i] = ts[r];
+            ts[r] = tmp;
+        }
+    }
+}
+
 namespace CuaHang.Pooler
 {
     public class ItemPooler : ObjectPooler
@@ -10,7 +29,9 @@ namespace CuaHang.Pooler
         [Header("BoolingObjPlants")]
         [SerializeField] protected List<Item> _items;
 
+        public List<Item> GetPoolItem { get => _items; }
         public static ItemPooler Instance;
+
 
         private void Awake()
         {
@@ -24,6 +45,17 @@ namespace CuaHang.Pooler
             {
                 _items.Add(child.GetComponent<Item>());
             }
+        }
+
+        /// <summary> còn item có thể mua trong cửa hàng </summary>
+        public bool IsContentItemSell()
+        {
+            foreach (var item in _items)
+            {
+                if (!item._itemParent) continue;
+                if (item._isCanSell && item.gameObject.activeSelf && item._itemParent._type == Type.Shelf) return true;
+            }
+            return false;
         }
 
         /// <summary> 2 item đầu vào có cùng 1 shelf không ? </summary> 
@@ -72,55 +104,30 @@ namespace CuaHang.Pooler
             return null;
         }
 
-        /// <summary> Nhân viên tìm bưu kiện </summary>
-        public virtual Item FindItemTarget(TypeID typeID, bool activeSelf, Transform whoFindThis)
+        /// <summary> Tìm item có itemSlot có chứa itemProduct cần lấy </summary>
+        public virtual Item FindShelfContentItem(Item item)
         {
-            // Tìm trong hồ
-            foreach (var item in _items)
+            foreach (var i in _items)
             {
-                if (!item) continue;
-                if (item._typeID == typeID && !item.GetParent && item.gameObject.activeSelf == activeSelf) return item;
+                if (!i || !item) continue;
+                if (!i._itemSlot) continue;
+                if (i._itemSlot.IsContentItem(item) && i._type == Type.Shelf)
+                {
+                    return i;
+                }
             }
             return null;
-        }
-
-        /// <summary> tìm item với typeID và item này phải còn slot trống </summary>
-        public virtual Item FindItemWithTypeID(TypeID typeID)
-        {
-            foreach (var item in _items)
-            {
-                if (!item) continue;
-                if (!item._itemSlot) continue;
-                if (item._typeID == typeID && item.GetParent == null && item._itemSlot.IsHasSlotEmpty()) return item;
-            }
-            return null;
-        }
-
-        /// <summary> tìm item với typeID và item này phải còn slot trống </summary>
-        public virtual Item FindRandomItemWithTypeID(TypeID typeID, bool isAnyEmptySlot)
-        {
-            // Lấy danh sách item thoa mãn
-            List<Item> itemsOk = new List<Item>();
-            foreach (var item in _items)
-            {
-                if (!item) continue;
-                if (!item._itemSlot) continue;
-                if (item._itemSlot.IsHasSlotEmpty() != isAnyEmptySlot) continue;
-                if (item._typeID == typeID && !item.GetParent) itemsOk.Add(item);
-            }
-
-            int randomIndex = UnityEngine.Random.Range(0, itemsOk.Count);
-            return itemsOk[randomIndex];
         }
 
         /// <summary> Tìm item có itemSlot có chứa itemProduct cần lấy </summary>
-        public virtual Item FindShelfContentItem(Item itemProduct)
+        public virtual Item FindShelfContentItem(TypeID typeID, Type type)
         {
             foreach (var item in _items)
             {
                 if (!item) continue;
                 if (!item._itemSlot) continue;
-                if (item._itemSlot.IsContentItem(itemProduct)) return item;
+                if (item._type != Type.Shelf) continue;
+                if (item._itemSlot.GetItemWithTypeID(typeID) && item._itemSlot.GetItemWithType(type)) return item;
             }
             return null;
         }

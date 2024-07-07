@@ -18,9 +18,8 @@ namespace CuaHang
         public string _currency;
 
         [Header("Item")]
-        public bool _isCanDrag = true;
+        public bool _isCanDrag = true;  // có thằng nhân vật nào đó đang bưng bê cái này
         public bool _isCanSell;
-        public bool _isHasHolder; // có thằng nhân vật nào đó đang bưng bê cái này
         public TextMeshProUGUI _txtPrice;
         public Transform _models;
         public BoxCollider _coll;
@@ -45,7 +44,7 @@ namespace CuaHang
 
             _thisParent = thisParent;
             _itemParent = itemParent;
-            _isHasHolder = isHadHolder;
+            _isCanDrag = !isHadHolder;
         }
 
         protected virtual void Awake()
@@ -93,20 +92,34 @@ namespace CuaHang
             SetPrice(_price);
         }
 
-        /// <summary> Con trỏ gọi vào hàm này để kích hoạt object Temp  </summary>
         public void DragItem()
         {
             if (_itemParent)
+            {
                 if (_itemParent._itemSlot)
                 {
                     _itemParent._itemSlot.RemoveItemInList(this);
+                    _isCanDrag = false;
                 }
+            }
+
+            if (_itemSlot)
+            {
+                _itemSlot.SetItemsDrag(false);
+            }
         }
 
-        /// <summary> Item này có đang tồn tại và là vô chủ hay không </summary>
-        public bool IsThisItemFreedom()
+        public void DropItem(Transform location)
         {
-            return gameObject.activeSelf == true && GetParent == null;
+            _isCanDrag = true;
+            SetParent(null, null, false);
+            transform.position = location.position;
+            transform.rotation = location.rotation;
+
+            if (_itemSlot)
+            {
+                _itemSlot.SetItemsDrag(true);
+            }
         }
 
         public void SetPrice(float value)

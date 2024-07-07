@@ -37,6 +37,7 @@ namespace CuaHang.AI
         protected virtual bool IsHitItemTarget()
         {
             if (_itemTarget == null) return false;
+            
             foreach (var item in _boxSensor._hits)
             {
                 if (item == _itemTarget.transform)

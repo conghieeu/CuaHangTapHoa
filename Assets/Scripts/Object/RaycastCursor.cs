@@ -101,14 +101,8 @@ namespace CuaHang
 
             if (item)
             {
-                if (!item._isHasHolder && !_objDrag._modelsHolding && item._isCanDrag) // 
+                if (item._isCanDrag)
                 {
-                    item.DragItem();
-                    _objDrag.PickUpItem(item);
-                }
-                else if (item._isHasHolder && item._itemParent)
-                {
-                    item._itemParent._itemSlot.RemoveItemInList(item);
                     item.DragItem();
                     _objDrag.PickUpItem(item);
                 }
