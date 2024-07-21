@@ -1226,6 +1226,7 @@ Transform:
   - {fileID: 423970280}
   - {fileID: 7146526252618287007}
   - {fileID: 1705968444}
+  - {fileID: 692309821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &619073403 stripped
@@ -1233,6 +1234,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
   m_PrefabInstance: {fileID: 9047661363466969731}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &692309820
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 692309821}
+  m_Layer: 0
+  m_Name: "V\u1ECB tr\xED kh\xE1ch h\xE0ng gi\u1EEF t\xE1o"
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &692309821
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 692309820}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 614028710}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -2091,7 +2123,7 @@ PrefabInstance:
     - target: {fileID: 351328626338813721, guid: 90fe28073319c6040b7a080c866f9f07, type: 3}
       propertyPath: _mayTinh
       value: 
-      objectReference: {fileID: 457847371}
+      objectReference: {fileID: 0}
     - target: {fileID: 2117981837730436582, guid: 90fe28073319c6040b7a080c866f9f07, type: 3}
       propertyPath: m_LocalPosition.x
       value: -2.17
@@ -2292,7 +2324,8 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8561598972193656896, guid: a941f81bb804d8e46826d769a3bde517, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a941f81bb804d8e46826d769a3bde517, type: 3}
@@ -3429,7 +3462,8 @@ PrefabInstance:
       value: KhachHang_1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects: []
+    m_RemovedGameObjects:
+    - {fileID: 8561598972193656896, guid: a941f81bb804d8e46826d769a3bde517, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a941f81bb804d8e46826d769a3bde517, type: 3}

@@ -8,12 +8,11 @@ using System;
 
 namespace CuaHang.AI
 {
-
     public class Customer : AIBehavior
     {
         [Header("Customer")]
         public float _totalPay;
-        public Item _itemFinding;
+        public Item _itemFinding; // item mà khách hàng đang tìm
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
         public Transform _outShopPoint; // Là điểm sẽ tới nếu rời shop
         public bool _isNotNeedBuy; // Không cần mua gì nữa
@@ -52,7 +51,6 @@ namespace CuaHang.AI
 
             Behavior();
         }
-
 
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
         public void PlayerConfirmPay()
@@ -130,7 +128,9 @@ namespace CuaHang.AI
         /// <summary> Chạy tới vị trí item cần lấy </summary>
         bool GoToItemNeed()
         {
-            _itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo 
+            _itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo
+
+            if(_itemTarget == null) _itemFinding = null;
             if (IsHitItemTarget()) return true;
             MoveToTarget();
             return false;
@@ -147,6 +147,7 @@ namespace CuaHang.AI
                 foreach (var item in _itemsCard)
                 {
                     item.SetParent(null, null, false);
+                    ItemPooler.Instance.DeleteObject(item.transform);
                 }
             }
         }
@@ -202,7 +203,8 @@ namespace CuaHang.AI
         {
             _totalPay += _itemFinding._price;
             _itemsCard.Add(_itemFinding);
-            _itemFinding._itemParent._itemSlot.CustomerAddItem(_itemFinding);
+            _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding); 
+            _itemFinding.SetParent(GameObject.Find("HOLDING_APPLE").transform, null, false);
             _listItemBuy.Remove(_itemFinding._typeID);
             _itemFinding = null;
         }
@@ -212,7 +214,6 @@ namespace CuaHang.AI
         {
             List<Item> poolItem = ItemPooler.Instance.GetPoolItem.ToList();
             poolItem.Shuffle<Item>();
-
 
             foreach (var i in poolItem)
             {

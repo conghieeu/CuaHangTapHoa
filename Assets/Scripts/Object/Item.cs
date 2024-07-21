@@ -25,11 +25,9 @@ namespace CuaHang
         public BoxCollider _coll;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
-        [SerializeField] private Transform _thisParent; // là cha của item này
+        public Transform _thisParent; // là cha của item này
 
-        /// <summary> set vị trí và cha (_thisParent) cho item này </summary>
-        public Transform GetParent => _thisParent;
-        public void SetParent(Transform thisParent, Item itemParent, bool isHadHolder)
+        public void SetParent(Transform thisParent, Item itemParent, bool isCanDrag)
         {
             if (thisParent)
             {
@@ -44,7 +42,7 @@ namespace CuaHang
 
             _thisParent = thisParent;
             _itemParent = itemParent;
-            _isCanDrag = !isHadHolder;
+            _isCanDrag = isCanDrag;
         }
 
         protected virtual void Awake()
@@ -57,6 +55,11 @@ namespace CuaHang
         private void OnEnable()
         {
             StartCoroutine(LoadSlotSO());
+        }
+
+        private void OnDisable()
+        {
+            _thisParent = null;
         }
 
         /// <summary> Set value với SO có đang gáng </summary>
@@ -72,6 +75,12 @@ namespace CuaHang
             _isCanSell = _SO._isCanSell;
         }
 
+        public void SetPrice(float value)
+        {
+            _price = value;
+            if (_txtPrice) _txtPrice.text = $"{value.ToString()}c";
+        }
+
         /// <summary> Tạo item có thể mua với list item SO </summary>
         IEnumerator LoadSlotSO()
         {
@@ -80,16 +89,19 @@ namespace CuaHang
                 yield return null;
             }
 
-            if (_itemSlot)
+            for (int i = 0; i < _itemSlot._itemsSlots.Count && i < _SO._items.Count; i++)
             {
-                for (int i = 0; i < _itemSlot._itemsSlots.Count && i < _SO._items.Count; i++)
+                In("Khởi tạo item SO từ SO có sẵn " + i);
+                if (_SO._items[i])
                 {
-                    In("Khởi tạo item SO từ SO có sẵn " + i);
-                    if (_SO._items[i]) _itemSlot.AddItemWithTypeID(_SO._items[i]._typeID, true);
+                    Item item = ItemPooler.Instance.GetItemWithTypeID(_SO._items[i]._typeID);
+
+                    if (_itemSlot.TryAddItemToItemSlot(item, false))
+                    {
+                        item.SetPrice(_price);
+                    }
                 }
             }
-
-            SetPrice(_price);
         }
 
         public void DragItem()
@@ -111,8 +123,7 @@ namespace CuaHang
 
         public void DropItem(Transform location)
         {
-            _isCanDrag = true;
-            SetParent(null, null, false);
+            SetParent(null, null, true);
             transform.position = location.position;
             transform.rotation = location.rotation;
 
@@ -122,12 +133,7 @@ namespace CuaHang
             }
         }
 
-        public void SetPrice(float value)
-        {
-            _price = value;
-            _itemSlot.SetPriceInItemSlot(value);
-            if (_txtPrice) _txtPrice.text = $"{value.ToString()}c";
-        }
+
 
     }
 }

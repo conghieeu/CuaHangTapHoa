@@ -99,7 +99,7 @@ namespace CuaHang.Pooler
         {
             foreach (var item in _items)
             {
-                if (item._typeID == typeID && !item.gameObject.activeSelf && !item.GetParent) return item;
+                if (item._typeID == typeID && !item.gameObject.activeSelf) return item;
             }
             return null;
         }
@@ -126,7 +126,7 @@ namespace CuaHang.Pooler
             foreach (var item in _items)
             {
                 if (item == null) continue;
-                if (item._isCanSell && item.gameObject.activeSelf && item.GetParent) items.Add(item);
+                if (item._isCanSell && item.gameObject.activeSelf && item._thisParent) items.Add(item);
             }
             return items;
         }
@@ -139,7 +139,7 @@ namespace CuaHang.Pooler
             {
                 if (shelf == null) continue;
                 if (!shelf._itemSlot) continue;
-                if (!shelf._isCanSell && !shelf.GetParent && shelf._itemSlot.IsAnyItem()) listShelf.Add(shelf);
+                if (!shelf._isCanSell && !shelf._thisParent && shelf._itemSlot.IsAnyItem()) listShelf.Add(shelf);
             }
             return listShelf;
         }

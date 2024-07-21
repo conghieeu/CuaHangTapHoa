@@ -20,13 +20,18 @@ namespace CuaHang
             _waitingLine = GetComponentInChildren<WaitingLine>();
         }
 
+        private void Update()
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                CreateObjectPlant(); In($"Tạo cái bưu kiện");
+            }
+        }
+
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                In("Player đã chạm máy tính: Tạo 1 vật phẩm");
-                CreateObjectPlant();
-
                 if (_waitingLine._waitingSlots[0]._customer)
                     _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().PlayerConfirmPay();
             }
@@ -35,10 +40,11 @@ namespace CuaHang
         // tạo vật thể với SO mới trùng vs SO mẫu nào đó
         void CreateObjectPlant()
         {
-            Item newItem = ItemPooler.Instance.GetItemWithTypeID(TypeID.parcel_1);
-            if (newItem)
+            Item parcel = ItemPooler.Instance.GetItemWithTypeID(TypeID.parcel_1);
+
+            if (parcel)
             {
-                newItem.transform.position = _spawnTrans.position;
+                parcel.transform.position = _spawnTrans.position;
             }
         }
     }

@@ -64,7 +64,7 @@ namespace CuaHang
                 {
                     In($"Player thêm item {parcel} vào trash  {trash}");
                     _ctrl._objectDrag.OnDropItem();
-                    trash._itemSlot.TryAddItemToItemSlot(parcel, false);
+                    trash._itemSlot.TryAddItemToItemSlot(parcel, true);
                 }
             }
         }

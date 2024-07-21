@@ -69,16 +69,15 @@ namespace CuaHang.AI
         /// <summary> Đặt item vào cái table </summary>
         protected virtual void PlaceItemOnTable()
         {
-            Item target = FindItemHasSlotEmpty(TypeID.table_1); // tìm bàn còn trống
+            Item target = FindItemHasSlotEmpty(TypeID.table_1); 
 
             if (_itemTarget != target) _itemTarget = target;
-
-            // Tới được cái bàn chưa
-            if (_itemHolding && IsHitItemTarget())
+ 
+            if (_itemHolding && IsHitItemTarget()) // Tới được cái bàn chưa
             {
                 if (target._itemSlot.IsHasSlotEmpty())
                 {
-                    target._itemSlot.ReceiverItems(_itemHolding._itemSlot, false);
+                    target._itemSlot.ReceiverItems(_itemHolding._itemSlot, true);
                     _itemTarget = null;
                 }
             }
@@ -95,7 +94,7 @@ namespace CuaHang.AI
             if (trash && IsHitItemTarget())
                 if (IsHitItemTarget() && trash._itemSlot.IsHasSlotEmpty() && trash.GetComponent<Trash>())
                 {
-                    trash._itemSlot.TryAddItemToItemSlot(_itemHolding, false);
+                    trash._itemSlot.TryAddItemToItemSlot(_itemHolding, true);
                     trash.GetComponent<Trash>().AddItemToTrash(_itemHolding);
 
                     _itemTarget = null;
@@ -117,7 +116,7 @@ namespace CuaHang.AI
             {
                 if (IsHitItemTarget() && storage._itemSlot.IsHasSlotEmpty())
                 {
-                    storage._itemSlot.TryAddItemToItemSlot(_itemHolding, false);
+                    storage._itemSlot.TryAddItemToItemSlot(_itemHolding, true);
 
                     _itemTarget = null;
                     _itemHolding = null;
@@ -143,7 +142,7 @@ namespace CuaHang.AI
             foreach (var item in ItemPooler.Instance.GetPoolItem)
             {
                 if (!item) continue;
-                if (item._typeID == typeID && !item.GetParent && item.gameObject.activeSelf) return item;
+                if (item._typeID == typeID && !item._thisParent && item.gameObject.activeSelf) return item;
             }
 
             return null;

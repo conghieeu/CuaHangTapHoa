@@ -47,13 +47,6 @@ namespace CuaHang
             }
         }
 
-        /// <summary> Kháchh hàng lấy item nào đó trong danh sách </summary>
-        public void CustomerAddItem(Item item)
-        { 
-            RemoveItemInList(item);
-            item.gameObject.SetActive(false);
-        }
-
         public Item GetItemWithTypeID(TypeID typeID)
         {
             foreach (var item in _itemsSlots)
@@ -153,22 +146,15 @@ namespace CuaHang
             return false;
         }
 
-        /// <summary> Thêm item vào slot với TypeID của Item </summary>
-        public bool AddItemWithTypeID(TypeID typeID, bool isHasHolder)
+        /// <summary> Thêm 1 item vào danh sách </summary>
+        public bool TryAddItemToItemSlot(Item item, bool isCanDrag)
         {
-            Item item = ItemPooler.Instance.GetItemWithTypeID(typeID);
-            return TryAddItemToItemSlot(item, isHasHolder);
-        }
-
-        /// <summary> Thêm item list ItemSlot và set cha của item là vị trí slot </summary>
-        public bool TryAddItemToItemSlot(Item item, bool isHasHolder)
-        {
-            for (int i = 0; i < _itemsSlots.Count; i++)
+            foreach (var i in _itemsSlots)
             {
-                if (_itemsSlots[i]._item == null)
+                if (i._item == null)
                 {
-                    _itemsSlots[i]._item = item;
-                    item.SetParent(_itemsSlots[i]._slot, _item, isHasHolder);
+                    i._item = item;
+                    item.SetParent(i._slot, GetComponentInParent<Item>(), isCanDrag);
                     return true;
                 }
             }
@@ -240,13 +226,13 @@ namespace CuaHang
         }
 
         /// <summary> Lấy toàn bộ item từ sender đang có nạp vào _itemSlot này </summary>
-        public virtual void ReceiverItems(ItemSlot sender, bool isHasHolder)
+        public virtual void ReceiverItems(ItemSlot sender, bool isCanDrag)
         {
             for (int i = 0; i < sender._itemsSlots.Count; i++)
             {
                 if (sender._itemsSlots[i]._item && IsHasSlotEmpty())
                 {
-                    TryAddItemToItemSlot(sender._itemsSlots[i]._item, isHasHolder);
+                    TryAddItemToItemSlot(sender._itemsSlots[i]._item, isCanDrag);
                     sender.RemoveItemInList(sender._itemsSlots[i]._item);
                 }
             }
