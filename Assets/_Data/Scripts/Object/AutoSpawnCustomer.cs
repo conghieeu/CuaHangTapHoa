@@ -18,15 +18,15 @@ namespace CuaHang
 
         /// <summary> Luôn Spawn khách hàng ngẫu nhiên </summary>
         IEnumerator AutoSpawn()
-        {
-            float rTime = UnityEngine.Random.Range(3, 3);
-            yield return new WaitForSeconds(rTime);
+        { 
+            float delay = Random.Range(3, 3);
+            yield return new WaitForSeconds(delay);
 
             if (_customerPrefabs.Count > 0 && _spawnPoint.Count > 0)
             {
                 In($"tạo khách hàng");
-                int rCustomer = UnityEngine.Random.Range(0, _customerPrefabs.Count - 1);
-                int rPoint = UnityEngine.Random.Range(0, _spawnPoint.Count - 1);
+                int rCustomer = Random.Range(0, _customerPrefabs.Count);
+                int rPoint = Random.Range(0, _spawnPoint.Count);
 
                 // spawn customer
                 Customer cus = CustomerPooler.Instance.GetCustomer(_customerPrefabs[rCustomer]);

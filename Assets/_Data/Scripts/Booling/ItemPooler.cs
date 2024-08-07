@@ -89,8 +89,7 @@ namespace CuaHang.Pooler
                         }
                     }
                 }
-            } 
-
+            }
             return item;
         }
 
@@ -99,7 +98,6 @@ namespace CuaHang.Pooler
         {
             foreach (var item in _items)
             {
-                if(item == null) { continue; }
                 if (item._typeID == typeID && !item.gameObject.activeSelf) return item;
             }
             return null;
@@ -119,7 +117,7 @@ namespace CuaHang.Pooler
             }
             return null;
         }
-        
+
         /// <summary> Danh sách item có thể bán </summary>
         public List<Item> GetAllItemsCanSell()
         {
