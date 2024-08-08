@@ -5,6 +5,7 @@ using CuaHang.Pooler;
 using Unity.VisualScripting;
 using UnityEngine;
 using System;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CuaHang.AI
 {
@@ -19,11 +20,26 @@ namespace CuaHang.AI
         [SerializeField] private bool _playerConfirmPay; // Player xác nhận thanh toán
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
         public List<Item> _itemsCard;
+        public Animator _anim;
+        public bool _isPickingItem; // Khi Khách hàng đang pick item
+
         bool _isPay;
+
+        [Serializable]
+        public enum STATE_ANIM
+        {
+            Idle = 0,
+            Walk = 1,
+            Picking = 2,
+            Idle_Carrying = 3,
+            Walk_Carrying = 4,
+        }
+        public STATE_ANIM _stageAnim;
 
         protected override void Awake()
         {
             base.Awake();
+            _anim = GetComponentInChildren<Animator>();
         }
 
         protected override void Start()
@@ -34,6 +50,8 @@ namespace CuaHang.AI
 
         private void FixedUpdate()
         {
+            if(_isPickingItem) return;
+
             SetItemNeed();
 
             // set item finding
@@ -50,6 +68,7 @@ namespace CuaHang.AI
             else _isNotNeedBuy = true;
 
             Behavior();
+            SetAnimation();
         }
 
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
@@ -86,8 +105,36 @@ namespace CuaHang.AI
                 GoOutShop();
                 return;
             }
-
         }
+
+        void SetAnimation()
+        {
+            // is pick item
+            if (_isPickingItem && _stageAnim != STATE_ANIM.Picking)
+            {
+                _stageAnim = STATE_ANIM.Picking;
+                SetAnim();
+                return;
+            } 
+
+            // Idle
+            if (_navMeshAgent.velocity.sqrMagnitude == 0 && _stageAnim != STATE_ANIM.Idle)
+            {
+                _stageAnim = STATE_ANIM.Idle;
+                SetAnim();
+                return;
+            }
+
+            // Walk
+            if (_navMeshAgent.velocity.sqrMagnitude > 0.1f && _stageAnim != STATE_ANIM.Walk)
+            {
+                _stageAnim = STATE_ANIM.Walk;
+                SetAnim();
+                return;
+            }
+        }
+
+        void SetAnim() => _anim.SetInteger("State", (int)_stageAnim);
 
         /// <summary> Chọn ngẫu nhiên item mà khách hàng này muốn lấy </summary>
         void SetItemNeed()
@@ -103,10 +150,11 @@ namespace CuaHang.AI
                 for (int i = 0; i < countBuy; i++)
                 {
                     if (FindItem(GetRandomItemBuy()))
+                    {
                         _listItemBuy.Add(GetRandomItemBuy());
+                    }
                 }
             }
-
         }
 
         TypeID GetRandomItemBuy()
@@ -130,7 +178,7 @@ namespace CuaHang.AI
         {
             _itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo
 
-            if(_itemTarget == null) _itemFinding = null;
+            if (_itemTarget == null) _itemFinding = null;
             if (IsHitItemTarget()) return true;
             MoveToTarget();
             return false;
@@ -201,13 +249,22 @@ namespace CuaHang.AI
 
         void AddItemToCart()
         {
+            StartCoroutine(IsPickingItem());
             _totalPay += _itemFinding._price;
             _itemsCard.Add(_itemFinding);
-            _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding); 
+            _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding);
             _itemFinding.SetParent(GameObject.Find("HOLDING_APPLE").transform, null, false);
             _listItemBuy.Remove(_itemFinding._typeID);
             _itemFinding = null;
         }
+
+        IEnumerator IsPickingItem()
+        {
+            _isPickingItem = true; 
+            yield return new WaitForSeconds(2f);
+            _isPickingItem = false;
+        }
+
 
         /// <summary> Tìm item lần lượt theo mục đang muốn mua </summary>
         Item FindItem(TypeID typeID)

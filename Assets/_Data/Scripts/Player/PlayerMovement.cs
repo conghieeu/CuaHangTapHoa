@@ -19,7 +19,8 @@ namespace Hieu.Player
             Idle = 0,
             Walk = 1,
             Picking = 2,
-            Carring = 3,
+            Idle_Carrying = 3,
+            Walk_Carrying = 4,
         }
         public STATE_ANIM _stageAnim;
 
@@ -60,8 +61,8 @@ namespace Hieu.Player
         }
 
         void SetAnimator()
-        { 
-            Animator anim = _ctrl._anim; 
+        {
+            Animator anim = _ctrl._anim;
 
             // animation idle
             if (_inputVector == Vector3.zero && _stageAnim != STATE_ANIM.Idle)
