@@ -6,13 +6,13 @@ namespace CuaHang
     public class RaycastCursor : HieuBehavior
     {
         [Header("RaycastCursor")]
-        public float rotationSpeed = 10.0f; // Tốc độ xoay
         public ObjectDrag _objDrag;
         public Transform _itemFocus;
         public bool _enableSnapping; // bật chế độ snapping
+        public float _rotationSpeed = 10.0f; // Tốc độ xoay
         public float _snapDistance = 6f; // Khoảng cách cho phép đặt 
         public float _tileSize = 1;
-        public Vector3 tileOffset = Vector3.zero;
+        public Vector3 _tileOffset = Vector3.zero;
         public LayerMask _layerMask;
         public RaycastHit _hit;
         public RaycastHit[] _hits;
@@ -33,6 +33,11 @@ namespace CuaHang
             RotationItemDrag();
         }
 
+        void FixedUpdate()
+        {
+            CanNotPlant();
+        }
+
         /// <summary> Chiếu tia raycast lấy dữ liệu cho _Hit </summary>
         private void SetRayHit()
         {
@@ -40,11 +45,6 @@ namespace CuaHang
             Physics.Raycast(ray, out _hit, 100, _layerMask);
             _hits = Physics.RaycastAll(ray, 100f, _layerMask);
             In($"You Hit {_hit.transform}");
-        }
-
-        void FixedUpdate()
-        {
-            CanNotPlant();
         }
 
         /// <summary> Tạo viền khi click vào đối tượng để nó focus </summary>
@@ -95,7 +95,7 @@ namespace CuaHang
         /// <summary> Bật item drag với item được _Hit chiếu</summary>
         void SetItemDrag()
         {
-            if (!_enableSnapping || !_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
+            if (!_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
 
             Item item = _itemFocus.transform.GetComponent<Item>();
 
@@ -115,11 +115,11 @@ namespace CuaHang
             //  Làm tròn vị trí temp để nó giống snap
             if (_enableSnapping)
             {
-                Vector3 _hitPoint = _hit.point;
+                Vector3 hitPoint = _hit.point;
 
-                float sX = Mathf.Round(_hitPoint.x / _tileSize) * _tileSize + tileOffset.x;
-                float sZ = Mathf.Round(_hitPoint.z / _tileSize) * _tileSize + tileOffset.z;
-                float sY = Mathf.Round(_hitPoint.y / _tileSize) * _tileSize + tileOffset.y;
+                float sX = Mathf.Round(hitPoint.x / _tileSize) * _tileSize + _tileOffset.x;
+                float sZ = Mathf.Round(hitPoint.z / _tileSize) * _tileSize + _tileOffset.z;
+                float sY = Mathf.Round(hitPoint.y / _tileSize) * _tileSize + _tileOffset.y;
 
                 Vector3 snappedPosition = new Vector3(sX, sY, sZ);
                 _objDrag.transform.position = snappedPosition;
@@ -137,14 +137,14 @@ namespace CuaHang
 
             // rotate model
             if (_objDrag)
+            {
                 if (_objDrag._modelsHolding)
                 {
                     float scrollValue = Input.mouseScrollDelta.y;
-
-                    float rotationAngle = scrollValue * rotationSpeed;
-
+                    float rotationAngle = scrollValue * _rotationSpeed;
                     _objDrag._modelsHolding.Rotate(Vector3.up, rotationAngle);
                 }
+            }
         }
     }
 

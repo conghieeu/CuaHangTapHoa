@@ -1549,7 +1549,7 @@ GameObject:
   - component: {fileID: 7922635133017891253}
   - component: {fileID: 4526812699781064335}
   m_Layer: 0
-  m_Name: KhachHang_2
+  m_Name: KhachHang_2_PRE
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

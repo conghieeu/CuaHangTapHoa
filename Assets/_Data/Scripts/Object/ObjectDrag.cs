@@ -51,6 +51,14 @@ namespace CuaHang
             _isDragging = true;
         }
 
+        void ClickToDropItem()
+        {
+            if (Input.GetMouseButtonDown(0) && IsCanPlant() && _itemDragging)
+            {
+                OnDropItem();
+            }
+        }
+
         /// <summary> Huỷ tôi không muốn đặt item nữa </summary>
         public void OnDropItem()
         {
@@ -59,14 +67,6 @@ namespace CuaHang
             _itemDragging = null;
             _isDragging = false;
             gameObject.SetActive(false);
-        }
-
-        void ClickToDropItem()
-        {
-            if (Input.GetMouseButtonDown(0) && IsCanPlant() && _itemDragging)
-            {
-                OnDropItem();
-            }
         }
 
         void SetMaterial()
@@ -104,7 +104,6 @@ namespace CuaHang
                     return true;
                 }
             }
-
             return false;
         }
     }

@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using CuaHang;
@@ -11,7 +12,16 @@ namespace Hieu.Player
 
         [Space]
         public Transform _cameraTransform;
-        public Camera _camera;
+
+        [Serializable]
+        public enum STATE_ANIM
+        {
+            Idle = 0,
+            Walk = 1,
+            Picking = 2,
+            Carring = 3,
+        }
+        public STATE_ANIM _stageAnim;
 
         [SerializeField] Vector3 _inputVector;
 
@@ -22,19 +32,18 @@ namespace Hieu.Player
         {
             _ctrl = GetComponent<PlayerCtrl>();
             _rb = GetComponent<Rigidbody>();
-            _rb.angularDrag = 0.0f;
+            _rb.angularDrag = 0.0f; // lực cản khi xoay vật
         }
 
         void Update()
         {
             SetInputVector();
+            SetAnimator();
         }
 
         void FixedUpdate()
         {
-
             Movement();
-
         }
 
         private void Movement()
@@ -49,6 +58,29 @@ namespace Hieu.Player
                 if (!_ctrl._objectDrag._isDragging) transform.forward = direction;
             }
         }
+
+        void SetAnimator()
+        { 
+            Animator anim = _ctrl._anim; 
+
+            // animation idle
+            if (_inputVector == Vector3.zero && _stageAnim != STATE_ANIM.Idle)
+            {
+                _stageAnim = STATE_ANIM.Idle;
+                SetAnim();
+                return;
+            }
+
+            // animation walk
+            if (_inputVector != Vector3.zero && _stageAnim != STATE_ANIM.Walk)
+            {
+                _stageAnim = STATE_ANIM.Walk;
+                SetAnim();
+                return;
+            }
+        }
+
+        void SetAnim() => _ctrl._anim.SetInteger("State", (int)_stageAnim);
 
         void SetInputVector()
         {

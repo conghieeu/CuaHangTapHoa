@@ -12,7 +12,6 @@ namespace CuaHang
         public ItemSO _SO; // SO chỉ được load một lần
         public TypeID _typeID;
         public Type _type;
-        public string _ID; // Mỗi đối tượng đc cấp 1 ID khác nhau
         public string _name;
         public float _price;
         public string _currency;
@@ -25,7 +24,7 @@ namespace CuaHang
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
         public Transform _thisParent; // là cha của item này
-        
+
         BoxCollider _coll;
 
         public void SetParent(Transform thisParent, Item itemParent, bool isCanDrag)
@@ -114,6 +113,8 @@ namespace CuaHang
                 }
             }
 
+            _coll.enabled = false;
+
             if (_itemSlot)
             {
                 _itemSlot.SetItemsDrag(false);
@@ -126,13 +127,13 @@ namespace CuaHang
             transform.position = location.position;
             transform.rotation = location.rotation;
 
+            _coll.enabled = true;
+
             if (_itemSlot)
             {
                 _itemSlot.SetItemsDrag(true);
             }
         }
-
-
 
     }
 }

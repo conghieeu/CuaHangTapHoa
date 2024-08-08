@@ -61,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 930ecfa0fd0df3e4ba5493b0e3fecf35, type: 2}
+  - {fileID: 2100000, guid: 92f66c4c14591d042b981e06d0a23285, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -141,7 +141,7 @@ Transform:
   m_GameObject: {fileID: 6064686546783510566}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.6, y: 0, z: -2.581}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -165,11 +165,11 @@ MonoBehaviour:
   _itemDragging: {fileID: 0}
   _isDragging: 0
   _isDistance: 0
-  _isCanPlant: 0
   _groundTag: Ground
   _models: {fileID: 2869998791410652833}
-  _green: {fileID: 2100000, guid: 930ecfa0fd0df3e4ba5493b0e3fecf35, type: 2}
-  _red: {fileID: 2100000, guid: d5ccfc76241bd7347b6ebbd4705d14a1, type: 2}
+  _modelsHolding: {fileID: 0}
+  _green: {fileID: 2100000, guid: a05bd2674206604469096bab4a003b1c, type: 2}
+  _red: {fileID: 2100000, guid: e73aac614011c224cad13fcc81b550bc, type: 2}
   _sensorAround: {fileID: 7823346145357002467}
   _sensorGround: {fileID: 7327548470162622635}
 --- !u!1 &7665742356841031233
@@ -216,6 +216,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03107e4c994ee9241b32b2dfb9a3f1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layer:
+    serializedVersion: 2
+    m_Bits: 0
   _hits: []
   _eventTrigger:
     m_PersistentCalls:
@@ -265,6 +268,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 03107e4c994ee9241b32b2dfb9a3f1f5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _layer:
+    serializedVersion: 2
+    m_Bits: 0
   _hits: []
   _eventTrigger:
     m_PersistentCalls:

@@ -3,7 +3,12 @@ guid: 21ad64c06d11e3640893ab586b38babb
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Material.002
+    second: {fileID: 2100000, guid: 03cea75956fea834698cd855e1931aa0, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -77,8 +82,7 @@ ModelImporter:
     legacyComputeAllNormalsFromSmoothingGroupsWhenMeshHasBlendShapes: 0
     blendShapeNormalImportMode: 1
     normalSmoothingSource: 0
-  referencedClips:
-  - b2d38a8f7d3517649a3b9f6fc9ff88be
+  referencedClips: []
   importAnimation: 1
   humanDescription:
     serializedVersion: 3
