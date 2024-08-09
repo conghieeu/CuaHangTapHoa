@@ -24,6 +24,9 @@ namespace CuaHang
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
         public Transform _thisParent; // là cha của item này
+        
+        [Header("Other")]
+        public Transform _waitingPoint;
 
         BoxCollider _coll;
 

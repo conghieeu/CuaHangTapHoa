@@ -37,7 +37,7 @@ namespace CuaHang.AI
         protected virtual bool IsHitItemTarget()
         {
             if (_itemTarget == null) return false;
-            
+
             foreach (var item in _boxSensor._hits)
             {
                 if (item == _itemTarget.transform)
@@ -51,7 +51,13 @@ namespace CuaHang.AI
         /// <summary> Di chuyển tới property _ItemTarget </summary>
         protected virtual void MoveToTarget()
         {
-            if (_itemTarget != null)
+            if (_itemTarget == null) return;
+
+            if (_itemTarget._waitingPoint)
+            {
+                _navMeshAgent.SetDestination(_itemTarget._waitingPoint.transform.position);
+            }
+            else
             {
                 _navMeshAgent.SetDestination(_itemTarget.transform.position);
             }
@@ -65,7 +71,8 @@ namespace CuaHang.AI
             // Kiểm tra tới được điểm target
             float distance = Vector3.Distance(transform.position, target.position);
 
-            if(distance <= 0.5f) {
+            if (distance <= 0.5f)
+            {
                 return true;
             }
 
