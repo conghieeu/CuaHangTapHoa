@@ -180,7 +180,7 @@ namespace CuaHang.AI
                 _itemFinding = null;
                 return false;
             }
-            if (MoveToTarget(itemTarget.transform))
+            if (MoveToTarget(itemTarget._waitingPoint.transform))
             {
                 return true;
             }

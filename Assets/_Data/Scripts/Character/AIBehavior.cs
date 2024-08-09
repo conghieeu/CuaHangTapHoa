@@ -18,7 +18,7 @@ namespace CuaHang.AI
         protected NavMeshAgent _navMeshAgent;
 
         public bool _isToDestination; // đén đích rồi
-        public float _distanceMove = 0.5f;
+        public float _stopDistance = 0.5f;
 
         protected virtual void Awake()
         {
@@ -41,7 +41,7 @@ namespace CuaHang.AI
             // Kiểm tra tới được điểm target
             float distance = Vector3.Distance(transform.position, target.position);
 
-            if (distance <= _distanceMove)
+            if (distance <= _stopDistance)
             {
                 _isToDestination = true;
                 return true;

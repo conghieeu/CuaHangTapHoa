@@ -24,19 +24,22 @@ namespace CuaHang.AI
             Item parcel = null;
             if (!_parcelHold) parcel = GetParcel();
 
-            // Parcel có rỗng không ?
-            bool parcelHasItem = false;
-            if (_parcelHold) parcelHasItem = _parcelHold._itemSlot.IsAnyItem();
-
-            // Di chuyển đến parcel
-            if (parcel) MoveToTarget(parcel.transform);
-
             // Nhặt parcel
-            if (!_parcelHold && _isToDestination && !parcel._itemParent)
+            if (parcel)
             {
-                _parcelHold = parcel;
-                _parcelHold.SetParent(_ItemHoldingPoint, null, true);
-                return;
+                if (MoveToTarget(parcel.transform))
+                {
+                    parcel.SetParent(_ItemHoldingPoint, null, true);
+                    _parcelHold = parcel;
+                    return;
+                }
+            }
+
+            // Parcel có item không
+            bool parcelHasItem = false;
+            if (_parcelHold)
+            {
+                parcelHasItem = _parcelHold._itemSlot.IsAnyItem();
             }
 
             if (_parcelHold == null) return;
@@ -78,7 +81,7 @@ namespace CuaHang.AI
                 return;
             }
         }
- 
+
         /// <summary> Tìm item có item Slot và còn chỗ trống </summary>
         Item GetItem(TypeID typeID)
         {

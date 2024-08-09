@@ -97,16 +97,13 @@ namespace CuaHang
         {
             if (!_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
 
-            CollDragItem collItem = _itemFocus.transform.GetComponent<CollDragItem>();
+            Item item = _itemFocus.transform.GetComponent<Item>();
 
-            if (collItem)
-            {
-                if (collItem._item._isCanDrag)
+            if (item) if (item._isCanDrag)
                 {
-                    collItem._item.DragItem();
-                    _objDrag.PickUpItem(collItem._item);
+                    item.DragItem();
+                    _objDrag.PickUpItem(item);
                 }
-            }
         }
 
         /// <summary> Di chuyen item </summary>
