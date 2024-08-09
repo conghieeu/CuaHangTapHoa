@@ -32,7 +32,7 @@ namespace CuaHang.AI
         public bool _isPickingItem; // Khi Khách hàng đang pick item
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
         public List<Item> _itemsCard;
-        
+
         [SerializeField] private bool _playerConfirmPay; // Player xác nhận thanh toán
 
         bool _isPay;
@@ -51,7 +51,7 @@ namespace CuaHang.AI
 
         private void FixedUpdate()
         {
-            if(_isPickingItem) return;
+            if (_isPickingItem) return;
 
             SetItemNeed();
 
@@ -116,7 +116,7 @@ namespace CuaHang.AI
                 _stageAnim = STATE_ANIM.Picking;
                 SetAnim();
                 return;
-            } 
+            }
 
             // Idle
             if (_navMeshAgent.velocity.sqrMagnitude == 0 && _stageAnim != STATE_ANIM.Idle)
@@ -160,10 +160,6 @@ namespace CuaHang.AI
 
         TypeID GetRandomItemBuy()
         {
-            // Lấy itemTypeID ngẫu nhiên (tạm cố định mỗi cái apple_1)
-            // Array values = Enum.GetValues(typeof(TypeID));
-            // System.Random random = new System.Random();
-            // TypeID randomTypeID = (TypeID)values.GetValue(random.Next(values.Length)); 
             return TypeID.apple_1;
         }
 
@@ -177,11 +173,18 @@ namespace CuaHang.AI
         /// <summary> Chạy tới vị trí item cần lấy </summary>
         bool GoToItemNeed()
         {
-            _itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo
+            Item itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo
 
-            if (_itemTarget == null) _itemFinding = null;
-            if (IsHitItemTarget()) return true;
-            MoveToTarget();
+            if (itemTarget == null)
+            {
+                _itemFinding = null;
+                return false;
+            }
+            if (MoveToTarget(itemTarget.transform))
+            {
+                return true;
+            }
+
             return false;
         }
 
@@ -261,7 +264,7 @@ namespace CuaHang.AI
 
         IEnumerator IsPickingItem()
         {
-            _isPickingItem = true; 
+            _isPickingItem = true;
             yield return new WaitForSeconds(2f);
             _isPickingItem = false;
         }
