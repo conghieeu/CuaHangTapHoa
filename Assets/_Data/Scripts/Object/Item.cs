@@ -50,7 +50,7 @@ namespace CuaHang
 
         protected virtual void Awake()
         {
-            _coll = GetComponent<BoxCollider>();
+            _coll = GetComponentInChildren<BoxCollider>();
             _itemSlot = GetComponentInChildren<ItemSlot>();
             SetValueSO();
         }

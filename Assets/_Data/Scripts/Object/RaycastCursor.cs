@@ -97,14 +97,14 @@ namespace CuaHang
         {
             if (!_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
 
-            Item item = _itemFocus.transform.GetComponent<Item>();
+            CollDragItem collItem = _itemFocus.transform.GetComponent<CollDragItem>();
 
-            if (item)
+            if (collItem)
             {
-                if (item._isCanDrag)
+                if (collItem._item._isCanDrag)
                 {
-                    item.DragItem();
-                    _objDrag.PickUpItem(item);
+                    collItem._item.DragItem();
+                    _objDrag.PickUpItem(collItem._item);
                 }
             }
         }
