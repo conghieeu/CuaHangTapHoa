@@ -15,6 +15,7 @@ namespace CuaHang.AI
         private void FixedUpdate()
         {
             Behavior();
+            Animation();
         }
 
         /// <summary>  Khi đáp ứng sự kiện hãy gọi vào đây nên nó đưa phán đoán hành vi tiếp theo nhân viên cần làm </summary>
@@ -30,6 +31,7 @@ namespace CuaHang.AI
                 if (MoveToTarget(parcel.transform))
                 {
                     parcel.SetParent(_ItemHoldingPoint, null, true);
+                    parcel._isCanDrag = false;
                     _parcelHold = parcel;
                     return;
                 }
@@ -62,6 +64,7 @@ namespace CuaHang.AI
                 if (MoveToTarget(storage.transform))
                 {
                     storage._itemSlot.TryAddItemToItemSlot(_parcelHold, true);
+                    _parcelHold._isCanDrag = true;
                     _parcelHold = null;
                 }
                 return;
@@ -76,10 +79,38 @@ namespace CuaHang.AI
                 {
                     trash._itemSlot.TryAddItemToItemSlot(_parcelHold, true);
                     trash.AddItemToTrash(_parcelHold);
+                    _parcelHold._isCanDrag = true;
                     _parcelHold = null;
                 }
                 return;
             }
+        }
+
+        Item parcel;
+        void Animation()
+        {
+            float velocity = _navMeshAgent.velocity.sqrMagnitude;
+
+            // Idle
+            if (velocity == 0 && _stageAnim != STATE_ANIM.Idle || velocity == 0 && parcel != _parcelHold)
+            {
+                if (_parcelHold) _stageAnim = STATE_ANIM.Idle_Carrying;
+                else _stageAnim = STATE_ANIM.Idle;
+                parcel = _parcelHold;
+                SetAnim();
+                return;
+            }
+
+            // Walk
+            if (velocity > 0.1f && _stageAnim != STATE_ANIM.Walk || velocity > 0.1f && parcel != _parcelHold)
+            {
+                if (_parcelHold) _stageAnim = STATE_ANIM.Walk_Carrying;
+                else _stageAnim = STATE_ANIM.Walk;
+                parcel = _parcelHold;
+                SetAnim();
+                return;
+            }
+
         }
 
         /// <summary> Tìm item có item Slot và còn chỗ trống </summary>

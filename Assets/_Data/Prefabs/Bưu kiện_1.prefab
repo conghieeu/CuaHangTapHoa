@@ -72,8 +72,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2623791704684918421}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.25, y: 1.2, z: -0.009}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.09, y: 0.119, z: -0.212}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -183,7 +183,6 @@ MonoBehaviour:
   _SO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
   _typeID: 1
   _type: 1
-  _ID: 
   _name: "B\u01B0u ki\u1EC7n"
   _price: 0
   _currency: 
@@ -191,10 +190,10 @@ MonoBehaviour:
   _isCanSell: 0
   _txtPrice: {fileID: 0}
   _models: {fileID: 8084133237305432176}
-  _coll: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
   _thisParent: {fileID: 0}
+  _waitingPoint: {fileID: 0}
 --- !u!1 &9165246386765471154
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,8 +218,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9165246386765471154}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.267, y: 1.2, z: 0.156}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.082, y: 0.119, z: 0.175}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

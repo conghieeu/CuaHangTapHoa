@@ -11,15 +11,7 @@ namespace CuaHang.AI
 {
     public class Customer : AIBehavior
     {
-        [Serializable]
-        public enum STATE_ANIM
-        {
-            Idle = 0,
-            Walk = 1,
-            Picking = 2,
-            Idle_Carrying = 3,
-            Walk_Carrying = 4,
-        }
+
 
         [Header("Customer")]
         public float _totalPay;
@@ -27,8 +19,6 @@ namespace CuaHang.AI
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
         public Transform _outShopPoint; // Là điểm sẽ tới nếu rời shop
         public bool _isNotNeedBuy; // Không cần mua gì nữa
-        public Animator _anim;
-        public STATE_ANIM _stageAnim;
         public bool _isPickingItem; // Khi Khách hàng đang pick item
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
         public List<Item> _itemsCard;
@@ -40,7 +30,6 @@ namespace CuaHang.AI
         protected override void Awake()
         {
             base.Awake();
-            _anim = GetComponentInChildren<Animator>();
         }
 
         protected override void Start()
@@ -134,8 +123,6 @@ namespace CuaHang.AI
                 return;
             }
         }
-
-        void SetAnim() => _anim.SetInteger("State", (int)_stageAnim);
 
         /// <summary> Chọn ngẫu nhiên item mà khách hàng này muốn lấy </summary>
         void SetItemNeed()
