@@ -24,7 +24,7 @@ namespace CuaHang
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
         public Transform _thisParent; // là cha của item này
-        
+
         [Header("Other")]
         public Transform _waitingPoint;
 
@@ -103,9 +103,11 @@ namespace CuaHang
                     }
                 }
             }
+
+            DropItem(null); // let z pos = 0
         }
 
-        public void DragItem()
+        public virtual void DragItem()
         {
             if (_itemParent)
             {
@@ -124,11 +126,15 @@ namespace CuaHang
             }
         }
 
-        public void DropItem(Transform location)
+        public virtual void DropItem(Transform location)
         {
             SetParent(null, null, true);
-            transform.position = location.position;
-            transform.rotation = location.rotation;
+
+            if (location)
+            {
+                transform.position = location.position;
+                transform.rotation = location.rotation;
+            }
 
             _coll.enabled = true;
 

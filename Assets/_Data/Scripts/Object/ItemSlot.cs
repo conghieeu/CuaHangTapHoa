@@ -37,7 +37,7 @@ namespace CuaHang
             _item = GetComponentInParent<Item>();
             LoadSlots();
         }
-
+ 
         private void LoadSlots()
         {
             for (int i = 0; i < transform.childCount; i++)

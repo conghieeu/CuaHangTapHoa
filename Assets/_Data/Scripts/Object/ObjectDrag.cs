@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.AI.Navigation;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CuaHang
 {
@@ -18,6 +20,7 @@ namespace CuaHang
         [SerializeField] String _groundTag = "Ground";
         [SerializeField] Transform _models;
         public Transform _modelsHolding;
+        public NavMeshSurface _navMeshSurface;
         [SerializeField] Material _green, _red;
 
         [Space]
@@ -56,6 +59,7 @@ namespace CuaHang
             if (Input.GetMouseButtonDown(0) && IsCanPlant() && _itemDragging)
             {
                 OnDropItem();
+                _navMeshSurface.BuildNavMesh();
             }
         }
 
@@ -91,7 +95,7 @@ namespace CuaHang
 
         bool IsCanPlant()
         {
-            Debug.Log($"{_sensorAround._hits.Count == 0} && {IsTouchGround()} && { _isDistance}");
+            // Debug.Log($"{_sensorAround._hits.Count == 0} && {IsTouchGround()} && { _isDistance}");
             return _sensorAround._hits.Count == 0 && IsTouchGround() && _isDistance;
         }
 

@@ -182,7 +182,7 @@ namespace CuaHang.AI
             {
                 CustomerPooler.Instance.DeleteObject(transform);
 
-                // xoá tắt cả item đăng giữ
+                // xoá tắt cả item dang giữ
                 foreach (var item in _itemsCard)
                 {
                     item.SetParent(null, null, false);

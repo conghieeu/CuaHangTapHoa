@@ -20,6 +20,10 @@ namespace CuaHang
             _waitingLine = GetComponentInChildren<WaitingLine>();
         }
 
+        private void Start()
+        {
+        }
+
         private void Update()
         {
             if (Input.GetKeyDown(KeyCode.T))
@@ -30,10 +34,12 @@ namespace CuaHang
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.CompareTag("Player"))
+            if (other.tag == "Player")
             {
                 if (_waitingLine._waitingSlots[0]._customer)
+                { 
                     _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().PlayerConfirmPay();
+                }
             }
         }
 
@@ -45,6 +51,21 @@ namespace CuaHang
             if (parcel)
             {
                 parcel.transform.position = _spawnTrans.position;
+            }
+        }
+
+        /// <summary> Đặt lại toạ độ trục Z = 0 để nó khớp với sàn </summary>
+        public override void DropItem(Transform location)
+        {
+            base.DropItem(location);
+
+            for (int i = 0; i < _waitingLine._waitingSlots.Count; i++)
+            {
+                Vector3 iPos = _waitingLine._waitingSlots[i]._slot.transform.position;
+                
+                iPos.y = 0;
+
+                _waitingLine._waitingSlots[i]._slot.transform.position = iPos;
             }
         }
     }

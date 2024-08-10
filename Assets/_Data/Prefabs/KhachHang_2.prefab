@@ -1979,7 +1979,7 @@ NavMeshAgent:
   m_Acceleration: 8
   avoidancePriority: 50
   m_AngularSpeed: 1500
-  m_StoppingDistance: 0
+  m_StoppingDistance: 0.4
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
@@ -2000,19 +2000,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
-  _name: KhachHang_1
-  _itemTarget: {fileID: 0}
-  _itemHolding: {fileID: 0}
   _gameManager: {fileID: 0}
   _mayTinh: {fileID: 0}
+  _stageAnim: 0
+  _isToDestination: 0
+  _stopDistance: 0.5
+  _anim: {fileID: 0}
   _totalPay: 0
   _itemFinding: {fileID: 0}
   _slotWaiting: {fileID: 0}
   _outShopPoint: {fileID: 0}
   _isNotNeedBuy: 0
-  _playerConfirmPay: 0
+  _isPickingItem: 0
   _listItemBuy: 
   _itemsCard: []
+  _playerConfirmPay: 0
 --- !u!1 &7809002696507283467
 GameObject:
   m_ObjectHideFlags: 0

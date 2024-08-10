@@ -50,7 +50,7 @@ namespace CuaHang.AI
             Item shelf = GetItem(TypeID.table_1);
             if (shelf && parcelHasItem)
             {
-                if (MoveToTarget(shelf.transform))
+                if (MoveToTarget(shelf._waitingPoint.transform))
                 {
                     shelf._itemSlot.ReceiverItems(_parcelHold._itemSlot, true);
                 }
