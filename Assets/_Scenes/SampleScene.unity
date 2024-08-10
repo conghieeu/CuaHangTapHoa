@@ -1336,6 +1336,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDebugLog: 0
   _objDrag: {fileID: 6334553454394321204}
+  _cameraCtrl: {fileID: 1659902826}
   _itemFocus: {fileID: 0}
   _enableSnapping: 0
   _rotationSpeed: 10
@@ -4215,8 +4216,8 @@ Camera:
   m_GameObject: {fileID: 963194225}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.78964937, g: 0.8162196, b: 0.8584906, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -5700,7 +5701,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _rotationSpeed: 1.7
-  _objectForcus: {fileID: 0}
+  _moveSpeed: 30
+  _characterFollow: {fileID: 0}
   _objectFollow: {fileID: 1143578435}
   _cameraHolder: {fileID: 1751169461}
   _cam: {fileID: 963194227}
@@ -6103,7 +6105,7 @@ Transform:
   m_GameObject: {fileID: 1751169460}
   serializedVersion: 2
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 4, z: -4}
+  m_LocalPosition: {x: 0, y: 10, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6871,6 +6873,7 @@ GameObject:
   - component: {fileID: 3431642051607349710}
   - component: {fileID: 6557031565226900140}
   - component: {fileID: 7058435072633779224}
+  - component: {fileID: 7058435072633779225}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -7436,6 +7439,24 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &7058435072633779225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2270620335445421405}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!136 &7062217120032368675
 CapsuleCollider:
   m_ObjectHideFlags: 0

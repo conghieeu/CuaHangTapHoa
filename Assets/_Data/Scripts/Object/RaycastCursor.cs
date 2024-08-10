@@ -7,6 +7,7 @@ namespace CuaHang
     {
         [Header("RaycastCursor")]
         public ObjectDrag _objDrag;
+        public CameraControl _cameraCtrl;
         public Transform _itemFocus;
         public bool _enableSnapping; // bật chế độ snapping
         public float _rotationSpeed = 10.0f; // Tốc độ xoay
@@ -27,6 +28,7 @@ namespace CuaHang
         {
             SetRayHit();
             SetItemFocus();
+            SetItemFocusToCamera();
             SetItemDrag();
 
             MoveItemDrag();
@@ -65,6 +67,8 @@ namespace CuaHang
                 SetOutlines(_itemFocus, false);
                 _itemFocus = null;
             }
+
+
         }
 
         /// <summary> Tìm outline trong đối tượng và bật tắt viền của nó </summary>
@@ -104,6 +108,18 @@ namespace CuaHang
                     item.DragItem();
                     _objDrag.PickUpItem(item);
                 }
+        }
+
+        void SetItemFocusToCamera()
+        {
+            if (!_itemFocus || !Input.GetKeyDown(KeyCode.F)) return;
+
+            Item item = _itemFocus.transform.GetComponent<Item>();
+
+            if (item) 
+            {
+                _cameraCtrl._characterFollow = _itemFocus;
+            }
         }
 
         /// <summary> Di chuyen item </summary>

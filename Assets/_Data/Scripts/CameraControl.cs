@@ -7,22 +7,23 @@ namespace CuaHang
     public class CameraControl : MonoBehaviour
     {
         public float _rotationSpeed;
-        public Transform _objectForcus;
+        public float _moveSpeed;
+        public Transform _characterFollow;
         public Transform _objectFollow; // là đối tượng theo giỏi object forcus
         public Transform _cameraHolder;
         public Camera _cam;
 
         private void Start()
         {
-            _objectForcus = PlayerCtrl.Instance.transform;
+            _characterFollow = PlayerCtrl.Instance.transform;
             _cam = Camera.main;
         }
 
         private void Update()
         {
-            _objectFollow.transform.position = _objectForcus.transform.position;
-            _cam.transform.position = _cameraHolder.transform.position;
-            _cam.transform.rotation = _cameraHolder.transform.rotation;
+            _objectFollow.position = Vector3.MoveTowards(_objectFollow.position, _characterFollow.position, _moveSpeed * Time.deltaTime);
+            _cam.transform.position = _cameraHolder.position;
+            _cam.transform.rotation = _cameraHolder.rotation;
 
             // Kiểm tra nếu giữ chuột phải
             if (Input.GetMouseButton(1))
@@ -34,8 +35,11 @@ namespace CuaHang
                 _objectFollow.Rotate(Vector3.up, mouseX * _rotationSpeed, Space.Self);
             }
 
-
-
+            // return forcus to player
+            if (Input.GetKeyDown(KeyCode.BackQuote))
+            {
+                _characterFollow = PlayerCtrl.Instance.transform;
+            }
         }
     }
 }
