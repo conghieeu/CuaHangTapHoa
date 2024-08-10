@@ -116,7 +116,7 @@ namespace CuaHang
 
             Item item = _itemFocus.transform.GetComponent<Item>();
 
-            if (item) 
+            if (item)
             {
                 _cameraCtrl._characterFollow = _itemFocus;
             }

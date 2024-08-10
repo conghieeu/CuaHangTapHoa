@@ -5705,6 +5705,7 @@ MonoBehaviour:
   _characterFollow: {fileID: 0}
   _objectFollow: {fileID: 1143578435}
   _cameraHolder: {fileID: 1751169461}
+  _objectDrag: {fileID: 6334553454394321204}
   _cam: {fileID: 963194227}
 --- !u!1 &1686941734
 GameObject:

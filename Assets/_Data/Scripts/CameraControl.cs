@@ -11,6 +11,7 @@ namespace CuaHang
         public Transform _characterFollow;
         public Transform _objectFollow; // là đối tượng theo giỏi object forcus
         public Transform _cameraHolder;
+        public ObjectDrag _objectDrag;
         public Camera _cam;
 
         private void Start()
@@ -21,6 +22,7 @@ namespace CuaHang
 
         private void Update()
         {
+            // Move forward character follow
             _objectFollow.position = Vector3.MoveTowards(_objectFollow.position, _characterFollow.position, _moveSpeed * Time.deltaTime);
             _cam.transform.position = _cameraHolder.position;
             _cam.transform.rotation = _cameraHolder.rotation;
@@ -35,7 +37,12 @@ namespace CuaHang
                 _objectFollow.Rotate(Vector3.up, mouseX * _rotationSpeed, Space.Self);
             }
 
-            // return forcus to player
+            // return _characterFollow = player 
+            if (_objectDrag._itemDragging)
+                if (_objectDrag._itemDragging.transform == _characterFollow)
+                {
+                    _characterFollow = PlayerCtrl.Instance.transform;
+                }
             if (Input.GetKeyDown(KeyCode.BackQuote))
             {
                 _characterFollow = PlayerCtrl.Instance.transform;
