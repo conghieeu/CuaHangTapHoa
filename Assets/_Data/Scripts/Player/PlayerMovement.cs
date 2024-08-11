@@ -8,11 +8,6 @@ namespace Hieu.Player
 {
     public class PlayerMovement : MonoBehaviour
     {
-        public float _moveSpeed;
-
-        [Space]
-        public Transform _cam;
-
         [Serializable]
         public enum STATE_ANIM
         {
@@ -22,7 +17,13 @@ namespace Hieu.Player
             Idle_Carrying = 3,
             Walk_Carrying = 4,
         }
+
+
+        [Space] 
+        public float _moveSpeed;
+        public Transform _cam;
         public STATE_ANIM _stageAnim;
+        public bool _triggerDragging; // trigger player đang drag item
 
         [SerializeField] Vector3 _moveDir;
 
@@ -51,7 +52,7 @@ namespace Hieu.Player
         {
             // Input
             float horInput = Input.GetAxisRaw("Horizontal");
-            float verInput = Input.GetAxisRaw("Vertical");  
+            float verInput = Input.GetAxisRaw("Vertical");
 
             // camera dir
             Vector3 camForward = _cam.forward;
@@ -77,24 +78,30 @@ namespace Hieu.Player
                 velocity.y = 0;
                 transform.forward = velocity;
             }
+
+
         }
 
         void SetAnimator()
-        {
-            Animator anim = _ctrl._anim;
+        { 
+            bool _isDragItem = _ctrl._objectDrag.gameObject.activeInHierarchy;
 
-            // animation idle
-            if (_moveDir == Vector3.zero && _stageAnim != STATE_ANIM.Idle)
+            // Idle
+            if (_moveDir == Vector3.zero && (_stageAnim != STATE_ANIM.Idle || _triggerDragging != _isDragItem))
             {
-                _stageAnim = STATE_ANIM.Idle;
+                if (_isDragItem) _stageAnim = STATE_ANIM.Idle_Carrying;
+                else _stageAnim = STATE_ANIM.Idle;
+                _triggerDragging = _isDragItem;
                 SetAnim();
                 return;
             }
 
-            // animation walk
-            if (_moveDir != Vector3.zero && _stageAnim != STATE_ANIM.Walk)
+            // Walk
+            if (_moveDir != Vector3.zero && _stageAnim != STATE_ANIM.Walk || _triggerDragging != _isDragItem)
             {
-                _stageAnim = STATE_ANIM.Walk;
+                if (_isDragItem) _stageAnim = STATE_ANIM.Walk_Carrying;
+                else _stageAnim = STATE_ANIM.Walk;
+                _triggerDragging = _isDragItem;
                 SetAnim();
                 return;
             }
