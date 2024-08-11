@@ -186,7 +186,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: a6ab7460efed4b84098bbeee1caa5ad1, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 281833196}
   m_SourcePrefab: {fileID: 100100000, guid: a6ab7460efed4b84098bbeee1caa5ad1, type: 3}
 --- !u!4 &5822582 stripped
 Transform:
@@ -822,6 +825,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _gameManager: {fileID: 0}
   _textCoin: {fileID: 268710920}
+--- !u!1 &281833195 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: a6ab7460efed4b84098bbeee1caa5ad1, type: 3}
+  m_PrefabInstance: {fileID: 5822581}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &281833196
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 281833195}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &288444586
 GameObject:
   m_ObjectHideFlags: 0
@@ -2479,7 +2505,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 573a35256a0b17244ab233d037292747, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1233843344}
   m_SourcePrefab: {fileID: 100100000, guid: 573a35256a0b17244ab233d037292747, type: 3}
 --- !u!4 &451097167 stripped
 Transform:
@@ -2774,10 +2803,6 @@ PrefabInstance:
     - target: {fileID: 2792255803312273508, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
       propertyPath: m_Name
       value: "C\xE1i b\xE0n_3"
-      objectReference: {fileID: 0}
-    - target: {fileID: 3655790261670572774, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
-      propertyPath: enableDebugLog
-      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7926259378843185262, guid: 58c0b87738ffd1645a523374215d31ec, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3301,7 +3326,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 85703428be2c22a4387a5dde9cc4d020, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 751302917}
   m_SourcePrefab: {fileID: 100100000, guid: 85703428be2c22a4387a5dde9cc4d020, type: 3}
 --- !u!4 &625238524 stripped
 Transform:
@@ -3856,6 +3884,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 171a212e8f2c6054b9d8314c3061d920, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &751302914 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 85703428be2c22a4387a5dde9cc4d020, type: 3}
+  m_PrefabInstance: {fileID: 625238523}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &751302917
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 751302914}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &772120783
 GameObject:
   m_ObjectHideFlags: 0
@@ -4266,8 +4317,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalRotation: {x: 0.058881592, y: 0.7344718, z: -0.06425799, w: 0.6730194}
+  m_LocalPosition: {x: -0.2530005, y: 1.52, z: -3.85}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4780,6 +4831,29 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1194576426}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &1233843341 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 573a35256a0b17244ab233d037292747, type: 3}
+  m_PrefabInstance: {fileID: 451097166}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1233843344
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233843341}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  outlineMode: 0
+  outlineColor: {r: 1, g: 1, b: 1, a: 1}
+  outlineWidth: 2
+  precomputeOutline: 0
+  bakeKeys: []
+  bakeValues: []
 --- !u!1 &1273658693
 GameObject:
   m_ObjectHideFlags: 0
@@ -5700,13 +5774,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23b083cd7eeddcb4ba79b5adfaa30d19, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _camSizeDefault: 5
   _rotationSpeed: 1.7
   _moveSpeed: 30
   _characterFollow: {fileID: 0}
   _objectFollow: {fileID: 1143578435}
   _cameraHolder: {fileID: 1751169461}
   _objectDrag: {fileID: 6334553454394321204}
-  _cam: {fileID: 963194227}
+  _raycastCursor: {fileID: 423970279}
+  _cam: {fileID: 0}
+  _isTargetToCamHere: 0
 --- !u!1 &1686941734
 GameObject:
   m_ObjectHideFlags: 0

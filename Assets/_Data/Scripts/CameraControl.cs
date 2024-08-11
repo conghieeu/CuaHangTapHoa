@@ -6,13 +6,16 @@ namespace CuaHang
 {
     public class CameraControl : MonoBehaviour
     {
+        public float _camSizeDefault = 5;
         public float _rotationSpeed;
         public float _moveSpeed;
         public Transform _characterFollow;
         public Transform _objectFollow; // là đối tượng theo giỏi object forcus
         public Transform _cameraHolder;
         public ObjectDrag _objectDrag;
+        public RaycastCursor _raycastCursor;
         public Camera _cam;
+        public bool _isTargetToCamHere;
 
         private void Start()
         {
@@ -21,6 +24,14 @@ namespace CuaHang
         }
 
         private void Update()
+        {
+            if (_isTargetToCamHere == false) CamCtrl();
+
+            SetCamFocus(_raycastCursor._itemFocus);
+            CamForcusShelf(_raycastCursor._itemFocus);
+        }
+
+        private void CamCtrl()
         {
             // Move forward character follow
             _objectFollow.position = Vector3.MoveTowards(_objectFollow.position, _characterFollow.position, _moveSpeed * Time.deltaTime);
@@ -36,17 +47,56 @@ namespace CuaHang
                 // Xoay đối tượng quanh trục Y dựa trên giá trị delta của chuột
                 _objectFollow.Rotate(Vector3.up, mouseX * _rotationSpeed, Space.Self);
             }
+        }
 
-            // return _characterFollow = player 
-            if (_objectDrag._itemDragging)
-                if (_objectDrag._itemDragging.transform == _characterFollow)
-                {
-                    _characterFollow = PlayerCtrl.Instance.transform;
-                }
-            if (Input.GetKeyDown(KeyCode.BackQuote))
+        /// <summary> Cam tập trung vào đối tượng Item </summary>
+        void SetCamFocus(Transform itemF)
+        {
+            // Thoát trạng thái tập trung của cam
+            if (Input.GetKeyDown(KeyCode.BackQuote) || _objectDrag.gameObject.activeInHierarchy)
             {
-                _characterFollow = PlayerCtrl.Instance.transform;
+                ResetCharacterCamFocus(PlayerCtrl.Instance.transform);
+            }
+
+            // F để tập trung vào đối tượng
+            if (itemF && Input.GetKeyDown(KeyCode.F))
+            {
+                Item item = itemF.GetComponent<Item>();
+
+                if (item)
+                {
+                    _characterFollow = itemF;
+                }
             }
         }
+
+        private void ResetCharacterCamFocus(Transform chFocus)
+        {
+            _characterFollow = chFocus;
+            _isTargetToCamHere = false;
+            _cam.orthographicSize = _camSizeDefault;
+        }
+
+        /// <summary> cam tập trung vào kệ hàng để điều chỉnh giá sản phẩm </summary>
+        void CamForcusShelf(Transform itemF)
+        {
+            if (itemF && Input.GetKeyDown(KeyCode.Z))
+            {
+                CamHere ch = itemF.GetComponentInChildren<CamHere>();
+
+                if (ch && !_isTargetToCamHere)
+                {
+                    _isTargetToCamHere = true;
+                    ch.SetCamFocusHere();
+                    return;
+                }
+
+                if (_isTargetToCamHere == true)  
+                {
+                    ResetCharacterCamFocus(itemF);
+                }
+            }
+        }
+
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 
 namespace CuaHang
 {
-    /// <summary> Aim con trỏ, có thể snap khi drag các item </summary>
+    /// <summary> Dùng raycast và drag các item </summary>
     public class RaycastCursor : HieuBehavior
     {
         [Header("RaycastCursor")]
@@ -28,7 +28,6 @@ namespace CuaHang
         {
             SetRayHit();
             SetItemFocus();
-            SetItemFocusToCamera();
             SetItemDrag();
 
             MoveItemDrag();
@@ -67,8 +66,6 @@ namespace CuaHang
                 SetOutlines(_itemFocus, false);
                 _itemFocus = null;
             }
-
-
         }
 
         /// <summary> Tìm outline trong đối tượng và bật tắt viền của nó </summary>
@@ -108,18 +105,6 @@ namespace CuaHang
                     item.DragItem();
                     _objDrag.PickUpItem(item);
                 }
-        }
-
-        void SetItemFocusToCamera()
-        {
-            if (!_itemFocus || !Input.GetKeyDown(KeyCode.F)) return;
-
-            Item item = _itemFocus.transform.GetComponent<Item>();
-
-            if (item)
-            {
-                _cameraCtrl._characterFollow = _itemFocus;
-            }
         }
 
         /// <summary> Di chuyen item </summary>
