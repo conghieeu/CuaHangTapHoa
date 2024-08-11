@@ -9,10 +9,11 @@ namespace CuaHang
         public float _camSize;
         public Camera _cam;
 
-        private void Awake() {
+        private void Awake()
+        {
             _cam = Camera.main;
         }
- 
+
         // camera hãy tập trung vào đây
         public void SetCamFocusHere()
         {

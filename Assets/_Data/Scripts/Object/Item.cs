@@ -3,6 +3,7 @@ using CuaHang.Pooler;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor.PackageManager;
 
 namespace CuaHang
 {
@@ -19,14 +20,15 @@ namespace CuaHang
         [Header("Item")]
         public bool _isCanDrag = true;  // có thằng nhân vật nào đó đang bưng bê cái này
         public bool _isCanSell;
+        public bool _isOnEditMode;
         public TextMeshProUGUI _txtPrice;
         public Transform _models;
+        public Transform _thisParent; // là cha của item này
+        public Transform _waitingPoint;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
-        public Transform _thisParent; // là cha của item này
+        public CamHere _camHere;
 
-        [Header("Other")]
-        public Transform _waitingPoint;
 
         BoxCollider _coll;
 
@@ -52,6 +54,7 @@ namespace CuaHang
         {
             _coll = GetComponent<BoxCollider>();
             _itemSlot = GetComponentInChildren<ItemSlot>();
+            _camHere = GetComponentInChildren<CamHere>();
             SetValueSO();
         }
 
@@ -105,6 +108,22 @@ namespace CuaHang
             }
 
             DropItem(null); // let z pos = 0
+        }
+
+        public void OnEditMode(bool enable)
+        {
+            if (enable)
+            {
+                _camHere.SetCamFocusHere();
+                _coll.enabled = false;
+                _isOnEditMode = true;
+            }
+            else
+            {
+
+                _coll.enabled = true;
+                _isOnEditMode = false;
+            }
         }
 
         public virtual void DragItem()

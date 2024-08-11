@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CuaHang
@@ -12,6 +13,7 @@ namespace CuaHang
         public Transform _characterFollow;
         public Transform _objectFollow; // là đối tượng theo giỏi object forcus
         public Transform _cameraHolder;
+        public Item _itemEditing;
         public ObjectDrag _objectDrag;
         public RaycastCursor _raycastCursor;
         public Camera _cam;
@@ -70,11 +72,18 @@ namespace CuaHang
             }
         }
 
-        private void ResetCharacterCamFocus(Transform chFocus)
+        void ResetCharacterCamFocus(Transform chFocus)
         {
             _characterFollow = chFocus;
             _isTargetToCamHere = false;
             _cam.orthographicSize = _camSizeDefault;
+
+
+            if (_itemEditing)
+            {
+                _itemEditing.OnEditMode(false);
+                _itemEditing = null;
+            }
         }
 
         /// <summary> cam tập trung vào kệ hàng để điều chỉnh giá sản phẩm </summary>
@@ -82,19 +91,27 @@ namespace CuaHang
         {
             if (itemF && Input.GetKeyDown(KeyCode.Z))
             {
-                CamHere ch = itemF.GetComponentInChildren<CamHere>();
+                Item item = itemF.GetComponentInChildren<Item>();
 
-                if (ch && !_isTargetToCamHere)
+                if (item && !_isTargetToCamHere)
                 {
+                    if (!item._camHere)
+                    {
+                        Debug.LogWarning($"Đối tượng này không có _camHere");
+                        return;
+                    }
+
+                    _itemEditing = item;
                     _isTargetToCamHere = true;
-                    ch.SetCamFocusHere();
+                    item.OnEditMode(true);
                     return;
                 }
 
-                if (_isTargetToCamHere == true)  
+                if (_isTargetToCamHere && _itemEditing)
                 {
-                    ResetCharacterCamFocus(itemF);
+                    ResetCharacterCamFocus(_itemEditing.transform);
                 }
+
             }
         }
 
