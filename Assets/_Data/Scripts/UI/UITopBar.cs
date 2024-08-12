@@ -6,10 +6,10 @@ using UnityEngine.UI;
 
 namespace CuaHang.UI
 {
-    public class UpdateValues : MonoBehaviour
+    public class UITopBar : MonoBehaviour
     {
         [SerializeField] protected GameManager _gameManager;
-        [SerializeField] protected Text _textCoin;
+        [SerializeField] protected Text _textCoin; 
 
         private void Start()
         {
@@ -18,7 +18,7 @@ namespace CuaHang.UI
 
         private void FixedUpdate()
         {
-            _textCoin.text = _gameManager._Coin.ToString();
+            _textCoin.text = $"Tổng tiền: {_gameManager._Coin.ToString("F1")}";
         }
     }
 

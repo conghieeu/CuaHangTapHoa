@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace CuaHang
+namespace CuaHang.UI
 {
     public class UISpaceDetect : MonoBehaviour
     {

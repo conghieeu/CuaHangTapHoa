@@ -203,7 +203,7 @@ namespace CuaHang.AI
         {
             if (_itemFinding)
             {
-                if (_itemFinding._price > _itemFinding._SO._priceMarketMax)
+                if (_itemFinding._Price > _itemFinding._SO._priceMarketMax)
                 {
                     ExpressedComplaintsItem();
                     _isNotNeedBuy = true;
@@ -237,7 +237,7 @@ namespace CuaHang.AI
         void AddItemToCart()
         {
             StartCoroutine(IsPickingItem());
-            _totalPay += _itemFinding._price;
+            _totalPay += _itemFinding._Price;
             _itemsCard.Add(_itemFinding);
             _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding);
             _itemFinding.gameObject.SetActive(false);

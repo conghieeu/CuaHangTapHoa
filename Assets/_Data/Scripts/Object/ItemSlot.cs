@@ -83,7 +83,7 @@ namespace CuaHang
         {
             foreach (var i in _itemsSlots)
             {
-                if (i._item) i._item._price = value;
+                if (i._item) i._item.SetPrice(value);
             }
         }
 

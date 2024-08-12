@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 
 namespace CuaHang
 {
@@ -60,7 +61,7 @@ namespace CuaHang
         /// <summary> Tạo viền khi click vào đối tượng để nó focus </summary>
         void SetItemFocus()
         {
-            if (_hit.transform && !_objectDrag._itemDragging && Input.GetMouseButtonDown(0))
+            if (_hit.transform && !_objectDrag._itemDragging && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
                 // chuyển đói tượng focus
                 if (_itemFocus != _hit.transform && _itemFocus != null)

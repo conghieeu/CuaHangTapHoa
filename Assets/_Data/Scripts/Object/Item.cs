@@ -14,7 +14,7 @@ namespace CuaHang
         public TypeID _typeID;
         public Type _type;
         public string _name;
-        public float _price;
+        [SerializeField] float _price;
         public string _currency;
 
 
@@ -32,8 +32,9 @@ namespace CuaHang
         public CamHere _camHere;
         public TextMeshProUGUI _txtPrice;
 
-
         BoxCollider _coll;
+
+        public float _Price { get => _price;}
 
         public void SetParent(Transform thisParent, Item itemParent, bool isCanDrag)
         {
@@ -112,6 +113,16 @@ namespace CuaHang
             }
 
             DropItem(null); // let z pos = 0
+        }
+
+        public void SetPrice(float price)
+        {
+            float newPrice = _price + price;
+
+            if (newPrice <= _SO._priceMarketMax && newPrice >= _SO._priceMarketMin)
+            {
+                _price = newPrice;
+            }
         }
 
         public void OnEditMode(bool enable)
