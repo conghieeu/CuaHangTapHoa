@@ -183,7 +183,7 @@ namespace CuaHang
             {
                 if (_itemsSlots[i]._item == item && _itemsSlots[i]._item != null)
                 {
-                    ItemPooler.Instance.DeleteObject(item.transform);
+                    ItemPooler.Instance.RemovePoolObj(item);
                     _itemsSlots[i]._item = null;
                     return true;
                 }

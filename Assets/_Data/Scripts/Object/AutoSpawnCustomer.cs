@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using CuaHang.AI;
 using CuaHang.Pooler;
+using Unity.VisualScripting;
 using UnityEngine;
 
 namespace CuaHang
@@ -13,12 +14,15 @@ namespace CuaHang
 
         private void Start()
         {
-            StartCoroutine(AutoSpawn());
+            StartSpawnCustomer();
         }
+
+        [ContextMenu("StartSpawnCustomer")]
+        public void StartSpawnCustomer() => StartCoroutine(AutoSpawn());
 
         /// <summary> Luôn Spawn khách hàng ngẫu nhiên </summary>
         IEnumerator AutoSpawn()
-        { 
+        {
             float delay = Random.Range(3, 3);
             yield return new WaitForSeconds(delay);
 

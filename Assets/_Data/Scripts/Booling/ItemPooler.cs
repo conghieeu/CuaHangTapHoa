@@ -32,15 +32,11 @@ namespace CuaHang.Pooler
         public List<Item> GetPoolItem { get => _items; }
         public static ItemPooler Instance;
 
-
         private void Awake()
         {
             if (Instance) Destroy(this); else { Instance = this; }
-            LoadItems();
-        }
 
-        private void LoadItems()
-        {
+            // load childen item
             foreach (Transform child in transform)
             {
                 _items.Add(child.GetComponent<Item>());
@@ -98,7 +94,7 @@ namespace CuaHang.Pooler
         {
             foreach (var item in _items)
             {
-                if (item._typeID == typeID && !item.gameObject.activeSelf) return item;
+                if (item._typeID == typeID && !item.gameObject.activeSelf && item._isRecyclable) return item;
             }
             return null;
         }
@@ -160,5 +156,6 @@ namespace CuaHang.Pooler
 
             return listShelf;
         }
+
     }
 }

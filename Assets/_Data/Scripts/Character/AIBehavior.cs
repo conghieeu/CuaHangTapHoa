@@ -16,7 +16,7 @@ namespace CuaHang.AI
         Walk_Carrying = 4,
     }
 
-    public class AIBehavior : HieuBehavior
+    public class AIBehavior : PoolObject
     {
         [Header("AIBehavior")]
 

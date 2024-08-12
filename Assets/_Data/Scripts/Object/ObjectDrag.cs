@@ -11,21 +11,21 @@ namespace CuaHang
     public class ObjectDrag : MonoBehaviour
     {
         [Space]
-        public Item _itemDragging;
-        [Space]
         public bool _isDragging;
         public bool _isDistance;
 
         [Space]
+        public Transform _modelsHolding; // là model object temp có màu xanh đang kéo thả
+        public Item _itemDragging;
         [SerializeField] String _groundTag = "Ground";
-        [SerializeField] Transform _models;
-        public Transform _modelsHolding;
-        public NavMeshSurface _navMeshSurface;
         [SerializeField] Material _green, _red;
+        [SerializeField] NavMeshSurface _navMeshSurface;
 
         [Space]
+        [SerializeField] Transform _modelsHolder;
         [SerializeField] SensorCast _sensorAround;
         [SerializeField] SensorCast _sensorGround;
+
 
         private void FixedUpdate()
         {
@@ -37,21 +37,22 @@ namespace CuaHang
             ClickToDropItem();
         }
 
-        /// <summary> Tạo model giống otherModel ở vị trí _models</summary>
-        public void CreateModel(Transform otherModel)
-        {
-            _modelsHolding = Instantiate(otherModel, _models, false);
-        }
 
         /// <summary> để model temp đang dragging nó hiện giống model đang di chuyển ở thằng Player </summary>
         public void PickUpItem(Item item)
         {
-            // Set Temp
+            // Bật object drag
             gameObject.SetActive(true);
-            _itemDragging = item;
-            CreateModel(item._models);
-            _itemDragging.SetParent(PlayerCtrl.Instance._posHoldParcel, null, true);
+
+            // Tạo model giống otherModel ở vị trí 
+            _modelsHolding = Instantiate(item._models, _modelsHolder);
+            _modelsHolding.transform.localRotation = item.transform.rotation;
+
+            // Cho item này lênh tay player
+            item.SetParent(PlayerCtrl.Instance._posHoldParcel, null, true);
+
             _isDragging = true;
+            _itemDragging = item;
         }
 
         void ClickToDropItem()
@@ -87,7 +88,7 @@ namespace CuaHang
 
         void SetMaterialModel(Material color)
         {
-            foreach (Renderer model in _models.GetComponentsInChildren<Renderer>())
+            foreach (Renderer model in _modelsHolder.GetComponentsInChildren<Renderer>())
             {
                 model.material = color;
             }

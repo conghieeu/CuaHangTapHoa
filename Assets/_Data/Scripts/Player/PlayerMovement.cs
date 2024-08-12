@@ -2,23 +2,13 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CuaHang;
+using CuaHang.AI;
 using UnityEngine;
 
 namespace Hieu.Player
 {
     public class PlayerMovement : MonoBehaviour
-    {
-        [Serializable]
-        public enum STATE_ANIM
-        {
-            Idle = 0,
-            Walk = 1,
-            Picking = 2,
-            Idle_Carrying = 3,
-            Walk_Carrying = 4,
-        }
-
-
+    { 
         [Space] 
         public float _moveSpeed;
         public Transform _cam;

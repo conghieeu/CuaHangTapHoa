@@ -7,6 +7,7 @@ namespace CuaHang.Pooler
 {
     public class CustomerPooler : ObjectPooler
     {
+        [Header("CustomerPooler")]
         public List<Customer> _listCustomer;
 
         public static CustomerPooler Instance { get; private set; }
@@ -49,7 +50,7 @@ namespace CuaHang.Pooler
         {
             foreach (var cus in _listCustomer)
             {
-                if (cus.name == name && !cus.gameObject.activeSelf) return cus;
+                if (cus.name == name && !cus.gameObject.activeSelf && cus._isRecyclable) return cus;
             }
             return null;
         }

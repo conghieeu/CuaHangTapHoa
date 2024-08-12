@@ -2731,6 +2731,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 1
+  _isRecyclable: 0
   _SO: {fileID: 0}
   _typeID: 0
   _type: 2
@@ -2739,12 +2740,14 @@ MonoBehaviour:
   _currency: 
   _isCanDrag: 1
   _isCanSell: 0
-  _txtPrice: {fileID: 0}
-  _models: {fileID: 1621579394}
+  _isOnEditMode: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 0}
+  _models: {fileID: 1621579394}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 0}
   _objectPlantSO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
   _spawnTrans: {fileID: 548140215}
   _waitingLine: {fileID: 0}
@@ -3284,7 +3287,6 @@ Transform:
   - {fileID: 423970280}
   - {fileID: 548140215}
   - {fileID: 1705968444}
-  - {fileID: 692309821}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &625238523
@@ -3352,37 +3354,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 85703428be2c22a4387a5dde9cc4d020, type: 3}
   m_PrefabInstance: {fileID: 625238523}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &692309820
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 692309821}
-  m_Layer: 0
-  m_Name: HOLDING_APPLE
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &692309821
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 692309820}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 40}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 614028710}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &696428882
 GameObject:
   m_ObjectHideFlags: 0
@@ -4333,7 +4304,7 @@ Transform:
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
   m_LocalRotation: {x: 0.058881592, y: 0.7344718, z: -0.06425799, w: 0.6730194}
-  m_LocalPosition: {x: -0.2530005, y: 1.52, z: -3.85}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5172,6 +5143,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _isRecyclable: 0
   _SO: {fileID: 0}
   _typeID: 0
   _type: 0
@@ -5180,12 +5152,14 @@ MonoBehaviour:
   _currency: 
   _isCanDrag: 1
   _isCanSell: 0
-  _txtPrice: {fileID: 0}
-  _models: {fileID: 1453531071}
+  _isOnEditMode: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 0}
+  _models: {fileID: 1453531071}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 0}
 --- !u!1 &1418513537
 GameObject:
   m_ObjectHideFlags: 0
@@ -5647,6 +5621,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _isRecyclable: 0
   _SO: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
   _typeID: 5
   _type: 5
@@ -5655,12 +5630,14 @@ MonoBehaviour:
   _currency: 
   _isCanDrag: 1
   _isCanSell: 1
-  _txtPrice: {fileID: 0}
-  _models: {fileID: 290539479}
+  _isOnEditMode: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 0}
+  _models: {fileID: 290539479}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 0}
 --- !u!65 &1613819681
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5796,6 +5773,7 @@ MonoBehaviour:
   _characterFollow: {fileID: 0}
   _objectFollow: {fileID: 1143578435}
   _cameraHolder: {fileID: 1751169461}
+  _itemEditing: {fileID: 0}
   _objectDrag: {fileID: 6334553454394321204}
   _raycastCursor: {fileID: 423970279}
   _cam: {fileID: 0}
@@ -5946,6 +5924,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _isRecyclable: 0
   _SO: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
   _typeID: 5
   _type: 5
@@ -5954,12 +5933,14 @@ MonoBehaviour:
   _currency: 
   _isCanDrag: 1
   _isCanSell: 1
-  _txtPrice: {fileID: 0}
-  _models: {fileID: 1727861083}
+  _isOnEditMode: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 0}
+  _models: {fileID: 1727861083}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 0}
 --- !u!65 &1703886476
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5997,7 +5978,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1705968444
 Transform:
   m_ObjectHideFlags: 0
@@ -6361,10 +6342,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 405026529}
     m_Modifications:
-    - target: {fileID: 1438908908323045396, guid: 0312638c44583764cabd2ce87ffa3340, type: 3}
-      propertyPath: m_Radius
-      value: 0.3
-      objectReference: {fileID: 0}
     - target: {fileID: 4790046557957274532, guid: 0312638c44583764cabd2ce87ffa3340, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.12
@@ -6418,8 +6395,7 @@ PrefabInstance:
       value: KhachHang_2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
-    m_RemovedGameObjects:
-    - {fileID: 1652393676948039756, guid: 0312638c44583764cabd2ce87ffa3340, type: 3}
+    m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 0312638c44583764cabd2ce87ffa3340, type: 3}
@@ -6985,7 +6961,7 @@ GameObject:
   m_Component:
   - component: {fileID: 9099227673387912599}
   m_Layer: 0
-  m_Name: ModelsHolder
+  m_Name: Models Holder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7375,15 +7351,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dc615dbe83bf3f94a95346cf2724da06, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _itemDragging: {fileID: 0}
   _isDragging: 0
   _isDistance: 0
-  _groundTag: Ground
-  _models: {fileID: 9099227673387912599}
   _modelsHolding: {fileID: 0}
-  _navMeshSurface: {fileID: 164984194}
+  _itemDragging: {fileID: 0}
+  _groundTag: Ground
   _green: {fileID: 2100000, guid: a05bd2674206604469096bab4a003b1c, type: 2}
   _red: {fileID: 2100000, guid: e73aac614011c224cad13fcc81b550bc, type: 2}
+  _navMeshSurface: {fileID: 164984194}
+  _modelsHolder: {fileID: 9099227673387912599}
   _sensorAround: {fileID: 3569557551578221569}
   _sensorGround: {fileID: 4083402508889682505}
 --- !u!33 &6557031565226900140
@@ -7664,6 +7640,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _isRecyclable: 0
   _SO: {fileID: 11400000, guid: ab6ae8750ede17642add04924cb1fcf6, type: 2}
   _typeID: 0
   _type: 3
@@ -7672,12 +7649,14 @@ MonoBehaviour:
   _currency: 
   _isCanDrag: 0
   _isCanSell: 0
-  _txtPrice: {fileID: 0}
-  _models: {fileID: 3431642051607349710}
+  _isOnEditMode: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 0}
+  _models: {fileID: 3431642051607349710}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 0}
 --- !u!1 &7696488578610326812
 GameObject:
   m_ObjectHideFlags: 0
@@ -7707,6 +7686,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _isRecyclable: 0
   _SO: {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
   _typeID: 5
   _type: 5
@@ -7715,12 +7695,14 @@ MonoBehaviour:
   _currency: 
   _isCanDrag: 1
   _isCanSell: 1
-  _txtPrice: {fileID: 0}
-  _models: {fileID: 1458852930940948620}
+  _isOnEditMode: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 0}
+  _models: {fileID: 1458852930940948620}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 0}
 --- !u!1 &8212941318923346546
 GameObject:
   m_ObjectHideFlags: 0

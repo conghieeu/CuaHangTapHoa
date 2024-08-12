@@ -7,9 +7,9 @@ using UnityEditor.PackageManager;
 
 namespace CuaHang
 {
-    public class Item : HieuBehavior
+    public class Item : PoolObject
     {
-        [Header("Settings")]
+        [Header("Property")]
         public ItemSO _SO; // SO chỉ được load một lần
         public TypeID _typeID;
         public Type _type;
@@ -17,17 +17,20 @@ namespace CuaHang
         public float _price;
         public string _currency;
 
-        [Header("Item")]
+
+        [Space]
         public bool _isCanDrag = true;  // có thằng nhân vật nào đó đang bưng bê cái này
         public bool _isCanSell;
         public bool _isOnEditMode;
-        public TextMeshProUGUI _txtPrice;
-        public Transform _models;
         public Transform _thisParent; // là cha của item này
-        public Transform _waitingPoint;
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
+
+        [Space]
+        public Transform _waitingPoint;
+        public Transform _models;
         public CamHere _camHere;
+        public TextMeshProUGUI _txtPrice;
 
 
         BoxCollider _coll;
@@ -62,6 +65,7 @@ namespace CuaHang
         {
             StartCoroutine(LoadSlotSO());
             _isCanDrag = true;
+            _isRecyclable = false;
         }
 
         private void OnDisable()

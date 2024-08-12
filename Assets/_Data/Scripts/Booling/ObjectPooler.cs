@@ -10,9 +10,10 @@ namespace CuaHang.Pooler
         [SerializeField] protected List<Transform> _listPrefab;
 
         /// <summary> Xoá object trong hồ </summary>
-        public virtual void DeleteObject(Transform objectR)
+        public virtual void RemovePoolObj(PoolObject obj)
         {
-            objectR.gameObject.SetActive(false);
+            obj.gameObject.SetActive(false);
+            obj._isRecyclable = true;
         }
     }
 

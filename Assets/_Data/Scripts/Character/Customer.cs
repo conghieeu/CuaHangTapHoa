@@ -11,8 +11,6 @@ namespace CuaHang.AI
 {
     public class Customer : AIBehavior
     {
-
-
         [Header("Customer")]
         public float _totalPay;
         public Item _itemFinding; // item mà khách hàng đang tìm
@@ -180,14 +178,12 @@ namespace CuaHang.AI
         {
             if (MoveToTarget(_outShopPoint))
             {
-                CustomerPooler.Instance.DeleteObject(transform);
-
                 // xoá tắt cả item dang giữ
                 foreach (var item in _itemsCard)
                 {
-                    item.SetParent(null, null, false);
-                    ItemPooler.Instance.DeleteObject(item.transform);
+                    ItemPooler.Instance.RemovePoolObj(item);
                 }
+                CustomerPooler.Instance.RemovePoolObj(this);
             }
         }
 
@@ -244,7 +240,7 @@ namespace CuaHang.AI
             _totalPay += _itemFinding._price;
             _itemsCard.Add(_itemFinding);
             _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding);
-            _itemFinding.SetParent(GameObject.Find("HOLDING_APPLE").transform, null, false);
+            _itemFinding.gameObject.SetActive(false);
             _listItemBuy.Remove(_itemFinding._typeID);
             _itemFinding = null;
         }
