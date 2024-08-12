@@ -6,22 +6,29 @@ namespace CuaHang
     public class RaycastCursor : HieuBehavior
     {
         [Header("RaycastCursor")]
-        public ObjectDrag _objDrag;
-        public CameraControl _cameraCtrl;
-        public Transform _itemFocus;
+        public ObjectDrag _objectDrag;
+        [SerializeField] Camera cam;
+
+        [Space]
         public bool _enableSnapping; // bật chế độ snapping
+        public bool _enableRaycast; // bat raycast
+        public bool _enableOutline;
+        public Transform _itemFocus;
         public float _rotationSpeed = 10.0f; // Tốc độ xoay
         public float _snapDistance = 6f; // Khoảng cách cho phép đặt 
-        public float _tileSize = 1;
-        public Vector3 _tileOffset = Vector3.zero;
+        public float _tileSize = 1; // ô snap tỷ lệ snap
+        public Vector3 _tileOffset = Vector3.zero; // tỷ lệ snap + sai số này
         public LayerMask _layerMask;
+
         public RaycastHit _hit;
         public RaycastHit[] _hits;
-        Camera cam;
 
-        private void Awake()
+        private void Start()
         {
             cam = Camera.main;
+            _enableRaycast = true;
+            _enableOutline = true;
+            _objectDrag = SingleModuleManager.Instance._objectDrag;
         }
 
         void Update()
@@ -42,6 +49,8 @@ namespace CuaHang
         /// <summary> Chiếu tia raycast lấy dữ liệu cho _Hit </summary>
         private void SetRayHit()
         {
+            if (_enableRaycast == false) return;
+
             Ray ray = cam.ScreenPointToRay(Input.mousePosition);
             Physics.Raycast(ray, out _hit, 100, _layerMask);
             _hits = Physics.RaycastAll(ray, 100f, _layerMask);
@@ -51,11 +60,13 @@ namespace CuaHang
         /// <summary> Tạo viền khi click vào đối tượng để nó focus </summary>
         void SetItemFocus()
         {
-            if (_hit.transform && Input.GetMouseButtonDown(0))
+            if (_hit.transform && !_objectDrag._itemDragging && Input.GetMouseButtonDown(0))
             {
                 // chuyển đói tượng focus
                 if (_itemFocus != _hit.transform && _itemFocus != null)
+                {
                     SetOutlines(_itemFocus, false);
+                }
 
                 _itemFocus = _hit.transform;
                 SetOutlines(_itemFocus, true);
@@ -73,23 +84,24 @@ namespace CuaHang
         {
             foreach (Outline outline in target.GetComponentsInChildren<Outline>())
             {
-                outline.enabled = value;
+                if (_enableOutline && value) outline.enabled = true;
+                else outline.enabled = false;
             }
         }
 
         /// <summary> Set thông số trường hợp cho không thể đặt </summary>
         void CanNotPlant()
         {
-            if (!_objDrag) return;
+            if (!_objectDrag) return;
 
             // khoảng cách bị quá dài
             if (Vector3.Distance(cam.transform.position, _hit.point) < _snapDistance)
             {
-                _objDrag.GetComponent<ObjectDrag>()._isDistance = true;
+                _objectDrag.GetComponent<ObjectDrag>()._isDistance = true;
             }
             else
             {
-                _objDrag.GetComponent<ObjectDrag>()._isDistance = false;
+                _objectDrag.GetComponent<ObjectDrag>()._isDistance = false;
             }
         }
 
@@ -103,7 +115,7 @@ namespace CuaHang
             if (item) if (item._isCanDrag)
                 {
                     item.DragItem();
-                    _objDrag.PickUpItem(item);
+                    _objectDrag.PickUpItem(item);
                 }
         }
 
@@ -120,27 +132,27 @@ namespace CuaHang
                 float sY = Mathf.Round(hitPoint.y / _tileSize) * _tileSize + _tileOffset.y;
 
                 Vector3 snappedPosition = new Vector3(sX, sY, sZ);
-                _objDrag.transform.position = snappedPosition;
+                _objectDrag.transform.position = snappedPosition;
             }
             else
             {
-                _objDrag.transform.position = _hit.point;
+                _objectDrag.transform.position = _hit.point;
             }
         }
 
         /// <summary> Xoay item </summary>
         void RotationItemDrag()
         {
-            _objDrag.transform.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
+            _objectDrag.transform.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
 
             // rotate model
-            if (_objDrag)
+            if (_objectDrag)
             {
-                if (_objDrag._modelsHolding)
+                if (_objectDrag._modelsHolding)
                 {
                     float scrollValue = Input.mouseScrollDelta.y;
                     float rotationAngle = scrollValue * _rotationSpeed;
-                    _objDrag._modelsHolding.Rotate(Vector3.up, rotationAngle);
+                    _objectDrag._modelsHolding.Rotate(Vector3.up, rotationAngle);
                 }
             }
         }

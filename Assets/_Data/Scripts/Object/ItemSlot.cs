@@ -37,7 +37,7 @@ namespace CuaHang
             _item = GetComponentInParent<Item>();
             LoadSlots();
         }
- 
+
         private void LoadSlots()
         {
             for (int i = 0; i < transform.childCount; i++)
@@ -70,7 +70,11 @@ namespace CuaHang
         {
             foreach (var i in _itemsSlots)
             {
-                if (i._item) i._item._isCanDrag = value;
+                if (i._item)
+                {
+                    i._item._isCanDrag = value;
+                    i._item.gameObject.SetActive(value);
+                }
             }
         }
 

@@ -95,8 +95,7 @@ namespace CuaHang
         }
 
         bool IsCanPlant()
-        {
-            // Debug.Log($"{_sensorAround._hits.Count == 0} && {IsTouchGround()} && { _isDistance}");
+        { 
             return _sensorAround._hits.Count == 0 && IsTouchGround() && _isDistance;
         }
 
