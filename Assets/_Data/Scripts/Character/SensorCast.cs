@@ -12,12 +12,11 @@ namespace CuaHang
     {
         public LayerMask _layer;
         public List<Transform> _hits;
-        public UnityEvent _eventTrigger;
         [SerializeField] protected Vector3 _size;
 
         private void Update()
         {
-            DetectTarget();
+            _hits = BoxCastHits();
         }
 
         /// <summary> Lấy đối tượng chạm đầu trong danh sách </summary>
@@ -25,52 +24,42 @@ namespace CuaHang
         {
             foreach (Transform hit in _hits)
             {
-                Item iHit = hit.GetComponent<Item>(); 
-                
-                if (iHit)
+                Item item = hit.GetComponent<Item>();
+
+                if (item)
                 {
-                    if (iHit._type == type)
+                    if (item._type == type)
                     {
-                        return iHit;
+                        return item;
                     }
                 }
             }
             return null;
         }
 
-        public Item GetObjectPlantHit()
+        public void Interactive()
         {
             foreach (var hit in _hits)
             {
-                // kiểm tra chạm
-                if (hit.GetComponent<Item>())
-                {
-                    return hit.GetComponent<Item>();
-                }
-            }
-            return null;
-        }
+                var interactable = hit.GetComponent<IInteractable>();
 
-        /// <summary> Trigger va chạm thi chạm đối tượng, có sự thay đổi mới trong đối tượng va chạm mới thì event gọi các đối tượng đăng ký </summary>
-        void DetectTarget()
-        {
-            if (!GetHits().SequenceEqual(_hits))
-            {
-                _hits = GetHits();
-                _eventTrigger.Invoke();
+                // kiểm tra chạm
+                if (interactable != null)
+                {
+                    interactable.Interact();
+                }
             }
         }
 
         /// <summary> Gọi liên tục để lấy va chạm </summary>
-        List<Transform> GetHits()
+        private List<Transform> BoxCastHits()
         {
             RaycastHit[] hits = Physics.BoxCastAll(transform.position, _size / 2f, transform.forward, transform.rotation, 0f, _layer);
-
             return hits.Select(x => x.transform).ToList();
         }
 
         // Vẽ box hit ra khi click vào thì thấy được box hit
-        void OnDrawGizmosSelected()
+        private void OnDrawGizmosSelected()
         {
             Matrix4x4 rotationMatrix = Matrix4x4.TRS(transform.position, transform.rotation, _size);
             Gizmos.matrix = rotationMatrix;

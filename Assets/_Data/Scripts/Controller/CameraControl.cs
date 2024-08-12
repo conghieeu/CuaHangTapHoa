@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -22,7 +23,6 @@ namespace CuaHang
         private void Start()
         {
             _characterFollow = PlayerCtrl.Instance.transform;
-            _cam = Camera.main;
         }
 
         private void Update()
@@ -52,7 +52,7 @@ namespace CuaHang
         }
 
         /// <summary> Cam tập trung vào đối tượng Item </summary>
-        void SetCamFocus(Transform itemF)
+        private void SetCamFocus(Transform itemF)
         {
             // Thoát trạng thái tập trung của cam
             if (Input.GetKeyDown(KeyCode.BackQuote) || _objectDrag.gameObject.activeInHierarchy)
@@ -72,12 +72,11 @@ namespace CuaHang
             }
         }
 
-        void ResetCharacterCamFocus(Transform chFocus)
+        private void ResetCharacterCamFocus(Transform chFocus)
         {
             _characterFollow = chFocus;
             _isTargetToCamHere = false;
             _cam.orthographicSize = _camSizeDefault;
-
 
             if (_itemEditing)
             {
@@ -87,7 +86,7 @@ namespace CuaHang
         }
 
         /// <summary> cam tập trung vào kệ hàng để điều chỉnh giá sản phẩm </summary>
-        void CamForcusShelf(Transform itemF)
+        private void CamForcusShelf(Transform itemF)
         {
             if (itemF && Input.GetKeyDown(KeyCode.Z))
             {
@@ -111,9 +110,9 @@ namespace CuaHang
                 {
                     ResetCharacterCamFocus(_itemEditing.transform);
                 }
-
             }
         }
+
 
     }
 }

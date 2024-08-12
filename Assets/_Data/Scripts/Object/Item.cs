@@ -4,10 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.PackageManager;
+using Cinemachine;
 
 namespace CuaHang
 {
-    public class Item : PoolObject
+    public class Item : PoolObject, IInteractable
     {
         [Header("Property")]
         public ItemSO _SO; // SO chỉ được load một lần
@@ -30,11 +31,12 @@ namespace CuaHang
         public Transform _waitingPoint;
         public Transform _models;
         public CamHere _camHere;
+        public CinemachineVirtualCamera _virtualCamera;
         public TextMeshProUGUI _txtPrice;
 
         BoxCollider _coll;
 
-        public float _Price { get => _price;}
+        public float _Price { get => _price; }
 
         public void SetParent(Transform thisParent, Item itemParent, bool isCanDrag)
         {
@@ -59,6 +61,7 @@ namespace CuaHang
             _coll = GetComponent<BoxCollider>();
             _itemSlot = GetComponentInChildren<ItemSlot>();
             _camHere = GetComponentInChildren<CamHere>();
+            _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             SetValueSO();
         }
 
@@ -178,5 +181,9 @@ namespace CuaHang
             }
         }
 
+        public bool Interact()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }
