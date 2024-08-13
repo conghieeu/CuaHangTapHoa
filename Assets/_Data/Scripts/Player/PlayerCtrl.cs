@@ -11,6 +11,7 @@ namespace CuaHang
         public Transform _posHoldParcel; // vị trí đặt cái parcel này trên tay
         public SensorCast _sensorForward; // cảm biến đằng trước
         public Animator _anim;
+        public Interactor _interactor;
 
         public static PlayerCtrl Instance { get; private set; }
 
@@ -20,7 +21,30 @@ namespace CuaHang
 
 
             _anim = GetComponentInChildren<Animator>();
+            _interactor = GetComponentInChildren<Interactor>();
         }
- 
+
+        private void Update()
+        {
+            Interactive();
+        }
+
+        // Interactive item
+        private void Interactive()
+        {
+            if (Input.GetKeyDown(KeyCode.T))
+            {
+                foreach (var hit in _sensorForward._hits)
+                {
+                    var interactable = hit.GetComponent<IInteractable>();
+
+                    // kiểm tra chạm
+                    if (interactable != null)
+                    {
+                        interactable.Interact(_interactor);
+                    }
+                }
+            }
+        }
     }
 }

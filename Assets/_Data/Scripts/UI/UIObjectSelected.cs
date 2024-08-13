@@ -13,9 +13,10 @@ namespace CuaHang.UI
 
         [SerializeField] string _defaultTmp;
 
-        private void Start() {
+        private void Start()
+        {
             _defaultTmp = _tmp.text;
-        } 
+        }
 
         private void Update()
         {
@@ -26,11 +27,12 @@ namespace CuaHang.UI
             {
                 _item = rc._itemFocus.GetComponentInChildren<Item>();
 
-                if (_item)
+                if (_item && _item._SO)
                 {
-                    _tmp.text = $"Name: {_item._name} \n Price: {_item._Price.ToString("F1")} ";
+                    string x = $"Name: {_item._name} \nPrice: {_item._Price.ToString("F1")} \n";
+                    _tmp.text = _item._SO._isCanSell ? x + "Item có thể bán" : x + "Item không thể bán";
                 }
-                else 
+                else
                 {
                     _tmp.text = _defaultTmp;
                 }
@@ -38,9 +40,6 @@ namespace CuaHang.UI
 
             // bật tắt tuỳ theo có item hay không
             if (_item) _uiContent.gameObject.SetActive(_item);
-
-            // thoát _item
-
         }
 
         public void Btn_IncreasePrice()

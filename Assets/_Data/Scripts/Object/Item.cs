@@ -4,7 +4,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.PackageManager;
-using Cinemachine;
 
 namespace CuaHang
 {
@@ -20,6 +19,7 @@ namespace CuaHang
 
 
         [Space]
+        public string _interactionPrompt;
         public bool _isCanDrag = true;  // có thằng nhân vật nào đó đang bưng bê cái này
         public bool _isCanSell;
         public bool _isOnEditMode;
@@ -31,12 +31,13 @@ namespace CuaHang
         public Transform _waitingPoint;
         public Transform _models;
         public CamHere _camHere;
-        public CinemachineVirtualCamera _virtualCamera;
         public TextMeshProUGUI _txtPrice;
 
         BoxCollider _coll;
 
         public float _Price { get => _price; }
+
+        public string InteractionPrompt => _interactionPrompt;
 
         public void SetParent(Transform thisParent, Item itemParent, bool isCanDrag)
         {
@@ -61,7 +62,6 @@ namespace CuaHang
             _coll = GetComponent<BoxCollider>();
             _itemSlot = GetComponentInChildren<ItemSlot>();
             _camHere = GetComponentInChildren<CamHere>();
-            _virtualCamera = GetComponentInChildren<CinemachineVirtualCamera>();
             SetValueSO();
         }
 
@@ -118,9 +118,26 @@ namespace CuaHang
             DropItem(null); // let z pos = 0
         }
 
+        // =================INTERFACE==================
+        
+        /// <summary> dùng cái này cho việc truyền itemSlot </summary>
+        public virtual bool Interact(Interactor interactor)
+        {
+            return true;
+        }
+
+        // ==================PUBLIC====================
+
         public void SetPrice(float price)
         {
+            if (!_SO)
+            {
+                Debug.LogWarning("Lỗi item này không có ScriptableObject", transform);
+                return;
+            }
+
             float newPrice = _price + price;
+
 
             if (newPrice <= _SO._priceMarketMax && newPrice >= _SO._priceMarketMin)
             {
@@ -128,7 +145,7 @@ namespace CuaHang
             }
         }
 
-        public void OnEditMode(bool enable)
+        public void SetEditMode(bool enable)
         {
             if (enable)
             {
@@ -181,9 +198,5 @@ namespace CuaHang
             }
         }
 
-        public bool Interact()
-        {
-            throw new System.NotImplementedException();
-        }
     }
 }

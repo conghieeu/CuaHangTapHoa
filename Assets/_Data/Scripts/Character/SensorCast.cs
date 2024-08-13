@@ -36,21 +36,7 @@ namespace CuaHang
             }
             return null;
         }
-
-        public void Interactive()
-        {
-            foreach (var hit in _hits)
-            {
-                var interactable = hit.GetComponent<IInteractable>();
-
-                // kiểm tra chạm
-                if (interactable != null)
-                {
-                    interactable.Interact();
-                }
-            }
-        }
-
+ 
         /// <summary> Gọi liên tục để lấy va chạm </summary>
         private List<Transform> BoxCastHits()
         {

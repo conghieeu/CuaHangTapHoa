@@ -1,6 +1,6 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
-using Cinemachine;
 using Unity.VisualScripting;
 using UnityEngine;
 
@@ -20,9 +20,12 @@ namespace CuaHang
         public Camera _cam;
         public bool _isTargetToCamHere;
 
+        public static event Action<Item> _EventOnEditItem;
+
         private void Start()
         {
             _characterFollow = PlayerCtrl.Instance.transform;
+            _cam = Camera.main;
         }
 
         private void Update()
@@ -80,8 +83,9 @@ namespace CuaHang
 
             if (_itemEditing)
             {
-                _itemEditing.OnEditMode(false);
+                _itemEditing.SetEditMode(false);
                 _itemEditing = null;
+                _EventOnEditItem?.Invoke(null);
             }
         }
 
@@ -102,7 +106,8 @@ namespace CuaHang
 
                     _itemEditing = item;
                     _isTargetToCamHere = true;
-                    item.OnEditMode(true);
+                    item.SetEditMode(true);
+                    _EventOnEditItem?.Invoke(item);
                     return;
                 }
 

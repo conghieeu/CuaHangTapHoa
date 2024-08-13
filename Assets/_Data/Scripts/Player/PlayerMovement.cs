@@ -8,8 +8,8 @@ using UnityEngine;
 namespace Hieu.Player
 {
     public class PlayerMovement : MonoBehaviour
-    { 
-        [Space] 
+    {
+        [Space]
         public float _moveSpeed;
         public Transform _cam;
         public STATE_ANIM _stageAnim;
@@ -20,7 +20,7 @@ namespace Hieu.Player
         Rigidbody _rb;
         PlayerCtrl _ctrl;
 
-        void Awake()
+        private void Start()
         {
             _ctrl = GetComponent<PlayerCtrl>();
             _rb = GetComponent<Rigidbody>();
@@ -28,15 +28,13 @@ namespace Hieu.Player
             _rb.angularDrag = 0.0f; // lực cản khi xoay vật
         }
 
-        void Update()
+        private void FixedUpdate()
         {
             SetAnimator();
-        }
-
-        void FixedUpdate()
-        {
             Movement();
         }
+
+        
 
         private void Movement()
         {
@@ -68,12 +66,10 @@ namespace Hieu.Player
                 velocity.y = 0;
                 transform.forward = velocity;
             }
-
-
         }
 
-        void SetAnimator()
-        { 
+        private void SetAnimator()
+        {
             bool _isDragItem = _ctrl._objectDrag.gameObject.activeInHierarchy;
 
             // Idle
@@ -97,6 +93,6 @@ namespace Hieu.Player
             }
         }
 
-        void SetAnim() => _ctrl._anim.SetInteger("State", (int)_stageAnim);
+        private void SetAnim() => _ctrl._anim.SetInteger("State", (int)_stageAnim);
     }
 }
