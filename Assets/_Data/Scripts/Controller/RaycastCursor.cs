@@ -40,6 +40,11 @@ namespace CuaHang
 
             MoveItemDrag();
             RotationItemDrag();
+
+            if(Input.GetKeyDown(KeyCode.N))
+            {
+                _enableSnapping = !_enableSnapping;
+            }
         }
 
         void FixedUpdate()
@@ -59,7 +64,7 @@ namespace CuaHang
         }
 
         /// <summary> Tạo viền khi click vào đối tượng để nó focus </summary>
-        void SetItemFocus()
+        private void SetItemFocus()
         {
             if (_hit.transform && !_objectDrag._itemDragging && Input.GetMouseButtonDown(0) && !EventSystem.current.IsPointerOverGameObject())
             {
@@ -81,7 +86,7 @@ namespace CuaHang
         }
 
         /// <summary> Tìm outline trong đối tượng và bật tắt viền của nó </summary>
-        void SetOutlines(Transform target, bool value)
+        private void SetOutlines(Transform target, bool value)
         {
             foreach (Outline outline in target.GetComponentsInChildren<Outline>())
             {
@@ -91,7 +96,7 @@ namespace CuaHang
         }
 
         /// <summary> Set thông số trường hợp cho không thể đặt </summary>
-        void CanNotPlant()
+        private void CanNotPlant()
         {
             if (!_objectDrag) return;
 
@@ -107,7 +112,7 @@ namespace CuaHang
         }
 
         /// <summary> Bật item drag với item được _Hit chiếu</summary>
-        void SetItemDrag()
+        private void SetItemDrag()
         {
             if (!_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
 
@@ -121,7 +126,7 @@ namespace CuaHang
         }
 
         /// <summary> Di chuyen item </summary>
-        void MoveItemDrag()
+        private void MoveItemDrag()
         {
             //  Làm tròn vị trí temp để nó giống snap
             if (_enableSnapping)
@@ -142,7 +147,7 @@ namespace CuaHang
         }
 
         /// <summary> Xoay item </summary>
-        void RotationItemDrag()
+        private void RotationItemDrag()
         {
             _objectDrag.transform.rotation = Quaternion.FromToRotation(Vector3.up, _hit.normal);
 

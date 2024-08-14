@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine;
 using CuaHang.AI;
 
-namespace CuaHang
+namespace CuaHang.UI
 {
     public class BtnBarCustomer : MonoBehaviour
     {

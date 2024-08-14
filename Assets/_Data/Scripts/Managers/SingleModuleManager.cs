@@ -9,6 +9,7 @@ namespace CuaHang
         public ObjectDrag _objectDrag;
         public RaycastCursor _raycastCursor;
         public PlayerCtrl _playerCtrl;
+        public Transform _itemSpawnPos;
 
         public static SingleModuleManager Instance;
 

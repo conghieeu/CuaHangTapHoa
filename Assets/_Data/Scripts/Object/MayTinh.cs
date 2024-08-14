@@ -52,14 +52,7 @@ namespace CuaHang
             }
             return false;
         }
-
-        private void PayItem()
-        {
-            if (_waitingLine._waitingSlots[0]._customer)
-            {
-                _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().PlayerConfirmPay();
-            }
-        }
+ 
 
     }
 }

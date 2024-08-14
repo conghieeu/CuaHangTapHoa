@@ -9,7 +9,7 @@ using UnityEditor.Animations;
 using TMPro;
 using System.Xml.Serialization;
 
-namespace CuaHang
+namespace CuaHang.UI
 {
     public class UIComputerScreen : MonoBehaviour
     {
@@ -41,7 +41,7 @@ namespace CuaHang
         [SerializeField] List<WaitingLine.WaitingSlot> _comSlot;
         public List<SlotBar> _barSlots;
 
-        private void Start()
+        void Start()
         {
             CameraControl._EventOnEditItem += SetActiveContent;
             SetActiveContent(null);
@@ -54,10 +54,14 @@ namespace CuaHang
             for (int i = 0; i < 10; i++) _barSlots.Add(new SlotBar());
         }
 
-        private void FixedUpdate()
+        void FixedUpdate()
         {
             CreateBtnSlot();
         }
+
+        // -----------BUY PANEL----------
+
+        // -----------PAYMENT PANEL----------
 
         public void SetActiveContent(Item item)
         {
@@ -112,9 +116,7 @@ namespace CuaHang
         {
             if (_mayTinh == null) return;
 
-            _comSlot = _mayTinh._waitingLine._waitingSlots;
-
-            Debug.Log(_comSlot.Count);
+            _comSlot = _mayTinh._waitingLine._waitingSlots; 
 
             // doi chieu su khach biet
             for (int c = 0; c < _comSlot.Count; c++)
@@ -158,6 +160,8 @@ namespace CuaHang
                 {
                     GameManager.AddCoin(coinAdd);
                 }
+
+                _customerSelectMark = null;
             }
         }
 
