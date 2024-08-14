@@ -41,8 +41,6 @@ namespace CuaHang.AI
             _anim = GetComponentInChildren<Animator>();
         }
 
-
-
         protected virtual void Start()
         {
             _itemPooler = ItemPooler.Instance;

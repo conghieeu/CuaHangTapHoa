@@ -7,25 +7,27 @@ namespace CuaHang
 {
     public class GameManager : MonoBehaviour
     {
-        [SerializeField] protected float _coin;
+        [SerializeField] protected static float _coin;
 
         public static GameManager Instance { get; private set; }
 
         private void Awake()
         {
             if (Instance) Destroy(this); else { Instance = this; }
+
+            _coin = 500;
         }
 
-        public float _Coin
+        public static float _Coin
         {
             get => _coin;
             set
             {
-                if (value > 0 && value < 9999999) _coin = value;
+                if (value > 0 && value < 999999) _coin = value;
             }
         }
         
-        public void AddCoin(float value) => _Coin += value;
+        public static void AddCoin(float value) => _Coin += value;
     }
 
 }

@@ -8,17 +8,11 @@ namespace CuaHang.UI
 {
     public class UITopBar : MonoBehaviour
     {
-        [SerializeField] protected GameManager _gameManager;
-        [SerializeField] protected Text _textCoin; 
-
-        private void Start()
-        {
-            _gameManager = GameManager.Instance;
-        }
-
+        [SerializeField] protected Text _textCoin;
+    
         private void FixedUpdate()
         {
-            _textCoin.text = $"Tổng tiền: {_gameManager._Coin.ToString("F1")}";
+            _textCoin.text = $"Tổng tiền: {GameManager._Coin.ToString("F1")}";
         }
     }
 

@@ -7,6 +7,7 @@ using CuaHang.AI;
 using System.Linq; // Thêm dòng này vào đầu script
 using UnityEditor.Animations;
 using TMPro;
+using System.Xml.Serialization;
 
 namespace CuaHang
 {
@@ -36,7 +37,8 @@ namespace CuaHang
         public TextMeshProUGUI _txtReport;
         public Customer _customerSelectMark;
         public TMP_InputField _infRefund;
-        List<WaitingLine.WaitingSlot> _comSlot;
+        [SerializeField] float _tienThoi;
+        [SerializeField] List<WaitingLine.WaitingSlot> _comSlot;
         public List<SlotBar> _barSlots;
 
         private void Start()
@@ -49,7 +51,7 @@ namespace CuaHang
             _btnPay.onClick.AddListener(OnClickPayBtn);
             _infRefund.onValueChanged.AddListener(ValidateInput);
 
-            for (int i = 0; i < 10; i++) _barSlots.Add(null);
+            for (int i = 0; i < 10; i++) _barSlots.Add(new SlotBar());
         }
 
         private void FixedUpdate()
@@ -59,20 +61,18 @@ namespace CuaHang
 
         public void SetActiveContent(Item item)
         {
-            if (item)
+            if (item && item.GetComponent<MayTinh>())
             {
-                if (item.GetComponent<MayTinh>())
-                {
-                    _panelPayment.gameObject.SetActive(true);
-                    _mayTinh = item.GetComponent<MayTinh>();
-                    return;
-                }
+                _panelPayment.gameObject.SetActive(true);
+                _mayTinh = item.GetComponent<MayTinh>();
             }
-
-            // thoat
-            _mayTinh = null;
-            _panelBuyItem.gameObject.SetActive(false);
-            _panelPayment.gameObject.SetActive(false);
+            else
+            {
+                // thoat
+                _mayTinh = null;
+                _panelBuyItem.gameObject.SetActive(false);
+                _panelPayment.gameObject.SetActive(false);
+            }
         }
 
         // Hàm này sẽ được gọi mỗi khi giá trị trong inputField thay đổi
@@ -80,11 +80,19 @@ namespace CuaHang
         {
             if (float.TryParse(input, out float tienThoi))
             {
-                if (_customerSelectMark && 300 - tienThoi < _customerSelectMark._totalPay)
+                if (_customerSelectMark && 300 - tienThoi <= _customerSelectMark._totalPay)
                 {
-                    _txtReport.text = "Bạn có thể thanh toán, tính đúng nếu không mún bị mất tiền";
-                    _isCanPay = true;
-                    return;
+                    if (GameManager._Coin < tienThoi)
+                    {
+                        _txtReport.text = "Cảnh báo: Không đủ tiền để thối";
+                    }
+                    else
+                    {
+                        _txtReport.text = "Bạn có thể thanh toán, tính đúng nếu không mún bị mất tiền";
+                        _tienThoi = tienThoi;
+                        _isCanPay = true;
+                        return;
+                    }
                 }
                 else
                 {
@@ -106,6 +114,8 @@ namespace CuaHang
 
             _comSlot = _mayTinh._waitingLine._waitingSlots;
 
+            Debug.Log(_comSlot.Count);
+
             // doi chieu su khach biet
             for (int c = 0; c < _comSlot.Count; c++)
             {
@@ -114,9 +124,7 @@ namespace CuaHang
                 // Recreate list bar
                 for (int i = 0; i < _comSlot.Count; i++)
                 {
-                    // xoa cai cu
-                    Destroy(_barSlots[i]._bar);
-
+                    if (_barSlots[i]._bar) Destroy(_barSlots[i]._bar.gameObject);
                     // tao cai moi
                     _barSlots[i]._customer = _comSlot[i]._customer;
 
@@ -126,16 +134,30 @@ namespace CuaHang
                         _barSlots[i]._bar = btnBar;
                         if (_comSlot[i]._customer) btnBar.SetCustomer(_comSlot[i]._customer);
                     }
-
                 }
             }
         }
 
         private void OnClickPayBtn()
         {
-            if (_customerSelectMark && _isCanPay)
+            if (!_customerSelectMark) return;
+
+            if (GameManager._Coin < _tienThoi)
+            {
+                _txtReport.text = "Cảnh báo: Không đủ tiền để thối";
+                return;
+            }
+
+            if (_isCanPay)
             {
                 _customerSelectMark.PlayerConfirmPay();
+
+                float coinAdd = 300 - _tienThoi;
+
+                if (GameManager._Coin >= _tienThoi)
+                {
+                    GameManager.AddCoin(coinAdd);
+                }
             }
         }
 

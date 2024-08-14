@@ -64,10 +64,18 @@ namespace CuaHang.AI
         void Behavior()
         {
             // đi lấy item thứ cần mua
-            if (GoToItemNeed() && IsAgreeItem() && !_isNotNeedBuy && _itemFinding)
+            if (GoToItemNeed() && IsAgreeItem() && !_isNotNeedBuy)
             {
                 In("1.1: Đang đi lấy thứ muốn mua");
-                AddItemToCart();
+
+                StartCoroutine(IsPickingItem());
+                _totalPay += _itemFinding._Price;
+                _itemsCard.Add(_itemFinding);
+                _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding);
+                _itemFinding.gameObject.SetActive(false);
+                _listItemBuy.Remove(_itemFinding._typeID);
+                _itemFinding = null;
+
                 return;
             }
 
@@ -76,8 +84,17 @@ namespace CuaHang.AI
             {
                 In("1.2: Mua được vài thứ, đi thanh toán");
                 _listItemBuy.Clear();
+
                 ConfirmPayItem();
-                if (GoWaitingSlots()) GoOutShop();
+
+                if (_isPay)
+                {
+                    GoOutShop();
+                }
+                else
+                {
+                    IsMoveToWating();
+                }
                 return;
             }
 
@@ -101,7 +118,18 @@ namespace CuaHang.AI
 
         // -----------PRIVATE-----------
 
-        void SetAnimation()
+        private bool IsMoveToWating()
+        {
+            _mayTinh._waitingLine.RegisterSlot(this); // Đăng ký slot 
+            if (_slotWaiting) // move
+            {
+                MoveToTarget(_slotWaiting);
+                return true;
+            }
+            return false;
+        }
+
+        private void SetAnimation()
         {
             // is pick item
             if (_isPickingItem && _stageAnim != STATE_ANIM.Picking)
@@ -129,7 +157,7 @@ namespace CuaHang.AI
         }
 
         /// <summary> Chọn ngẫu nhiên item mà khách hàng này muốn lấy </summary>
-        void SetItemNeed()
+        private void SetItemNeed()
         {
             if (_listItemBuy.Count == 0 && _itemsCard.Count == 0) // đk để được set danh sách mua
             {
@@ -149,13 +177,13 @@ namespace CuaHang.AI
             }
         }
 
-        TypeID GetRandomItemBuy()
+        private TypeID GetRandomItemBuy()
         {
             return TypeID.apple_1;
         }
 
         /// <summary> Chạy tới vị trí item cần lấy </summary>
-        bool GoToItemNeed()
+        private bool GoToItemNeed()
         {
             Item itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo
 
@@ -173,7 +201,7 @@ namespace CuaHang.AI
         }
 
         /// <summary> Ra về khách tìm điểm đến là ngoài ở shop </summary>
-        void GoOutShop()
+        private void GoOutShop()
         {
             if (MoveToTarget(_outShopPoint))
             {
@@ -186,19 +214,8 @@ namespace CuaHang.AI
             }
         }
 
-        /// <summary> Tìm slot đợi thanh toán </summary>
-        bool GoWaitingSlots()
-        {
-            if (_isPay) return true; // thanh toán rồi thì không cần đén hàng chờ
-
-            _mayTinh._waitingLine.RegisterSlot(this); // Đăng ký slot 
-            if (_slotWaiting == null) return false;
-
-            return MoveToTarget(_slotWaiting);
-        }
-
         /// <summary> Giá quá cao thì không đồng ý mua </summary>
-        bool IsAgreeItem()
+        private bool IsAgreeItem()
         {
             if (_itemFinding)
             {
@@ -214,13 +231,12 @@ namespace CuaHang.AI
         }
 
         /// <summary> Thanh toán tiền, trả true nếu thanh toán thành công </summary>
-        bool ConfirmPayItem()
+        private bool ConfirmPayItem()
         {
             if (_isPay) return true;
             if (_playerConfirmPay)
             {
                 _isPay = true;
-                _gameManager.AddCoin(_totalPay);
                 _mayTinh._waitingLine.CancelRegisterSlot(this);
                 return true;
             }
@@ -228,24 +244,13 @@ namespace CuaHang.AI
         }
 
         /// <summary> Expressed complaints because this product is too expensive </summary>
-        void ExpressedComplaintsItem()
+        private void ExpressedComplaintsItem()
         {
             Debug.Log("Bán gì mắt vậy cha");
         }
 
-        void AddItemToCart()
-        {
-            StartCoroutine(IsPickingItem());
-            _totalPay += _itemFinding._Price;
-            _itemsCard.Add(_itemFinding);
-            _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding);
-            _itemFinding.gameObject.SetActive(false);
-            _listItemBuy.Remove(_itemFinding._typeID);
-            _itemFinding = null;
-        }
-
         /// <summary> Delay time pickup item </summary>
-        IEnumerator IsPickingItem()
+        private IEnumerator IsPickingItem()
         {
             _isPickingItem = true;
             yield return new WaitForSeconds(2f);
@@ -253,7 +258,7 @@ namespace CuaHang.AI
         }
 
         /// <summary> Tìm item lần lượt theo mục đang muốn mua </summary>
-        Item FindItem(TypeID typeID)
+        private Item FindItem(TypeID typeID)
         {
             List<Item> poolItem = ItemPooler.Instance.GetPoolItem.ToList();
             poolItem.Shuffle<Item>();
