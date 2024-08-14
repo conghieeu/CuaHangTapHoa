@@ -24,11 +24,12 @@ namespace CuaHang
             return CreateObjectPlant();
         }
 
-        /// <summary> Đặt lại toạ độ trục Z = 0 để nó khớp với sàn </summary>
+        /// <summary> Đặt lại toạ độ trục Y = 0 để nó khớp với sàn </summary>
         public override void DropItem(Transform location)
         {
             base.DropItem(location);
 
+            // Set Y
             for (int i = 0; i < _waitingLine._waitingSlots.Count; i++)
             {
                 Vector3 iPos = _waitingLine._waitingSlots[i]._slot.transform.position;
@@ -51,5 +52,14 @@ namespace CuaHang
             }
             return false;
         }
+
+        private void PayItem()
+        {
+            if (_waitingLine._waitingSlots[0]._customer)
+            {
+                _waitingLine._waitingSlots[0]._customer.GetComponent<Customer>().PlayerConfirmPay();
+            }
+        }
+
     }
 }

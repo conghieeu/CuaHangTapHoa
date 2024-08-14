@@ -12,18 +12,19 @@ namespace CuaHang.AI
     public class Customer : AIBehavior
     {
         [Header("Customer")]
+        public string _name;
         public float _totalPay;
         public Item _itemFinding; // item mà khách hàng đang tìm
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
         public Transform _outShopPoint; // Là điểm sẽ tới nếu rời shop
         public bool _isNotNeedBuy; // Không cần mua gì nữa
         public bool _isPickingItem; // Khi Khách hàng đang pick item
+        [SerializeField] bool _playerConfirmPay; // Player xác nhận thanh toán
+        [SerializeField] bool _isPay;
+
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
         public List<Item> _itemsCard;
 
-        [SerializeField] private bool _playerConfirmPay; // Player xác nhận thanh toán
-
-        bool _isPay;
 
         protected override void Awake()
         {
@@ -59,13 +60,6 @@ namespace CuaHang.AI
             SetAnimation();
         }
 
-        /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
-        public void PlayerConfirmPay()
-        {
-            _isNotNeedBuy = true;
-            _playerConfirmPay = true;
-        }
-
         /// <summary> Hành vi </summary>
         void Behavior()
         {
@@ -82,7 +76,8 @@ namespace CuaHang.AI
             {
                 In("1.2: Mua được vài thứ, đi thanh toán");
                 _listItemBuy.Clear();
-                if (GoPayItem()) GoOutShop();
+                ConfirmPayItem();
+                if (GoWaitingSlots()) GoOutShop();
                 return;
             }
 
@@ -94,6 +89,17 @@ namespace CuaHang.AI
                 return;
             }
         }
+
+        // -----------PUBLIC-----------
+
+        /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
+        public void PlayerConfirmPay()
+        {
+            _isNotNeedBuy = true;
+            _playerConfirmPay = true;
+        }
+
+        // -----------PRIVATE-----------
 
         void SetAnimation()
         {
@@ -148,13 +154,6 @@ namespace CuaHang.AI
             return TypeID.apple_1;
         }
 
-        /// <summary> Đi thanh toán item </summary>
-        bool GoPayItem()
-        {
-            if (GoWaitingSlots()) if (PayItem()) return true;
-            return false;
-        }
-
         /// <summary> Chạy tới vị trí item cần lấy </summary>
         bool GoToItemNeed()
         {
@@ -190,7 +189,7 @@ namespace CuaHang.AI
         /// <summary> Tìm slot đợi thanh toán </summary>
         bool GoWaitingSlots()
         {
-            if (_isPay) return true; // thanh toán rồi thì không cần đén hàng chờ 
+            if (_isPay) return true; // thanh toán rồi thì không cần đén hàng chờ
 
             _mayTinh._waitingLine.RegisterSlot(this); // Đăng ký slot 
             if (_slotWaiting == null) return false;
@@ -214,14 +213,8 @@ namespace CuaHang.AI
             return true;
         }
 
-        /// <summary> Expressed complaints because this product is too expensive </summary>
-        void ExpressedComplaintsItem()
-        {
-            Debug.Log("Bán gì mắt vậy cha");
-        }
-
         /// <summary> Thanh toán tiền, trả true nếu thanh toán thành công </summary>
-        bool PayItem()
+        bool ConfirmPayItem()
         {
             if (_isPay) return true;
             if (_playerConfirmPay)
@@ -232,6 +225,12 @@ namespace CuaHang.AI
                 return true;
             }
             return false;
+        }
+
+        /// <summary> Expressed complaints because this product is too expensive </summary>
+        void ExpressedComplaintsItem()
+        {
+            Debug.Log("Bán gì mắt vậy cha");
         }
 
         void AddItemToCart()
@@ -245,13 +244,13 @@ namespace CuaHang.AI
             _itemFinding = null;
         }
 
+        /// <summary> Delay time pickup item </summary>
         IEnumerator IsPickingItem()
         {
             _isPickingItem = true;
             yield return new WaitForSeconds(2f);
             _isPickingItem = false;
         }
-
 
         /// <summary> Tìm item lần lượt theo mục đang muốn mua </summary>
         Item FindItem(TypeID typeID)
