@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CuaHang.UI
 {
@@ -11,17 +12,25 @@ namespace CuaHang.UI
         public RectTransform _uiContent;
         public TextMeshProUGUI _tmp;
 
+        [SerializeField] RaycastCursor rc;
         [SerializeField] string _defaultTmp;
+        [SerializeField] BtnPressHandler _btnIncreasePrice;
+        [SerializeField] BtnPressHandler _btnDiscountPrice;
 
-        private void Start()
+        void Start()
         {
             _defaultTmp = _tmp.text;
+            rc = SingleModuleManager.Instance._raycastCursor;
+
+            _btnIncreasePrice.OnButtonDown += BtnDownIncreasePrice;
+            _btnIncreasePrice.OnButtonHolding += BtnHoldIncreasePrice;
+
+            _btnDiscountPrice.OnButtonDown += BtnDownDiscountPrice;
+            _btnDiscountPrice.OnButtonHolding += BtnHoldDiscountPrice;
         }
 
-        private void Update()
+        void FixedUpdate()
         {
-            RaycastCursor rc = SingleModuleManager.Instance._raycastCursor;
-
             // Get Item selected
             if (rc._itemFocus)
             {
@@ -40,14 +49,25 @@ namespace CuaHang.UI
 
             // bật tắt tuỳ theo có item hay không
             if (_item) _uiContent.gameObject.SetActive(_item);
+
         }
 
-        public void Btn_IncreasePrice()
+        // --------------BUTTON--------------
+
+        public void BtnDownIncreasePrice()
+        {
+            if (_item) _item.SetPrice(0.1f);
+        }
+        public void BtnHoldIncreasePrice()
         {
             if (_item) _item.SetPrice(0.1f);
         }
 
-        public void Btn_DiscountPrice()
+        public void BtnDownDiscountPrice()
+        {
+            if (_item) _item.SetPrice(-0.1f);
+        }
+        public void BtnHoldDiscountPrice()
         {
             if (_item) _item.SetPrice(-0.1f);
         }

@@ -77,6 +77,7 @@ namespace CuaHang.Pooler
                     Item itemPrefab = objPrefab.GetComponent<Item>();
                     if (itemPrefab)
                     {
+                        if (!itemPrefab._SO) Debug.LogWarning(itemPrefab + "Đang không có SO",itemPrefab.transform);
                         if (itemPrefab._SO._typeID == typeID)
                         {
                             item = Instantiate(itemPrefab, transform).GetComponent<Item>();

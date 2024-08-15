@@ -13,11 +13,14 @@ public enum Type
 public enum TypeID
 {
     computer_1,
+    shelf_1,
     table_1,
     parcel_1,
     trash_1,
     storage_1,
     apple_1,
+    milk_1,
+    banana_1,
 
 }
 

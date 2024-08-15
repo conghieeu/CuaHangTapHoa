@@ -8,9 +8,10 @@ namespace CuaHang.UI
 {
     public class BtnBuyItem : MonoBehaviour
     {
-        public float _count;
-        public ItemSO _itemSO;
-        public Button _button;
+        public List<ItemSO> _items;
+        public ItemSO _parcel; // nếu khi tạo cần parcel thì bỏ parcel vào đây
+
+        Button _button;
 
         private void Start()
         {
@@ -20,28 +21,26 @@ namespace CuaHang.UI
 
         public void BuyItem()
         {
-            if (!_itemSO)
+            if (_items.Count == 0)
             {
                 Debug.LogWarning("chỗ này thiếu item SO");
                 return;
             }
 
-            Debug.Log("BUY ITEM " + _itemSO._name);
-
-            Item parcel = ItemPooler.Instance.GetItemWithTypeID(_itemSO._typeID);
-
-            Debug.Log(parcel);
-
-            if (parcel)
+            if (_parcel)
             {
-                float size = 2f;
-                float rx = Random.Range(-size, size);
-                float rz = Random.Range(-size, size);
-
-                Vector3 p = SingleModuleManager.Instance._itemSpawnPos.position;
-
-                parcel.transform.position = new Vector3(p.x + rx, p.y, p.z + rz);
+                Item parcel = ItemPooler.Instance.GetItemWithTypeID(_parcel._typeID);
+                parcel.CreateItemInSlot(_items);
+                parcel.SetRandomPos();
             }
+            else
+            {
+                Item item = ItemPooler.Instance.GetItemWithTypeID(_items[0]._typeID);
+                item.SetRandomPos();
+            }
+
         }
+
+
     }
 }

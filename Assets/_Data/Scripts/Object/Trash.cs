@@ -19,6 +19,10 @@ namespace CuaHang
         public float _timeDelete; // thời gian để xoá đi đối tượng bênh trong kho
         public List<ParcelTrash> _listTrash; // thời gian để xoá đi đối tượng bênh trong kho
 
+        private void Start() {
+            for (int i = 0; i < _itemSlot._itemsSlots.Count; i++) _listTrash.Add(new ParcelTrash());
+        }
+
         private void FixedUpdate()
         {
             CountDownRemove();

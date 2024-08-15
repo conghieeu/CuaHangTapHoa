@@ -10,17 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
-  m_Name: Parcel
-  m_EditorClassIdentifier: 
-  _typeID: 2
-  _name: Parcel
-  _type: 1
-  _price: 2
+  m_Name: Banana_1
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectSellSO
+  _name: BananaA
+  _typeID: 7
+  _type: 5
+  _priceDefault: 2
   _priceMarketMin: 0
-  _priceMarketMax: 33
-  _isCanSell: 0
+  _priceMarketMax: 99
+  _isCanSell: 1
   _currency: USD
-  _thisPrefabs: {fileID: 0}
-  _items:
-  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
-  - {fileID: 11400000, guid: 2119d55ad7fc12a4cbeedb9ee79150c7, type: 2}
+  _thisPrefabs: {fileID: 5093278088282058274, guid: ad81afd499c88fd4ca0c23549ee682c8, type: 3}
+  _items: []

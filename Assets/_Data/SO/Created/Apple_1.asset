@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
+  m_Name: Apple_1
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectSellSO
+  _name: Apple_1A
+  _typeID: 5
+  _type: 5
+  _priceDefault: 4
+  _priceMarketMin: 0
+  _priceMarketMax: 99
+  _isCanSell: 1
+  _currency: USD
+  _thisPrefabs: {fileID: 5093278088282058274, guid: ad81afd499c88fd4ca0c23549ee682c8, type: 3}
+  _items: []

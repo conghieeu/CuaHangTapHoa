@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
-  m_Name: Trash
-  m_EditorClassIdentifier: 
-  _typeID: 3
-  _name: Trash
-  _type: 3
-  _price: 8
+  m_Name: Milk_1
+  m_EditorClassIdentifier: Assembly-CSharp::ObjectSellSO
+  _name: MilkA
+  _typeID: 6
+  _type: 5
+  _priceDefault: 5
   _priceMarketMin: 0
-  _priceMarketMax: 33
-  _isCanSell: 0
+  _priceMarketMax: 99
+  _isCanSell: 1
   _currency: USD
-  _thisPrefabs: {fileID: 0}
+  _thisPrefabs: {fileID: 5093278088282058274, guid: ad81afd499c88fd4ca0c23549ee682c8, type: 3}
   _items: []

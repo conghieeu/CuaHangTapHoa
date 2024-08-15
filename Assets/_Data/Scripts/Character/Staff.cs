@@ -47,7 +47,7 @@ namespace CuaHang.AI
             if (_parcelHold == null) return;
 
             // Đưa item lênh kệ
-            Item shelf = GetItem(TypeID.table_1);
+            Item shelf = GetItem(TypeID.shelf_1);
             if (shelf && parcelHasItem)
             {
                 if (MoveToTarget(shelf._waitingPoint.transform))

@@ -233,6 +233,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 83ebe007957629c42939903d165fb8bd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _autoSetCam: 0
   _camSize: 1.3
   _cam: {fileID: 0}
 --- !u!1 &2792255803312273508
@@ -247,7 +248,7 @@ GameObject:
   - component: {fileID: 6288939643664805789}
   - component: {fileID: 3655790261670572774}
   m_Layer: 9
-  m_Name: "C\xE1i b\xE0n_1"
+  m_Name: Shelf_A
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -307,20 +308,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
-  _SO: {fileID: 11400000, guid: 4fb482ab6e3fd7e48ada9954b06b0331, type: 2}
+  _isRecyclable: 0
+  _SO: {fileID: 11400000, guid: 28b8700058a61334a8336e97272c1f7e, type: 2}
   _typeID: 1
   _type: 0
   _name: "C\xE1i b\xE0n"
   _price: 22
   _currency: USD
+  _interactionPrompt: 
   _isCanDrag: 1
   _isCanSell: 0
-  _txtPrice: {fileID: 9190673542115075135}
-  _models: {fileID: 514825223104718608}
+  _isOnEditMode: 0
+  _isSamePrice: 0
+  _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
-  _thisParent: {fileID: 0}
   _waitingPoint: {fileID: 3566908654006748766}
+  _models: {fileID: 514825223104718608}
+  _camHere: {fileID: 0}
+  _txtPrice: {fileID: 9190673542115075135}
 --- !u!1 &5702891752709663305
 GameObject:
   m_ObjectHideFlags: 0
