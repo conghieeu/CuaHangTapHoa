@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace CuaHang
 {
-    public class PlayerCtrl : HieuBehavior
+    public class PlayerCtrl : Singleton<PlayerCtrl>
     {
         public ObjectDrag _objectDrag;
         public Transform _posHoldParcel; // vị trí đặt cái parcel này trên tay
@@ -13,13 +13,9 @@ namespace CuaHang
         public Animator _anim;
         public Interactor _interactor;
 
-        public static PlayerCtrl Instance { get; private set; }
-
-        private void Awake()
+        protected override void Awake()
         {
-            if (Instance) Destroy(this); else { Instance = this; }
-
-
+            base.Awake();
             _anim = GetComponentInChildren<Animator>();
             _interactor = GetComponentInChildren<Interactor>();
         }

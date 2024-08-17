@@ -5,16 +5,12 @@ using UnityEngine.UIElements.Experimental;
 
 namespace CuaHang
 {
-    public class GameManager : MonoBehaviour
+    public class GameManager : Singleton<GameManager>
     {
         [SerializeField] protected static float _coin;
 
-        public static GameManager Instance { get; private set; }
-
         private void Awake()
         {
-            if (Instance) Destroy(this); else { Instance = this; }
-
             _coin = 500;
         }
 
