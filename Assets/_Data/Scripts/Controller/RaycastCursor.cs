@@ -41,7 +41,7 @@ namespace CuaHang
             MoveItemDrag();
             RotationItemDrag();
 
-            if(Input.GetKeyDown(KeyCode.N))
+            if (Input.GetKeyDown(KeyCode.N))
             {
                 _enableSnapping = !_enableSnapping;
             }
@@ -114,15 +114,15 @@ namespace CuaHang
         /// <summary> Bật item drag với item được _Hit chiếu</summary>
         private void SetItemDrag()
         {
-            if (!_itemFocus || !Input.GetKeyDown(KeyCode.E)) return;
+            if (!_itemFocus || !Input.GetKeyDown(KeyCode.E) || _objectDrag._isDragging) return;
 
             Item item = _itemFocus.transform.GetComponent<Item>();
 
-            if (item) if (item._isCanDrag)
-                {
-                    item.DragItem();
-                    _objectDrag.PickUpItem(item);
-                }
+            if (item && item._isCanDrag)
+            {
+                item.DragItem();
+                _objectDrag.PickUpItem(item);
+            }
         }
 
         /// <summary> Di chuyen item </summary>

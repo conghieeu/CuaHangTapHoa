@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 1341509002775232061}
   - component: {fileID: 9039417715033812155}
   m_Layer: 9
-  m_Name: CaiBan
+  m_Name: "C\xE1i b\xE0n 1"
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -176,7 +176,7 @@ GameObject:
   - component: {fileID: 3313030627078425663}
   - component: {fileID: 789522495296438288}
   m_Layer: 9
-  m_Name: "Kho h\xE0ng"
+  m_Name: "Kho h\xE0ng 1"
   m_TagString: Untagged
   m_Icon: {fileID: 5132851093641282708, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0

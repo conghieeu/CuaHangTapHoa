@@ -23,7 +23,7 @@ namespace CuaHang.UI
         {
             if (_items.Count == 0)
             {
-                Debug.LogWarning("chỗ này thiếu item SO");
+                Debug.LogWarning("btnButton mua này thiếu item SO yêu cầu", transform);
                 return;
             }
 

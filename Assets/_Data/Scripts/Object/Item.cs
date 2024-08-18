@@ -9,7 +9,8 @@ namespace CuaHang
 {
     public class Item : PoolObject, IInteractable
     {
-        [Header("Property")]
+        [Header("Item")]
+        [Header("State Data")]
         public ItemSO _SO; // SO chỉ được load một lần
         public TypeID _typeID;
         public Type _type;

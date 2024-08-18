@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44658, g: 0.49641484, b: 0.57481825, a: 1}
+  m_IndirectSpecularColor: {r: 0.44300693, g: 0.49219602, b: 0.5719254, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -242,7 +242,7 @@ GameObject:
   - component: {fileID: 20381219}
   - component: {fileID: 20381222}
   m_Layer: 5
-  m_Name: Buy 3 Apple
+  m_Name: Btn Buy 3 Apple
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -265,7 +265,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -785.27075, y: 701.1942}
+  m_AnchoredPosition: {x: -905, y: 800}
   m_SizeDelta: {x: 143.4586, y: 131.6116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &20381219
@@ -547,7 +547,6 @@ MonoBehaviour:
   _items:
   - {fileID: 7665632069718744732}
   - {fileID: 6901579493741972173}
-  - {fileID: 0}
   - {fileID: 6319444834722312510}
   - {fileID: 718980771}
   - {fileID: 2145997580}
@@ -1499,6 +1498,71 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1001 &358347403
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6718400531861190005, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_Name
+      value: "Hi\u1EC7n \u1EE9ng chuy\u1EC3n scene"
+      objectReference: {fileID: 0}
+    - target: {fileID: 7192760072520144273, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_Alpha
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7543359936705430395, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_Name
+      value: Image
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 854.17236
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 488.62717
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.193929
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9016473965200953361, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: be445eb7a946e8342a4f580af5852c93, type: 3}
 --- !u!1 &385099484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1636,6 +1700,37 @@ MonoBehaviour:
   _isHolding: 0
   _timeDelayDefault: 0.7
   _timeDelay: 0
+--- !u!1 &388697021
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 388697022}
+  m_Layer: 0
+  m_Name: ---------UI----------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &388697022
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 388697021}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &405026528
 GameObject:
   m_ObjectHideFlags: 0
@@ -2392,44 +2487,8 @@ MonoBehaviour:
   Rules:
   - Type: 0
     Name: 
-    GameObject: {fileID: 405026528}
-    Ordinal: 0
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 5000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
-    GameObject: {fileID: 261769746}
-    Ordinal: 1
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 9000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
-    GameObject: {fileID: 574769625}
-    Ordinal: 2
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 3000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 0}
-    Ordinal: 3
+    Ordinal: 0
     Priority: 0
     IconType: 0
     IconTexture: {fileID: 0}
@@ -2440,20 +2499,8 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 1574197915}
-    Ordinal: 4
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 17000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 0}
-    Ordinal: 5
+    Ordinal: 1
     Priority: 0
     IconType: 0
     IconTexture: {fileID: 0}
@@ -2464,20 +2511,8 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 130429679}
-    Ordinal: 6
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 16000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 0}
-    Ordinal: 7
+    Ordinal: 2
     Priority: 0
     IconType: 24000
     IconTexture: {fileID: 0}
@@ -2488,20 +2523,8 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 1805847571}
-    Ordinal: 8
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 17000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 8843161274535764514}
-    Ordinal: 9
+    Ordinal: 3
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2513,7 +2536,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 10
+    Ordinal: 4
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2525,7 +2548,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 11
+    Ordinal: 5
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2537,7 +2560,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 12
+    Ordinal: 6
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2549,7 +2572,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 13
+    Ordinal: 7
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2561,7 +2584,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 14
+    Ordinal: 8
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2573,7 +2596,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 2456840681473792199}
-    Ordinal: 15
+    Ordinal: 9
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2585,7 +2608,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 457847368}
-    Ordinal: 16
+    Ordinal: 10
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2597,7 +2620,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 3146640705278131931}
-    Ordinal: 17
+    Ordinal: 11
     Priority: 0
     IconType: 2000
     IconTexture: {fileID: 0}
@@ -2609,7 +2632,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 18
+    Ordinal: 12
     Priority: 0
     IconType: 5000
     IconTexture: {fileID: 0}
@@ -2621,7 +2644,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 2155897028315137650}
-    Ordinal: 19
+    Ordinal: 13
     Priority: 0
     IconType: 6000
     IconTexture: {fileID: 0}
@@ -2633,7 +2656,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 20
+    Ordinal: 14
     Priority: 0
     IconType: 5000
     IconTexture: {fileID: 0}
@@ -2645,7 +2668,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 21
+    Ordinal: 15
     Priority: 0
     IconType: 6000
     IconTexture: {fileID: 0}
@@ -2656,20 +2679,8 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 1791036809}
-    Ordinal: 22
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 13000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 0}
-    Ordinal: 23
+    Ordinal: 16
     Priority: 0
     IconType: 3000
     IconTexture: {fileID: 0}
@@ -2680,32 +2691,8 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 1589320171}
-    Ordinal: 24
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 5000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
-    GameObject: {fileID: 614028709}
-    Ordinal: 25
-    Priority: 0
-    IconType: 0
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 10000
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 1892898891}
-    Ordinal: 26
+    Ordinal: 17
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2717,7 +2704,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 27
+    Ordinal: 18
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2729,7 +2716,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 8300710112688654838}
-    Ordinal: 28
+    Ordinal: 19
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2741,7 +2728,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 29
+    Ordinal: 20
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2753,7 +2740,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 2145997579}
-    Ordinal: 30
+    Ordinal: 21
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2765,7 +2752,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 31
+    Ordinal: 22
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2777,7 +2764,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 32
+    Ordinal: 23
     Priority: 0
     IconType: 6000
     IconTexture: {fileID: 0}
@@ -2789,7 +2776,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 0}
-    Ordinal: 33
+    Ordinal: 24
     Priority: 0
     IconType: 2000
     IconTexture: {fileID: 0}
@@ -2800,20 +2787,8 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 5282009804455590105}
-    Ordinal: 34
-    Priority: 0
-    IconType: 117450
-    IconTexture: {fileID: 0}
-    IsIconRecursive: 0
-    BackgroundType: 0
-    BackgroundTexture: {fileID: 0}
-    IsBackgroundRecursive: 0
-    IsHidden: 0
-  - Type: 0
-    Name: 
     GameObject: {fileID: 0}
-    Ordinal: 35
+    Ordinal: 25
     Priority: 0
     IconType: 0
     IconTexture: {fileID: 0}
@@ -2825,7 +2800,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 181870222}
-    Ordinal: 36
+    Ordinal: 26
     Priority: 0
     IconType: 12000
     IconTexture: {fileID: 0}
@@ -2837,7 +2812,7 @@ MonoBehaviour:
   - Type: 0
     Name: 
     GameObject: {fileID: 7622420916792253890}
-    Ordinal: 37
+    Ordinal: 27
     Priority: 0
     IconType: 6000
     IconTexture: {fileID: 0}
@@ -2848,13 +2823,61 @@ MonoBehaviour:
     IsHidden: 0
   - Type: 0
     Name: 
-    GameObject: {fileID: 2035788014}
-    Ordinal: 38
+    GameObject: {fileID: 1946275727}
+    Ordinal: 28
     Priority: 0
     IconType: 0
     IconTexture: {fileID: 0}
     IsIconRecursive: 0
-    BackgroundType: 17000
+    BackgroundType: 21000
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 388697021}
+    Ordinal: 29
+    Priority: 0
+    IconType: 0
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 5000
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 1551466721}
+    Ordinal: 30
+    Priority: 0
+    IconType: 0
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 13000
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 628281471}
+    Ordinal: 31
+    Priority: 0
+    IconType: 0
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 16000
+    BackgroundTexture: {fileID: 0}
+    IsBackgroundRecursive: 0
+    IsHidden: 0
+  - Type: 0
+    Name: 
+    GameObject: {fileID: 1596303133}
+    Ordinal: 32
+    Priority: 0
+    IconType: 0
+    IconTexture: {fileID: 0}
+    IsIconRecursive: 0
+    BackgroundType: 9000
     BackgroundTexture: {fileID: 0}
     IsBackgroundRecursive: 0
     IsHidden: 0
@@ -3426,7 +3449,7 @@ GameObject:
   m_Component:
   - component: {fileID: 574769626}
   m_Layer: 0
-  m_Name: Enviroment - Static
+  m_Name: Enviroment
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -3593,7 +3616,7 @@ Transform:
   m_GameObject: {fileID: 628281471}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6850533, y: -0.47547007, z: 7.4743614}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4001,7 +4024,7 @@ Light:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingLayerMask: 1
-  m_Lightmapping: 1
+  m_Lightmapping: 4
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -4011,7 +4034,7 @@ Light:
   m_UseBoundingSphereOverride: 0
   m_UseViewFrustumForShadowCasterCull: 1
   m_ShadowRadius: 0
-  m_ShadowAngle: 0
+  m_ShadowAngle: 90
 --- !u!4 &705507995
 Transform:
   m_ObjectHideFlags: 0
@@ -4020,13 +4043,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 705507993}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.1855288, y: 0.81430656, z: -0.37971735, w: 0.39786783}
+  m_LocalRotation: {x: 0.24999999, y: 0.75000006, z: -0.43301275, w: 0.43301266}
   m_LocalPosition: {x: 0, y: 3, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1805847572}
-  m_LocalEulerAnglesHint: {x: 50, y: 127.92, z: 0}
+  m_LocalEulerAnglesHint: {x: 60, y: 120, z: 0}
 --- !u!1001 &718980769
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -4256,9 +4279,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.46187246, g: 0.5019608, b: 0.2509804, a: 1}
-  m_RaycastTarget: 1
+  m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
+  m_Maskable: 0
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -5969,7 +5992,7 @@ GameObject:
   - component: {fileID: 1017992678}
   - component: {fileID: 1017992681}
   m_Layer: 5
-  m_Name: Buy 3 Banana
+  m_Name: Btn Buy 3 Banana
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -5992,7 +6015,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -785.27, y: 321}
+  m_AnchoredPosition: {x: -905, y: 428}
   m_SizeDelta: {x: 143.4586, y: 131.6116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1017992678
@@ -6089,8 +6112,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1581d5d22b7f143b50da043c944e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: []
-  _parcel: {fileID: 0}
+  _items:
+  - {fileID: 11400000, guid: 2e23e2a5bcaa2624894082604b147e3b, type: 2}
+  - {fileID: 11400000, guid: 2e23e2a5bcaa2624894082604b147e3b, type: 2}
+  - {fileID: 11400000, guid: 2e23e2a5bcaa2624894082604b147e3b, type: 2}
+  _parcel: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
 --- !u!1 &1021088299
 GameObject:
   m_ObjectHideFlags: 0
@@ -8008,7 +8034,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1551466722}
   m_Layer: 0
-  m_Name: --------POOL-----------
+  m_Name: --------POOLS-----------
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8023,7 +8049,7 @@ Transform:
   m_GameObject: {fileID: 1551466721}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6850533, y: -0.47547007, z: 7.4743614}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8111,10 +8137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -8206,7 +8232,7 @@ Transform:
   m_GameObject: {fileID: 1596303133}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -4.6850533, y: -0.47547007, z: 7.4743614}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -8390,7 +8416,7 @@ GameObject:
   - component: {fileID: 1680142561}
   - component: {fileID: 1680142560}
   m_Layer: 5
-  m_Name: txtSnapping
+  m_Name: txtIsSnapping
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8813,8 +8839,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1791036809}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -10.859906, y: 9.248798, z: -5.839631}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -8869,7 +8895,7 @@ GameObject:
   - component: {fileID: 1815661213}
   - component: {fileID: 1815661216}
   m_Layer: 5
-  m_Name: Buy 3 Milk
+  m_Name: Btn Buy 3 Milk
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -8892,7 +8918,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -785.27, y: 512}
+  m_AnchoredPosition: {x: -905, y: 603}
   m_SizeDelta: {x: 143.4586, y: 131.6116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1815661213
@@ -8989,8 +9015,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1581d5d22b7f143b50da043c944e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: []
-  _parcel: {fileID: 0}
+  _items:
+  - {fileID: 11400000, guid: 3ca4e2e912fbb594c868ae9d68301647, type: 2}
+  - {fileID: 11400000, guid: 3ca4e2e912fbb594c868ae9d68301647, type: 2}
+  - {fileID: 11400000, guid: 3ca4e2e912fbb594c868ae9d68301647, type: 2}
+  _parcel: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
 --- !u!1 &1816686709
 GameObject:
   m_ObjectHideFlags: 0
@@ -9079,6 +9108,37 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8300710113426507887, guid: 66c9b5ab3e06d8548a67a5d00421c367, type: 3}
   m_PrefabInstance: {fileID: 9210982081321247427}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1946275727
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1946275728}
+  m_Layer: 0
+  m_Name: -------MANAGERS--------
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1946275728
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1946275727}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1978046704
 GameObject:
   m_ObjectHideFlags: 0
@@ -9475,7 +9535,7 @@ GameObject:
   - component: {fileID: 2042873803}
   - component: {fileID: 2042873802}
   m_Layer: 5
-  m_Name: Buy Shelf
+  m_Name: Btn Buy Shelf
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9498,7 +9558,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -582, y: 512}
+  m_AnchoredPosition: {x: -685, y: 603}
   m_SizeDelta: {x: 143.4586, y: 131.6116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2042873802
@@ -9874,7 +9934,7 @@ GameObject:
   - component: {fileID: 2085740688}
   - component: {fileID: 2085740687}
   m_Layer: 5
-  m_Name: Buy Table
+  m_Name: Btn Buy Table
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -9897,7 +9957,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -578, y: 700}
+  m_AnchoredPosition: {x: -685, y: 800}
   m_SizeDelta: {x: 143.4586, y: 131.6116}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2085740687
@@ -9912,7 +9972,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f1581d5d22b7f143b50da043c944e2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _items: []
+  _items:
+  - {fileID: 11400000, guid: 4fb482ab6e3fd7e48ada9954b06b0331, type: 2}
   _parcel: {fileID: 0}
 --- !u!114 &2085740688
 MonoBehaviour:
@@ -14324,21 +14385,24 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
+  - {fileID: 1946275728}
   - {fileID: 1574197916}
   - {fileID: 1791036810}
-  - {fileID: 2035788018}
-  - {fileID: 1589320175}
   - {fileID: 614028710}
   - {fileID: 1596303134}
-  - {fileID: 342665302}
-  - {fileID: 1659902825}
   - {fileID: 963194228}
+  - {fileID: 1659902825}
+  - {fileID: 164984195}
+  - {fileID: 342665302}
   - {fileID: 1805847572}
   - {fileID: 574769626}
-  - {fileID: 164984195}
   - {fileID: 628281472}
   - {fileID: 5529335358959203614}
   - {fileID: 1551466722}
   - {fileID: 130429680}
   - {fileID: 261769747}
   - {fileID: 405026529}
+  - {fileID: 388697022}
+  - {fileID: 358347403}
+  - {fileID: 2035788018}
+  - {fileID: 1589320175}
