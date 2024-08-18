@@ -27,12 +27,12 @@ namespace CuaHang
             if (Input.GetKeyDown(KeyCode.T))
             {
                 SenderParcel();
-                SenderApple();
+                SenderItemSell();
             }
         }
 
         /// <summary> chạm vào kệ, người chơi có thể truyền item từ parcel sang table đó </summary>
-        void SenderApple()
+        void SenderItemSell()
         {
             // có item ở cảm biến
             Item shelf = _ctrl._sensorForward.GetItemTypeHit(Type.Shelf);
@@ -44,11 +44,9 @@ namespace CuaHang
             }
             else if (shelf && itemHold && itemHold._isCanSell) // để apple lênh kệ
             {
-                In($"Thử để quả táo lênh bàn xem thử có được hay không");
-                if (shelf._itemSlot.TryAddItemToItemSlot(itemHold, false))
-                {
-                    _ctrl._objectDrag.OnDropItem();
-                }
+                In($"Player để quá táo lênh kệ");
+                _ctrl._objectDrag.OnDropItem();
+                shelf._itemSlot.TryAddItemToItemSlot(itemHold, false);
             }
         }
 

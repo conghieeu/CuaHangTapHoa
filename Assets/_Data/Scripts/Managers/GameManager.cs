@@ -9,8 +9,9 @@ namespace CuaHang
     {
         [SerializeField] protected static float _coin;
 
-        private void Awake()
+        protected override void Awake()
         {
+            base.Awake();
             _coin = 500;
         }
 

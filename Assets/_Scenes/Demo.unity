@@ -492,7 +492,7 @@ GameObject:
   - component: {fileID: 130429680}
   - component: {fileID: 130429681}
   m_Layer: 0
-  m_Name: Item Pooler
+  m_Name: Item Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -987,7 +987,7 @@ GameObject:
   - component: {fileID: 261769747}
   - component: {fileID: 261769748}
   m_Layer: 0
-  m_Name: DanhSachNhanVien
+  m_Name: Waiter Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1742,7 +1742,7 @@ GameObject:
   - component: {fileID: 405026529}
   - component: {fileID: 405026530}
   m_Layer: 0
-  m_Name: DanhSachKhachHang
+  m_Name: Customer Pool
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -11060,7 +11060,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 71a7fa81b2868f74d9992f22ae55e95b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enableDebugLog: 0
+  enableDebugLog: 1
 --- !u!1 &2756887455196668318
 GameObject:
   m_ObjectHideFlags: 0
@@ -11774,7 +11774,7 @@ Transform:
   m_GameObject: {fileID: 7622420916792253890}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.9934328, z: 0, w: 0.114417024}
-  m_LocalPosition: {x: 0.93, y: 0, z: -4.32}
+  m_LocalPosition: {x: 4.01, y: 0, z: 12.31}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -12001,7 +12001,7 @@ GameObject:
   - component: {fileID: 809743955841138627}
   - component: {fileID: 8799294347070491588}
   m_Layer: 0
-  m_Name: "Th\u1EB1ng ng\u01B0\u1EDDi ch\u01A1i"
+  m_Name: Player
   m_TagString: Player
   m_Icon: {fileID: 7250588514170254948, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -14270,7 +14270,7 @@ Transform:
   m_GameObject: {fileID: 2155897028315137650}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0.9934328, z: 0, w: 0.114417024}
-  m_LocalPosition: {x: -3.71, y: 0, z: -12.22}
+  m_LocalPosition: {x: 0.45, y: 0, z: 11.73}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
