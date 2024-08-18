@@ -67,15 +67,14 @@ namespace CuaHang.UI
         {
             if (item && item.GetComponent<MayTinh>())
             {
-                _panelPayment.gameObject.SetActive(true);
+                if (_panelPayment) _panelPayment.gameObject.SetActive(true);
                 _mayTinh = item.GetComponent<MayTinh>();
             }
             else
             {
-                // thoat
+                if (_panelPayment) _panelPayment.gameObject.SetActive(false);
+                if (_panelBuyItem) _panelBuyItem.gameObject.SetActive(false);
                 _mayTinh = null;
-                _panelBuyItem.gameObject.SetActive(false);
-                _panelPayment.gameObject.SetActive(false);
             }
         }
 
@@ -116,7 +115,7 @@ namespace CuaHang.UI
         {
             if (_mayTinh == null) return;
 
-            _comSlot = _mayTinh._waitingLine._waitingSlots; 
+            _comSlot = _mayTinh._waitingLine._waitingSlots;
 
             // doi chieu su khach biet
             for (int c = 0; c < _comSlot.Count; c++)
@@ -175,7 +174,7 @@ namespace CuaHang.UI
             SetAtivePanel(_panelBuyItem);
         }
 
-        private void SetAtivePanel(RectTransform panel)
+        private void SetAtivePanel(Transform panel)
         {
             if (panel == _panelPayment)
             {

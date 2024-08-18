@@ -8,6 +8,8 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Linq;
 using System.Xml;
+using CuaHang.AI;
+using HieuDev;
 
 [Serializable]
 public class PlayerData
@@ -28,22 +30,6 @@ public class WorldState
     public string weather;
 }
 
-[Serializable]
-public class GameSettings
-{
-    public float volume;
-    public string graphics;
-}
-
-[Serializable]
-public class Pet
-{
-    public string petName;
-    public int petID;
-    public string type;
-    public int level;
-    public Vector3 position;
-}
 
 [Serializable]
 public class GameData
@@ -51,7 +37,8 @@ public class GameData
     public PlayerData player = new PlayerData();
     public WorldState worldState = new WorldState();
     public GameSettings gameSettings = new GameSettings();
-    public List<Pet> pets = new List<Pet>(); // Thêm danh sách thú cưng
+    public List<Customer> customers = new List<Customer>(); // Thêm danh sách thú cưng
+    public List<Staff> staff = new List<Staff>(); // Thêm danh sách thú cưng
 }
 
 namespace HieuDev
@@ -59,38 +46,42 @@ namespace HieuDev
     /// <summary> Là GAMEDATA, chuỗi hoá và mã hoá lưu được nhiều loại dữ liệu của đối tượng </summary>
     public class SerializationAndEncryption : Singleton<SerializationAndEncryption>
     {
-        // [SerializeField] TMPro.TextMeshProUGUI text;
-        [SerializeField] bool serialize;
-        [SerializeField] bool usingXML;
-        [SerializeField] bool encrypt;
-        [SerializeField] string filePath;
-        public GameData GameData;
+        public static event Action _OnDataSaved;
+        public static event Action<GameData> _OnDataLoaded;
+
+        [SerializeField] bool _serialize;
+        [SerializeField] bool _usingXML;
+        [SerializeField] bool _encrypt;
+        [SerializeField] string _filePath;
+        public static GameData GameData;
 
         void Start()
         {
-            filePath = Application.persistentDataPath + "/gameData.save";
+            _filePath = Application.persistentDataPath + "/gameData.save";
             SetDontDestroyOnLoad(true);
             LoadGameData();
         }
 
         public void SaveGameData()
         {
-            File.WriteAllText(filePath, SerializeAndEncrypt(GameData));
-            Debug.Log("Game data saved to: " + filePath);
+            File.WriteAllText(_filePath, SerializeAndEncrypt(GameData));
+            Debug.Log("Game data saved to: " + _filePath);
+            _OnDataSaved?.Invoke();
         }
 
         public void LoadGameData()
         {
-            if (File.Exists(filePath))
+            if (File.Exists(_filePath))
             {
-                string stringData = File.ReadAllText(filePath);
-                Debug.Log("Game data loaded from: " + filePath);
-                
+                string stringData = File.ReadAllText(_filePath);
+                Debug.Log("Game data loaded from: " + _filePath);
+
                 GameData = Deserialized(stringData);
+                _OnDataLoaded?.Invoke(GameData);
             }
             else
             {
-                Debug.LogWarning("Save file not found in: " + filePath); 
+                Debug.LogWarning("Save file not found in: " + _filePath);
             }
         }
 
@@ -99,15 +90,15 @@ namespace HieuDev
         {
             string stringData = "";
 
-            if (serialize)
+            if (_serialize)
             {
-                if (usingXML)
+                if (_usingXML)
                     stringData = Utils.SerializeXML<GameData>(gameData);
                 else
                     stringData = JsonUtility.ToJson(gameData);
             }
 
-            if (encrypt)
+            if (_encrypt)
             {
                 stringData = Utils.EncryptAES(stringData);
             }
@@ -119,7 +110,7 @@ namespace HieuDev
         private GameData Deserialized(string stringData)
         {
             // giải mã hoá
-            if (encrypt)
+            if (_encrypt)
             {
                 stringData = Utils.DecryptAES(stringData);
             }
@@ -127,9 +118,9 @@ namespace HieuDev
             GameData gameData = new GameData();
 
             // đọc tuần tự hoá json hoặc xml
-            if (serialize)
+            if (_serialize)
             {
-                if (usingXML)
+                if (_usingXML)
                     gameData = Utils.DeserializeXML<GameData>(stringData);
                 else
                     gameData = JsonUtility.FromJson<GameData>(stringData);

@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using log4net.Util;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -9,15 +10,31 @@ namespace HieuDev
 {
     public class SettingsMenu : MonoBehaviour
     {
-        public AudioMixer audioMixer;
-        public TMP_Dropdown resolutionDropdown;
-        Resolution[] resolutions; // Array to store available screen resolutions
+        [SerializeField] AudioMixer audioMixer;
+        [SerializeField] TMP_Dropdown resolutionDropdown;
+        [SerializeField] RectTransform _panelContent;
+        [SerializeField] bool _enableMenuSettings;
+        [SerializeField] Resolution[] resolutions; // Array to store available screen resolutions
+
 
         void Start()
         {
             SetResolution();
+
+            GameSettings._OnSettingsChanged += LoadSettings;
+
+            // tắt menu setting khi mới bắt đầu 
+            _enableMenuSettings = false;
+            Debug.Log(_panelContent);
+            _panelContent.gameObject.SetActive(_enableMenuSettings);
         }
-        
+
+        private void LoadSettings(GameSettings gameSettings)
+        {
+            SetVolume(gameSettings._masterVolume);
+
+        }
+
         private void SetResolution()
         {
             resolutions = Screen.resolutions; // Get all available screen resolutions from the system
@@ -44,6 +61,12 @@ namespace HieuDev
             resolutionDropdown.AddOptions(options); // Add the resolution options to the dropdown
             resolutionDropdown.value = currentResolutionIndex;
             resolutionDropdown.RefreshShownValue();
+        }
+
+        public void SetActiveMenuSettings()
+        {
+            _enableMenuSettings = !_enableMenuSettings;
+            _panelContent.gameObject.SetActive(_enableMenuSettings);
         }
 
         public void SetVolume(float volume)
