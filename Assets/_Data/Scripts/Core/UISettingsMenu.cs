@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 namespace HieuDev
 {
-    public class SettingsMenu : MonoBehaviour
+    public class UISettingsMenu : MonoBehaviour
     {
         [SerializeField] AudioMixer audioMixer;
         [SerializeField] TMP_Dropdown resolutionDropdown;
@@ -24,15 +24,13 @@ namespace HieuDev
             GameSettings._OnSettingsChanged += LoadSettings;
 
             // tắt menu setting khi mới bắt đầu 
-            _enableMenuSettings = false;
-            Debug.Log(_panelContent);
+            _enableMenuSettings = false; 
             _panelContent.gameObject.SetActive(_enableMenuSettings);
         }
 
-        private void LoadSettings(GameSettings gameSettings)
+        private void LoadSettings(GameSettingsData gameSettings)
         {
             SetVolume(gameSettings._masterVolume);
-
         }
 
         private void SetResolution()

@@ -34,6 +34,7 @@ namespace CuaHang
 
             SetCamFocus(_raycastCursor._itemFocus);
             CamForcusShelf(_raycastCursor._itemFocus);
+
         }
 
         private void CamCtrl()

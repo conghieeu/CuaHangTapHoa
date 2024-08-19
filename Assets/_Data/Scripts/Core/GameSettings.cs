@@ -6,11 +6,8 @@ using UnityEngine;
 
 public class GameSettings : Singleton<GameSettings>
 {
-    public static event Action<GameSettings> _OnSettingsChanged;
-
-    public bool _fullScreen;
-    public string _quality;
-    public float _masterVolume;
+    public static event Action<GameSettingsData> _OnSettingsChanged;
+    public GameSettingsData _gameSettingsData;
 
     private void Start()
     {
@@ -18,11 +15,8 @@ public class GameSettings : Singleton<GameSettings>
     }
 
     public void LoadSettings(GameData gameData)
-    {
-        _fullScreen = gameData.gameSettings._fullScreen;
-        _quality = gameData.gameSettings._quality;
-        _masterVolume = gameData.gameSettings._masterVolume;
-
-        _OnSettingsChanged?.Invoke(this);
+    { 
+        _gameSettingsData = gameData._gameSettingsData;
+        _OnSettingsChanged?.Invoke(gameData._gameSettingsData);
     }
 }

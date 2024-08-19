@@ -5,7 +5,7 @@ using CuaHang;
 using CuaHang.AI;
 using UnityEngine;
 
-namespace Hieu.Player
+namespace CuaHang.Player
 {
     public class PlayerMovement : MonoBehaviour
     {

@@ -4279,9 +4279,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 0.46187246, g: 0.5019608, b: 0.2509804, a: 1}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 0
+  m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -7350,9 +7350,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  _fullScreen: 0
-  _quality: 
-  _masterVolume: 0
+  _gameSettingsData:
+    _fullScreen: 0
+    _quality: 
+    _masterVolume: 0
 --- !u!4 &1277471662
 Transform:
   m_ObjectHideFlags: 0
@@ -10411,7 +10412,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e4ce030c1f35824a8314ee51bbd6ab2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _money: 0
+  enableDebugLog: 0
+  _playerData:
+    _name: 
+    _position: {x: 0, y: 1, z: 0}
+    _money: 0
 --- !u!137 &822302459670252918
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 0
@@ -11820,6 +11825,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
+  _playerStats: {fileID: 0}
   _objectDrag: {fileID: 6334553454394321204}
   _posHoldParcel: {fileID: 7589937249930962797}
   _sensorForward: {fileID: 5938908392013626182}

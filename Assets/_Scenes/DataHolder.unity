@@ -271,26 +271,22 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _dontDestroyOnLoad: 0
-  serialize: 1
-  usingXML: 0
-  encrypt: 1
-  filePath: 
   GameData:
-    player:
-      name: 
-      level: 0
-      experience: 0
-      health: 0
-      mana: 0
-      position: {x: 0, y: 0, z: 0}
-      currency: 0
-    worldState:
-      dayTime: 
-      weather: 
-    gameSettings:
-      volume: 0
-      graphics: 
-    pets: []
+    _playerData:
+      _name: 
+      _position: {x: 0, y: 0, z: 0}
+      _money: 0
+    _gameSettingsData:
+      _fullScreen: 0
+      _quality: 
+      _masterVolume: 0
+    customers: []
+    staff: []
+  _serialize: 1
+  _usingXML: 0
+  _encrypt: 0
+  _saveName: /gameData.json
+  _filePath: 
 --- !u!1 &1903335568
 GameObject:
   m_ObjectHideFlags: 0

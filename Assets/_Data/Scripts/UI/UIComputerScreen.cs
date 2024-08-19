@@ -1,13 +1,9 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
 using UnityEngine.UI;
 using CuaHang.AI;
-using System.Linq; // Thêm dòng này vào đầu script
-using UnityEditor.Animations;
 using TMPro;
-using System.Xml.Serialization;
 
 namespace CuaHang.UI
 {
@@ -64,7 +60,7 @@ namespace CuaHang.UI
         // -----------PAYMENT PANEL----------
 
         public void SetActiveContent(Item item)
-        {
+        { 
             if (item && item.GetComponent<MayTinh>())
             {
                 if (_panelPayment) _panelPayment.gameObject.SetActive(true);

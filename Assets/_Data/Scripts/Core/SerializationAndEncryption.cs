@@ -10,35 +10,38 @@ using System.Linq;
 using System.Xml;
 using CuaHang.AI;
 using HieuDev;
+using CuaHang;
+
+[Serializable]
+public class GameSettingsData
+{
+    public bool _fullScreen;
+    public string _quality;
+    public float _masterVolume;
+}
 
 [Serializable]
 public class PlayerData
 {
-    public string name;
-    public int level;
-    public int experience;
-    public int health;
-    public int mana;
-    public Vector3 position;
-    public int currency; // Thêm thuộc tính để lưu trữ tiền tệ
-}
+    public string _name;
+    public Vector3 _position;
+    public float _money;
 
-[Serializable]
-public class WorldState
-{
-    public string dayTime;
-    public string weather;
+    public PlayerData(string name, Vector3 position, float money)
+    {
+        _name = name;
+        _position = position;
+        _money = money;
+    }
 }
-
 
 [Serializable]
 public class GameData
 {
-    public PlayerData player = new PlayerData();
-    public WorldState worldState = new WorldState();
-    public GameSettings gameSettings = new GameSettings();
-    public List<Customer> customers = new List<Customer>(); // Thêm danh sách thú cưng
-    public List<Staff> staff = new List<Staff>(); // Thêm danh sách thú cưng
+    public PlayerData _playerData; 
+    public GameSettingsData _gameSettingsData;
+    public List<Customer> customers = new ();
+    public List<Staff> staff = new ();
 }
 
 namespace HieuDev
@@ -49,15 +52,16 @@ namespace HieuDev
         public static event Action _OnDataSaved;
         public static event Action<GameData> _OnDataLoaded;
 
+        public GameData GameData = new ();
         [SerializeField] bool _serialize;
         [SerializeField] bool _usingXML;
         [SerializeField] bool _encrypt;
+        [SerializeField] string _saveName = "/gameData.save";
         [SerializeField] string _filePath;
-        public static GameData GameData;
 
         void Start()
         {
-            _filePath = Application.persistentDataPath + "/gameData.save";
+            _filePath = Application.persistentDataPath + _saveName;
             SetDontDestroyOnLoad(true);
             LoadGameData();
         }
