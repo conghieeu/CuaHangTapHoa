@@ -1,6 +1,8 @@
+using CuaHang;
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
-public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
+public abstract class Singleton<T> : HieuBehavior where T : MonoBehaviour
 {
     private static T instance;
 
@@ -18,7 +20,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
                 {
                     GameObject gameObject = new GameObject("Controller");
                     instance = gameObject.AddComponent<T>();
-                    Debug.LogWarning("intance không tồn tại, controller được khởi tạo");
+                    Debug.LogWarning("Lỗi singleton: intance không tồn tại, controller được khởi tạo", gameObject);
                 }
             }
             return instance;

@@ -1,26 +1,15 @@
 using System;
 using System.Collections;
 using HieuDev;
+using UnityEditorInternal;
 using UnityEngine;
 
 namespace CuaHang
 {
-    public class PlayerStats : HieuBehavior
+    public class PlayerStats : ObjectSave
     {
-        public static event Action _OnDataChange;
-
         [Header("PlayerStats")]
         public PlayerData _playerData;
-
-        private void Start()
-        {
-            StartCoroutine(UpdatePlayer());
-        }
-
-        private void OnEnable()
-        {
-            SerializationAndEncryption._OnDataLoaded += LoadPlayerData;
-        }
 
         private void Update()
         {
@@ -30,24 +19,26 @@ namespace CuaHang
             }
         }
 
-        private void LoadPlayerData(GameData gameData)
+        protected override void LoadPlayerData(GameData gameData)
         {
+            base.LoadPlayerData(gameData);
+
             _playerData = gameData._playerData;
-            _OnDataChange?.Invoke();
+
+            if (_playerData != null)
+            {
+                transform.position = _playerData._position;
+            }
         }
 
-        IEnumerator UpdatePlayer()
+        protected override void SavePlayerData()
         {
-            yield return new WaitForSeconds(0.1f);
-            transform.position = _playerData._position;
-        }
+            _serializationAndEncryption.GameData._playerData = new PlayerData(
+                _playerData._name,
+                transform.position,
+                _playerData._money);
 
-        private void SavePlayerData()
-        {
-            SerializationAndEncryption.Instance.GameData._playerData = new PlayerData(
-                _playerData._name, transform.position, _playerData._money);
-
-            SerializationAndEncryption.Instance.SaveGameData();
+            base.SavePlayerData();
         }
     }
 }

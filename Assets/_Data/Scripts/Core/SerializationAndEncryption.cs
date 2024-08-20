@@ -11,6 +11,7 @@ using System.Xml;
 using CuaHang.AI;
 using HieuDev;
 using CuaHang;
+using UnityEngine.SceneManagement;
 
 [Serializable]
 public class GameSettingsData
@@ -38,10 +39,10 @@ public class PlayerData
 [Serializable]
 public class GameData
 {
-    public PlayerData _playerData; 
+    public PlayerData _playerData;
     public GameSettingsData _gameSettingsData;
-    public List<Customer> customers = new ();
-    public List<Staff> staff = new ();
+    public List<Customer> customers = new();
+    public List<Staff> staff = new();
 }
 
 namespace HieuDev
@@ -52,12 +53,18 @@ namespace HieuDev
         public static event Action _OnDataSaved;
         public static event Action<GameData> _OnDataLoaded;
 
-        public GameData GameData = new ();
+        public GameData GameData = new();
         [SerializeField] bool _serialize;
         [SerializeField] bool _usingXML;
         [SerializeField] bool _encrypt;
         [SerializeField] string _saveName = "/gameData.save";
         [SerializeField] string _filePath;
+
+        protected override void Awake()
+        {
+            base.Awake();
+            SceneManager.sceneLoaded += OnSceneLoaded;
+        }
 
         void Start()
         {
@@ -66,11 +73,17 @@ namespace HieuDev
             LoadGameData();
         }
 
+        // called second
+        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        {
+            // LoadGameData();
+        }
+
         public void SaveGameData()
         {
+            _OnDataSaved?.Invoke();
             File.WriteAllText(_filePath, SerializeAndEncrypt(GameData));
             Debug.Log("Game data saved to: " + _filePath);
-            _OnDataSaved?.Invoke();
         }
 
         public void LoadGameData()

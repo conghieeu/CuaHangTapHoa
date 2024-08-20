@@ -21,16 +21,19 @@ namespace HieuDev
         {
             SetResolution();
 
-            GameSettings._OnSettingsChanged += LoadSettings;
+            // GameSettings._OnDataChange += GameData =>
+            // {
+
+            // };
 
             // tắt menu setting khi mới bắt đầu 
             _enableMenuSettings = false; 
             _panelContent.gameObject.SetActive(_enableMenuSettings);
         }
 
-        private void LoadSettings(GameSettingsData gameSettings)
+        private void LoadSettings(GameSettings gameSettings)
         {
-            SetVolume(gameSettings._masterVolume);
+            // SetVolume(gameSettings._masterVolume);
         }
 
         private void SetResolution()
