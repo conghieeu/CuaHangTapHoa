@@ -19,20 +19,14 @@ namespace CuaHang.AI
     public class AIBehavior : PoolObject
     {
         [Header("AIBehavior")]
-
-        public GameManager _gameManager;
-        public MayTinh _mayTinh;
-
-        protected ItemPooler _itemPooler;
-        protected SensorCast _boxSensor;
-        protected NavMeshAgent _navMeshAgent;
-
         public STATE_ANIM _stageAnim;
-
-        public bool _isToDestination; // đén đích rồi
-        public float _stopDistance = 0.5f;
-
-        public Animator _anim;
+        [SerializeField] private float _stopDistance = 0.5f;
+        [SerializeField] protected MayTinh _mayTinh;
+        [SerializeField] protected ItemPooler _itemPooler;
+        [SerializeField] protected SensorCast _boxSensor;
+        [SerializeField] protected NavMeshAgent _navMeshAgent;
+        [SerializeField] protected GameManager _gameManager;
+        [SerializeField] protected Animator _anim;
 
         protected virtual void Awake()
         {
@@ -59,12 +53,10 @@ namespace CuaHang.AI
             float distance = Vector3.Distance(transform.position, target.position);
 
             if (distance <= _stopDistance)
-            {
-                _isToDestination = true;
+            { 
                 return true;
             }
-
-            _isToDestination = false;
+ 
             return false;
         }
 

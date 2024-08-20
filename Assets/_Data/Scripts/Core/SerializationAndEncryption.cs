@@ -2,16 +2,49 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Xml.Serialization;
 using System.IO;
-using System.Collections;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Linq;
 using System.Xml;
-using CuaHang.AI;
-using HieuDev;
-using CuaHang;
-using UnityEngine.SceneManagement;
+
+[Serializable]
+public class ItemData
+{
+    public string _id;
+    public float _price;
+    public TypeID _typeID;
+    public Vector3 _position;
+
+    public ItemData(string id, float price, TypeID typeID, Vector3 position)
+    {
+        _id = id;
+        _price = price;
+        _typeID = typeID;
+        _position = position;
+    }
+}
+
+[Serializable]
+public class StaffData
+{
+    public string _id;
+    public string _name;
+    public ItemData _parcelHold;
+    public Vector3 _position;
+}
+
+[Serializable]
+public class CustomerData
+{
+    public string _id;
+    public string _name;
+    public float _totalPay;
+    public bool _isNotNeedBuy; // Không cần mua gì nữa
+    public bool _isPickingItem; // Khi Khách hàng đang pick item
+    public bool _playerConfirmPay; // Player xác nhận thanh toán
+    public bool _isPay;
+    public Vector3 _position;
+}
 
 [Serializable]
 public class GameSettingsData
@@ -19,14 +52,21 @@ public class GameSettingsData
     public bool _fullScreen;
     public string _quality;
     public float _masterVolume;
+
+    public GameSettingsData(bool fullScreen, string quality, float masterVolume)
+    {
+        _fullScreen = fullScreen;
+        _quality = quality;
+        _masterVolume = masterVolume;
+    }
 }
 
 [Serializable]
 public class PlayerData
 {
     public string _name;
-    public Vector3 _position;
     public float _money;
+    public Vector3 _position;
 
     public PlayerData(string name, Vector3 position, float money)
     {
@@ -41,8 +81,9 @@ public class GameData
 {
     public PlayerData _playerData;
     public GameSettingsData _gameSettingsData;
-    public List<Customer> customers = new();
-    public List<Staff> staff = new();
+    public List<CustomerData> _customers;
+    public List<StaffData> _staffs;
+    public List<ItemData> _items;                                                                                              
 }
 
 namespace HieuDev
@@ -60,41 +101,38 @@ namespace HieuDev
         [SerializeField] string _saveName = "/gameData.save";
         [SerializeField] string _filePath;
 
-        protected override void Awake()
-        {
-            base.Awake();
-            SceneManager.sceneLoaded += OnSceneLoaded;
-        }
-
         void Start()
         {
             _filePath = Application.persistentDataPath + _saveName;
             SetDontDestroyOnLoad(true);
-            LoadGameData();
+            LoadData();
         }
 
-        // called second
-        void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+        private void Update()
         {
-            // LoadGameData();
+            if (Input.GetKeyDown(KeyCode.S))
+            {
+                SaveData();
+            }
         }
 
-        public void SaveGameData()
+        public void SaveData()
         {
             _OnDataSaved?.Invoke();
             File.WriteAllText(_filePath, SerializeAndEncrypt(GameData));
             Debug.Log("Game data saved to: " + _filePath);
         }
 
-        public void LoadGameData()
+        public void LoadData()
         {
             if (File.Exists(_filePath))
             {
                 string stringData = File.ReadAllText(_filePath);
-                Debug.Log("Game data loaded from: " + _filePath);
 
                 GameData = Deserialized(stringData);
                 _OnDataLoaded?.Invoke(GameData);
+
+                Debug.Log("Game data loaded from: " + _filePath);
             }
             else
             {

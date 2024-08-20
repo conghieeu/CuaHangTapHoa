@@ -6,7 +6,7 @@ namespace CuaHang
 {
     public class PoolObject : HieuBehavior
     {
-        [Header("PoolObject")]
+        [Header("POOL OBJECT")]
         public bool _isRecyclable;
     }
 }

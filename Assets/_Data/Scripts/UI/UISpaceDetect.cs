@@ -9,11 +9,13 @@ namespace CuaHang.UI
         public Camera _cam;
         public Transform _target;
 
-        private void Awake() {
+        private void Awake()
+        {
             _cam = Camera.main;
         }
 
-        void FixedUpdate() {
+        void FixedUpdate()
+        {
             // Lấy vị trí của camera
             Vector3 cameraPosition = _cam.transform.position;
             Vector3 directionToCamera = transform.position - cameraPosition;

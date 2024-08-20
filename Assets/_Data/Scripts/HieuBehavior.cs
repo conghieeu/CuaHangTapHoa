@@ -4,7 +4,7 @@ namespace CuaHang
 {
     public class HieuBehavior : MonoBehaviour
     {
-        [Header("HieuBehavior")]
+        [Header("HIEU BEHAVIOR")]
         [SerializeField] private bool enableDebugLog;
 
         protected void In(object value)

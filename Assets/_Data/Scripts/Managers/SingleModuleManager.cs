@@ -10,6 +10,7 @@ namespace CuaHang
         public RaycastCursor _raycastCursor;
         public PlayerCtrl _playerCtrl;
         public Transform _itemSpawnPos;
+        public Transform _pointOutShop;
 
         public static SingleModuleManager Instance;
 

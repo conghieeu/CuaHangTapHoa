@@ -28,7 +28,7 @@ namespace CuaHang.UI
         {
             Customer c = _customerObserve;
             _uIComputerScreen._customerSelectMark = _customerObserve;
-            _uIComputerScreen._txtCustomerValue.text = $"Name: {c._name} \nMua: {c._totalPay} \nTiền đưa bạn: 300";
+            _uIComputerScreen._txtCustomerValue.text = $"{this.name}\nMua: {c._totalPay}\nTiền đưa bạn: 300";
         }
 
         /// <summary> Hiện những thống số của khách hàng lênh cái thanh này </summary>

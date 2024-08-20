@@ -8,9 +8,10 @@ namespace CuaHang.AI
 {
     public class Staff : AIBehavior
     {
-        public Transform _ItemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
-
-        public Item _parcelHold; // Parcel đã nhặt và đang giữ trong người
+        [Header("Staff")]
+        private Item triggerParcel; // trigger của animation ngăn animation được gọi liên tục từ fixed Update
+        [SerializeField] Item _parcelHold; // Parcel đã nhặt và đang giữ trong người
+        [SerializeField] Transform _itemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
 
         private void FixedUpdate()
         {
@@ -30,7 +31,7 @@ namespace CuaHang.AI
             {
                 if (MoveToTarget(parcel.transform))
                 {
-                    parcel.SetParent(_ItemHoldingPoint, null, true);
+                    parcel.SetParent(_itemHoldingPoint, null, true);
                     parcel._isCanDrag = false;
                     _parcelHold = parcel;
                     return;
@@ -86,27 +87,26 @@ namespace CuaHang.AI
             }
         }
 
-        Item parcel;
         void Animation()
         {
             float velocity = _navMeshAgent.velocity.sqrMagnitude;
 
             // Idle
-            if (velocity == 0 && _stageAnim != STATE_ANIM.Idle || velocity == 0 && parcel != _parcelHold)
+            if (velocity == 0 && _stageAnim != STATE_ANIM.Idle || velocity == 0 && triggerParcel != _parcelHold)
             {
                 if (_parcelHold) _stageAnim = STATE_ANIM.Idle_Carrying;
                 else _stageAnim = STATE_ANIM.Idle;
-                parcel = _parcelHold;
+                triggerParcel = _parcelHold;
                 SetAnim();
                 return;
             }
 
             // Walk
-            if (velocity > 0.1f && _stageAnim != STATE_ANIM.Walk || velocity > 0.1f && parcel != _parcelHold)
+            if (velocity > 0.1f && _stageAnim != STATE_ANIM.Walk || velocity > 0.1f && triggerParcel != _parcelHold)
             {
                 if (_parcelHold) _stageAnim = STATE_ANIM.Walk_Carrying;
                 else _stageAnim = STATE_ANIM.Walk;
-                parcel = _parcelHold;
+                triggerParcel = _parcelHold;
                 SetAnim();
                 return;
             }
@@ -137,4 +137,9 @@ namespace CuaHang.AI
             return null;
         }
     }
+}
+
+public class Staff
+{
+
 }

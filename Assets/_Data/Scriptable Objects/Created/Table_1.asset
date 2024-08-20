@@ -15,7 +15,7 @@ MonoBehaviour:
   _name: Shelf_A
   _typeID: 2
   _type: 0
-  _priceDefault: 0
+  _priceDefault: 22
   _priceMarketMin: 0
   _priceMarketMax: 33
   _isCanSell: 0

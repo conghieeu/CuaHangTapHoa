@@ -1,24 +1,24 @@
 using UnityEngine;
 using CuaHang.Pooler;
-using System.Collections;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.PackageManager;
+using System;
 
 namespace CuaHang
 {
     public class Item : PoolObject, IInteractable
     {
-        [Header("Item")]
-        [Header("State Data")]
+        [Header("ITEM")]
+        [Header("Properties")]
         public ItemSO _SO; // SO chỉ được load một lần
+        public string _ID;
         public TypeID _typeID;
         public Type _type;
         public string _name;
-        [SerializeField] float _price;
+        public float _price;
         [SerializeField] bool _isBlockPrice;
 
-        [Space]
+        [Header("Variables")]
         public string _interactionPrompt;
         public bool _isCanDrag = true;  // có thằng nhân vật nào đó đang bưng bê cái này
         public bool _isCanSell;
@@ -28,14 +28,14 @@ namespace CuaHang
         public ItemSlot _itemSlot; // Có cái này sẽ là item có khả năng lưu trử các item khác
         public Item _itemParent; // item đang giữ item này
 
-        [Space]
+        [Header("Components")]
+        public ItemStats _itemStats;
         public Transform _waitingPoint;
         public Transform _models;
         public CamHere _camHere;
         [SerializeField] TextMeshProUGUI _txtPrice;
         [SerializeField] BoxCollider _coll;
 
-        public float _Price { get => _price; }
         public string InteractionPrompt => _interactionPrompt;
 
         public void SetParent(Transform thisParent, Item itemParent, bool isCanDrag)
@@ -61,7 +61,9 @@ namespace CuaHang
             _coll = GetComponent<BoxCollider>();
             _itemSlot = GetComponentInChildren<ItemSlot>();
             _camHere = GetComponentInChildren<CamHere>();
-            SetValueSO();
+            _itemStats = GetComponentInChildren<ItemStats>();
+
+            SetProperties();
         }
 
         void Start()
@@ -82,10 +84,15 @@ namespace CuaHang
         }
 
         /// <summary> Set value với SO có đang gáng </summary>
-        private void SetValueSO()
+        private void SetProperties()
         {
-            if (_SO == null) return;
+            if (_SO == null)
+            {
+                Debug.LogWarning("Chỗ này thiếu item SO rồi ", transform);
+                return;
+            }
 
+            _ID = Guid.NewGuid().ToString(); // tạo mã định danh
             _name = _SO._name;
             _typeID = _SO._typeID;
             _type = _SO._type;
@@ -103,6 +110,15 @@ namespace CuaHang
         }
 
         // ==================PUBLIC====================
+
+        /// <summary> Set Properties with Item Data </summary>
+        public void SetProperties(ItemData itemData)
+        {
+            _ID = itemData._id;
+            transform.position = itemData._position;
+            _price = itemData._price;
+            _typeID = itemData._typeID;
+        }
 
         /// <summary> Tạo item có thể mua với list item SO </summary>
         public void CreateItemInSlot(List<ItemSO> items)
@@ -124,8 +140,8 @@ namespace CuaHang
         public void SetRandomPos()
         {
             float size = 2f;
-            float rx = Random.Range(-size, size);
-            float rz = Random.Range(-size, size);
+            float rx = UnityEngine.Random.Range(-size, size);
+            float rz = UnityEngine.Random.Range(-size, size);
 
             Vector3 p = SingleModuleManager.Instance._itemSpawnPos.position;
 
@@ -134,8 +150,8 @@ namespace CuaHang
 
         public void SetPrice(float price)
         {
-            if(_isBlockPrice) return;
-            
+            if (_isBlockPrice) return;
+
             if (!_SO)
             {
                 Debug.LogWarning("Lỗi item này không có ScriptableObject", transform);

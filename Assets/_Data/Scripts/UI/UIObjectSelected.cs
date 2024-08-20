@@ -38,7 +38,7 @@ namespace CuaHang.UI
 
                 if (_item && _item._SO)
                 {
-                    string x = $"Name: {_item._name} \nPrice: {_item._Price.ToString("F1")} \n";
+                    string x = $"Name: {_item._name} \nPrice: {_item._price.ToString("F1")} \n";
                     _tmp.text = _item._SO._isCanSell ? x + "Item có thể bán" : x + "Item không thể bán";
                 }
                 else

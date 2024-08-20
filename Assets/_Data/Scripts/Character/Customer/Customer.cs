@@ -2,17 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using CuaHang.Pooler;
-using Unity.VisualScripting;
 using UnityEngine;
-using System;
-using System.Runtime.InteropServices.WindowsRuntime;
 
 namespace CuaHang.AI
 {
     public class Customer : AIBehavior
     {
-        [Header("Customer")]
-        public string _name;
+        [Header("Customer")] 
         public float _totalPay;
         public Item _itemFinding; // item mà khách hàng đang tìm
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
@@ -25,7 +21,6 @@ namespace CuaHang.AI
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
         public List<Item> _itemsCard;
 
-
         protected override void Awake()
         {
             base.Awake();
@@ -34,7 +29,7 @@ namespace CuaHang.AI
         protected override void Start()
         {
             base.Start();
-            _outShopPoint = GameObject.Find("Point out shop").transform;
+            _outShopPoint = GameObject.Find("GO OUT SHOP POS").transform;
         }
 
         private void FixedUpdate()
@@ -69,7 +64,7 @@ namespace CuaHang.AI
                 In("1.1: Đang đi lấy thứ muốn mua");
 
                 StartCoroutine(IsPickingItem());
-                _totalPay += _itemFinding._Price;
+                _totalPay += _itemFinding._price;
                 _itemsCard.Add(_itemFinding);
                 _itemFinding._itemParent._itemSlot.RemoveItemInList(_itemFinding);
                 _itemFinding.gameObject.SetActive(false);
@@ -108,7 +103,6 @@ namespace CuaHang.AI
         }
 
         // -----------PUBLIC-----------
-
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
         public void PlayerConfirmPay()
         {
@@ -219,7 +213,7 @@ namespace CuaHang.AI
         {
             if (_itemFinding)
             {
-                if (_itemFinding._Price > _itemFinding._SO._priceMarketMax)
+                if (_itemFinding._price > _itemFinding._SO._priceMarketMax)
                 {
                     ExpressedComplaintsItem();
                     _isNotNeedBuy = true;
