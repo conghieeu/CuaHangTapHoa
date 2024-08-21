@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 8634155652811038510}
   - component: {fileID: 5846511156978638630}
   - component: {fileID: 3267181385781376067}
+  - component: {fileID: 9000221349915930293}
   m_Layer: 9
   m_Name: MayTinh 1
   m_TagString: Untagged
@@ -26,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 75358069314996987}
   serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -7.381, y: 0.812, z: -4.17}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
@@ -71,26 +72,50 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   enableDebugLog: 1
   _isRecyclable: 0
-  _SO: {fileID: 0}
+  _SO: {fileID: 11400000, guid: 6ea8749b0c71493419b0e76ebd8c940c, type: 2}
+  _ID: 
   _typeID: 0
   _type: 2
   _name: "M\xE1y t\xEDnh"
   _price: 0
-  _currency: 
+  _isBlockPrice: 0
   _interactionPrompt: 
   _isCanDrag: 1
   _isCanSell: 0
   _isOnEditMode: 0
+  _isSamePrice: 0
   _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
+  _itemStats: {fileID: 0}
   _waitingPoint: {fileID: 0}
   _models: {fileID: 7854164819132681978}
   _camHere: {fileID: 0}
   _txtPrice: {fileID: 0}
+  _coll: {fileID: 0}
   _objectPlantSO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
   _spawnTrans: {fileID: 0}
   _waitingLine: {fileID: 0}
+--- !u!114 &9000221349915930293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 75358069314996987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f416c5debd79f7443b586636a0d4253f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDebugLog: 0
+  _itemData:
+    _id: 
+    _price: 0
+    _typeID: 0
+    _position: {x: 0, y: 0, z: 0}
+    _rotation: {x: 0, y: 0, z: 0, w: 0}
+  _item: {fileID: 0}
 --- !u!1 &1040423705354571647
 GameObject:
   m_ObjectHideFlags: 0

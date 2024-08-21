@@ -9,9 +9,18 @@ namespace CuaHang.AI
     public class Staff : AIBehavior
     {
         [Header("Staff")]
+        public string _ID;
+        public string _name;
+        public StaffStats _staffStats;
+        public Item _parcelHold; // Parcel đã nhặt và đang giữ trong người
         private Item triggerParcel; // trigger của animation ngăn animation được gọi liên tục từ fixed Update
-        [SerializeField] Item _parcelHold; // Parcel đã nhặt và đang giữ trong người
         [SerializeField] Transform _itemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
+
+        protected override void Awake()
+        {
+            base.Awake();
+            _staffStats = GetComponent<StaffStats>();
+        }
 
         private void FixedUpdate()
         {
@@ -137,9 +146,4 @@ namespace CuaHang.AI
             return null;
         }
     }
-}
-
-public class Staff
-{
-
-}
+} 

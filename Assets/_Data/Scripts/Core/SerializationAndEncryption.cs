@@ -14,13 +14,15 @@ public class ItemData
     public float _price;
     public TypeID _typeID;
     public Vector3 _position;
+    public Quaternion _rotation;
 
-    public ItemData(string id, float price, TypeID typeID, Vector3 position)
+    public ItemData(string id, float price, TypeID typeID, Vector3 position, Quaternion rotate)
     {
         _id = id;
         _price = price;
         _typeID = typeID;
         _position = position;
+        _rotation = rotate;
     }
 }
 
@@ -31,6 +33,14 @@ public class StaffData
     public string _name;
     public ItemData _parcelHold;
     public Vector3 _position;
+
+    public StaffData(string id, string name, ItemData parcelHold, Vector3 position)
+    {
+        _id = id;
+        _name = name;
+        _parcelHold = parcelHold;
+        _position = position;
+    }
 }
 
 [Serializable]
@@ -39,11 +49,21 @@ public class CustomerData
     public string _id;
     public string _name;
     public float _totalPay;
-    public bool _isNotNeedBuy; // Không cần mua gì nữa
-    public bool _isPickingItem; // Khi Khách hàng đang pick item
+    public bool _isNotNeedBuy; // Không cần mua gì nữa 
     public bool _playerConfirmPay; // Player xác nhận thanh toán
     public bool _isPay;
     public Vector3 _position;
+
+    public CustomerData(string id, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position)
+    {
+        _id = id;
+        _name = name;
+        _totalPay = totalPay;
+        _isNotNeedBuy = isNotNeedBuy;
+        _playerConfirmPay = playerConfirmPay;
+        _isPay = isPay;
+        _position = position;
+    }
 }
 
 [Serializable]
@@ -83,7 +103,7 @@ public class GameData
     public GameSettingsData _gameSettingsData;
     public List<CustomerData> _customers;
     public List<StaffData> _staffs;
-    public List<ItemData> _items;                                                                                              
+    public List<ItemData> _itemsData;
 }
 
 namespace HieuDev

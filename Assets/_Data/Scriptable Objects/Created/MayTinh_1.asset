@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
+  m_Name: MayTinh_1
+  m_EditorClassIdentifier: 
+  _name: 
+  _typeID: 0
+  _type: 2
+  _priceDefault: 0
+  _priceMarketMin: 0
+  _priceMarketMax: 0
+  _isCanSell: 0
+  _isBlockPrice: 0

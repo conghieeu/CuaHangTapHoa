@@ -1,5 +1,4 @@
-using System.Runtime.InteropServices.WindowsRuntime;
-using Codice.CM.WorkspaceServer.Lock;
+ 
 using UnityEngine;
 
 namespace CuaHang
@@ -7,7 +6,7 @@ namespace CuaHang
     public class ItemStats : ObjectStats
     {
         [Header("ITEM STATS")]
-        [SerializeField] ItemData _itemData;
+        public ItemData _itemData;
         [SerializeField] Item _item;
 
         protected override void Start()
@@ -24,9 +23,8 @@ namespace CuaHang
         }
 
         public ItemData GetItemData()
-        {
-            Debug.Log(_item._price);
-            _itemData = new ItemData(_item._ID, _item._price, _item._typeID, _item.transform.position);
+        { 
+            _itemData = new ItemData(_item._ID, _item._price, _item._typeID, _item.transform.position, _item.transform.rotation);
             return _itemData;
         }
 

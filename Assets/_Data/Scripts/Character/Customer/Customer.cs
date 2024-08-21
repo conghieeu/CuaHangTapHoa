@@ -9,14 +9,17 @@ namespace CuaHang.AI
     public class Customer : AIBehavior
     {
         [Header("Customer")] 
+        public string _ID;
+        public string _name;
         public float _totalPay;
         public Item _itemFinding; // item mà khách hàng đang tìm
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
         public Transform _outShopPoint; // Là điểm sẽ tới nếu rời shop
+        public CustomerStats _customerStats; // customer stats moduel
         public bool _isNotNeedBuy; // Không cần mua gì nữa
         public bool _isPickingItem; // Khi Khách hàng đang pick item
-        [SerializeField] bool _playerConfirmPay; // Player xác nhận thanh toán
-        [SerializeField] bool _isPay;
+        public bool _playerConfirmPay; // Player xác nhận thanh toán
+        public bool _isPay;
 
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
         public List<Item> _itemsCard;
@@ -24,6 +27,7 @@ namespace CuaHang.AI
         protected override void Awake()
         {
             base.Awake();
+            _customerStats = GetComponent<CustomerStats>();
         }
 
         protected override void Start()
@@ -111,7 +115,6 @@ namespace CuaHang.AI
         }
 
         // -----------PRIVATE-----------
-
         private bool IsMoveToWating()
         {
             _mayTinh._waitingLine.RegisterSlot(this); // Đăng ký slot 

@@ -10,6 +10,7 @@ namespace CuaHang.Pooler
         [Header("CustomerPooler")]
         public List<Customer> _listCustomer;
 
+        public List<Customer> GetPoolItem { get => _listCustomer; }
         public static CustomerPooler Instance { get; private set; }
 
         private void Awake()

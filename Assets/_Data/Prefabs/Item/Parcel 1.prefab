@@ -283,6 +283,7 @@ GameObject:
   - component: {fileID: 2211060752114114342}
   - component: {fileID: 8187062885228785917}
   - component: {fileID: 6319444834252206247}
+  - component: {fileID: 9220721874167610222}
   m_Layer: 9
   m_Name: Parcel 1
   m_TagString: Untagged
@@ -343,11 +344,12 @@ MonoBehaviour:
   enableDebugLog: 0
   _isRecyclable: 0
   _SO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
+  _ID: 
   _typeID: 1
   _type: 1
   _name: "B\u01B0u ki\u1EC7n"
   _price: 0
-  _currency: 
+  _isBlockPrice: 0
   _interactionPrompt: 
   _isCanDrag: 1
   _isCanSell: 0
@@ -356,10 +358,32 @@ MonoBehaviour:
   _thisParent: {fileID: 0}
   _itemSlot: {fileID: 0}
   _itemParent: {fileID: 0}
+  _itemStats: {fileID: 0}
   _waitingPoint: {fileID: 0}
   _models: {fileID: 8084133237305432176}
   _camHere: {fileID: 0}
   _txtPrice: {fileID: 0}
+  _coll: {fileID: 0}
+--- !u!114 &9220721874167610222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8300710113426507887}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f416c5debd79f7443b586636a0d4253f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  enableDebugLog: 0
+  _itemData:
+    _id: 
+    _price: 0
+    _typeID: 0
+    _position: {x: 0, y: 0, z: 0}
+    _rotation: {x: 0, y: 0, z: 0, w: 0}
+  _item: {fileID: 0}
 --- !u!1 &8681696579664740406
 GameObject:
   m_ObjectHideFlags: 0
