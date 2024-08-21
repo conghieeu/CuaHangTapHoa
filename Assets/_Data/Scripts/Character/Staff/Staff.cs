@@ -125,7 +125,7 @@ namespace CuaHang.AI
         /// <summary> Tìm item có item Slot và còn chỗ trống </summary>
         Item GetItem(TypeID typeID)
         {
-            foreach (var item in ItemPooler.Instance.GetPoolItem)
+            foreach (var item in ItemPooler.Instance._Items)
             {
                 if (!item) continue;
                 if (!item._itemSlot) continue;
@@ -137,7 +137,7 @@ namespace CuaHang.AI
         /// <summary> Tìm item có thể kéo drag </summary>
         Item GetParcel()
         {
-            foreach (var item in ItemPooler.Instance.GetPoolItem)
+            foreach (var item in ItemPooler.Instance._Items)
             {
                 if (!item) continue;
                 if (item._typeID == TypeID.parcel_1 && !item._thisParent && item.gameObject.activeSelf) return item;

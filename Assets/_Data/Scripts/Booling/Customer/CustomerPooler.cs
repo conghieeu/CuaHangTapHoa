@@ -18,9 +18,9 @@ namespace CuaHang.Pooler
             if (Instance) Destroy(this); else { Instance = this; }
         }
 
-        public Customer GetCustomer(Customer cusPrefab)
+        public Customer GetCustomer(string name)
         {
-            Customer cus = GetHider(cusPrefab.name);
+            Customer cus = GetHider(name);
 
             if (cus)
             {
@@ -33,7 +33,7 @@ namespace CuaHang.Pooler
                     Customer newCus = objP.GetComponent<Customer>();
                     if (newCus)
                     {
-                        if (newCus.name == cusPrefab.name)
+                        if (newCus.name == name)
                         {
                             cus = Instantiate(newCus, transform); // create
                             _listCustomer.Add(cus); // Add list

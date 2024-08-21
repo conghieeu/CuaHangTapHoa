@@ -15,6 +15,8 @@ namespace CuaHang.Pooler
             obj.gameObject.SetActive(false);
             obj._isRecyclable = true;
         }
+
+        
     }
 
 }

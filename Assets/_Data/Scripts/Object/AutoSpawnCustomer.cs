@@ -33,7 +33,7 @@ namespace CuaHang
                 int rPoint = Random.Range(0, _spawnPoint.Count);
 
                 // spawn customer
-                Customer cus = CustomerPooler.Instance.GetCustomer(_customerPrefabs[rCustomer]);
+                Customer cus = CustomerPooler.Instance.GetCustomer(_customerPrefabs[rCustomer]._name);
                 cus.transform.position = _spawnPoint[rPoint].position;
             }
 

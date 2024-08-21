@@ -21,13 +21,14 @@ public class CustomerStats : ObjectStats
     public CustomerData GetCustomerData()
     {
         _customerData = new CustomerData(
-            _customer._ID, 
-            _customer._name, 
-            _customer._totalPay, 
-            _customer._isNotNeedBuy, 
-            _customer._playerConfirmPay, 
-            _customer._isPay, 
-            _customer.transform.position);
+            _customer._ID,
+            _customer._name,
+            _customer._totalPay,
+            _customer._isNotNeedBuy,
+            _customer._playerConfirmPay,
+            _customer._isPay,
+            _customer.transform.position,
+            _customer.transform.rotation);
 
         return _customerData;
     }

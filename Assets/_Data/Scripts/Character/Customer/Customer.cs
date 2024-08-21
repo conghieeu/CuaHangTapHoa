@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +10,6 @@ namespace CuaHang.AI
     public class Customer : AIBehavior
     {
         [Header("Customer")] 
-        public string _ID;
-        public string _name;
         public float _totalPay;
         public Item _itemFinding; // item mà khách hàng đang tìm
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
@@ -28,6 +27,7 @@ namespace CuaHang.AI
         {
             base.Awake();
             _customerStats = GetComponent<CustomerStats>();
+            if (_ID == "") _ID = Guid.NewGuid().ToString();
         }
 
         protected override void Start()
@@ -257,7 +257,7 @@ namespace CuaHang.AI
         /// <summary> Tìm item lần lượt theo mục đang muốn mua </summary>
         private Item FindItem(TypeID typeID)
         {
-            List<Item> poolItem = ItemPooler.Instance.GetPoolItem.ToList();
+            List<Item> poolItem = ItemPooler.Instance._Items.ToList();
             poolItem.Shuffle<Item>();
 
             foreach (var i in poolItem)

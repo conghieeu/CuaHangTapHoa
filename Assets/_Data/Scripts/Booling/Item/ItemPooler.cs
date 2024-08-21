@@ -29,7 +29,7 @@ namespace CuaHang.Pooler
         [Header("BoolingObjPlants")]
         [SerializeField] protected List<Item> _items;
 
-        public List<Item> GetPoolItem { get => _items; }
+        public List<Item> _Items { get => _items; }
         public static ItemPooler Instance;
 
         private void Awake()
@@ -77,7 +77,7 @@ namespace CuaHang.Pooler
                     Item itemPrefab = objPrefab.GetComponent<Item>();
                     if (itemPrefab)
                     {
-                        if (!itemPrefab._SO) Debug.LogWarning(itemPrefab + "Đang không có SO",itemPrefab.transform);
+                        if (!itemPrefab._SO) Debug.LogWarning(itemPrefab + "Đang không có SO", itemPrefab.transform);
                         if (itemPrefab._SO._typeID == typeID)
                         {
                             item = Instantiate(itemPrefab, transform).GetComponent<Item>();
@@ -87,6 +87,13 @@ namespace CuaHang.Pooler
                     }
                 }
             }
+
+            // create item ID
+            if (item)
+            {
+                item.CreateID();
+            }
+
             return item;
         }
 

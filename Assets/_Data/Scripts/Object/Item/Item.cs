@@ -6,15 +6,14 @@ using System;
 
 namespace CuaHang
 {
+    /// <summary> Là item, có khả năng drag </summary>
     public class Item : PoolObject, IInteractable
     {
         [Header("ITEM")]
         [Header("Properties")]
-        public ItemSO _SO; // SO chỉ được load một lần
-        public string _ID;
+        public ItemSO _SO; // SO chỉ được load một lần 
         public TypeID _typeID;
         public Type _type;
-        public string _name;
         public float _price;
         [SerializeField] bool _isBlockPrice;
 
@@ -92,7 +91,6 @@ namespace CuaHang
                 return;
             }
 
-            _ID = Guid.NewGuid().ToString(); // tạo mã định danh
             _name = _SO._name;
             _typeID = _SO._typeID;
             _type = _SO._type;
@@ -101,7 +99,7 @@ namespace CuaHang
             _isBlockPrice = _SO._isBlockPrice;
         }
 
-        // =================INTERFACE==================
+        #region -----------------INTERFACE---------------------
 
         /// <summary> dùng cái này cho việc truyền itemSlot </summary>
         public virtual bool Interact(Interactor interactor)
@@ -109,7 +107,15 @@ namespace CuaHang
             return true;
         }
 
-        // ==================PUBLIC====================
+        #endregion
+
+        #region -------------------PUBLIC-----------------------
+
+        /// <summary> tạo mã định danh </summary>
+        public void CreateID()
+        {
+            if (_ID == "") _ID = Guid.NewGuid().ToString(); 
+        }
 
         /// <summary> Set Properties with Item Data </summary>
         public void SetProperties(ItemData itemData)
@@ -217,6 +223,8 @@ namespace CuaHang
                 _itemSlot.SetItemsDrag(true);
             }
         }
+
+        #endregion
 
     }
 }

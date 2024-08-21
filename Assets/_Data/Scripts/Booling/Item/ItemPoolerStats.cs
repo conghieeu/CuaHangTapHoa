@@ -19,25 +19,31 @@ namespace CuaHang.Pooler
         protected override void LoadData(GameData gameData)
         {
             base.LoadData(gameData);
-
             _itemsData = gameData._itemsData;
 
-            if (_itemsData.Count > 0)
-            { 
-                // tạo lại item từ save file
-                foreach (var item in _itemsData)
+            // tái tạo 
+            foreach (var item in _itemsData)
+            {
+                // ngăn tạo item đã có ID
+                bool stop = false;
+                foreach (var cusPool in _itemPooler._Items)
                 {
-                    Item itemCre = _itemPooler.GetItemWithTypeID(item._typeID);
-                    if (!itemCre)
-                    {
-                        Debug.LogWarning($"Item {item._typeID} Này Tạo từ pool không thành công");
-                        continue;
-                    }
-                    itemCre._ID = item._id;
-                    itemCre._price = item._price;
-                    itemCre.transform.position = item._position;
-                    itemCre.transform.rotation = item._rotation;
+                    if (item._id == cusPool._ID) stop = true;
                 }
+                if (stop) continue;
+
+                // tạo item
+                Item itemPool = _itemPooler.GetItemWithTypeID(item._typeID);
+                if (!itemPool)
+                {
+                    Debug.LogWarning($"Item {item._typeID} Này Tạo từ pool không thành công");
+                    continue;
+                }
+
+                itemPool._ID = item._id;
+                itemPool._price = item._price;
+                itemPool.transform.position = item._position;
+                itemPool.transform.rotation = item._rotation;
             }
         }
 
@@ -45,11 +51,11 @@ namespace CuaHang.Pooler
         {
             _itemsData.Clear();
 
-            foreach (var item in _itemPooler.GetPoolItem)
+            foreach (var item in _itemPooler._Items)
             {
-                if (item._itemStats == null)
+                if (!item._itemStats && item._ID == "")
                 {
-                    Debug.LogWarning($"item {item.name} này không có stats", item.transform);
+                    Debug.LogWarning($"item {item.name} không save được", item.transform);
                     continue;
                 }
                 ItemData itemData = item._itemStats.GetItemData();

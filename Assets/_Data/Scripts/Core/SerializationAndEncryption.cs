@@ -53,8 +53,9 @@ public class CustomerData
     public bool _playerConfirmPay; // Player xác nhận thanh toán
     public bool _isPay;
     public Vector3 _position;
+    public Quaternion _rotation;
 
-    public CustomerData(string id, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position)
+    public CustomerData(string id, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position, Quaternion rotation)
     {
         _id = id;
         _name = name;
@@ -63,6 +64,7 @@ public class CustomerData
         _playerConfirmPay = playerConfirmPay;
         _isPay = isPay;
         _position = position;
+        _rotation = rotation;
     }
 }
 
