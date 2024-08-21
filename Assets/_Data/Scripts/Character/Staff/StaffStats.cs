@@ -4,10 +4,9 @@ namespace CuaHang.AI
 {
     public class StaffStats : ObjectStats
     {
-
         [Header("ItemStats")]
         [SerializeField] Staff _staff;
-        [SerializeField] StaffData _staffData;
+        [SerializeField] StaffData _data;
 
         protected override void Start()
         {
@@ -17,28 +16,28 @@ namespace CuaHang.AI
 
         public void LoadData(StaffData staffData)
         {
-            _staffData = staffData;
+            _data = staffData;
+            _staff.SetProperties(staffData);
         }
 
-        public StaffData GetStaffData()
+        public virtual StaffData GetData()
         {
             ItemData itemHolder = null;
 
             if (_staff._parcelHold)
             {
-                itemHolder = _staff._parcelHold._itemStats._itemData;
+                itemHolder = _staff._parcelHold._itemStats._data;
             }
 
-            _staffData = new StaffData(
+            _data = new StaffData(
                 _staff._ID,
+                _staff._typeID,
                 _staff._name,
                 itemHolder,
                 _staff.transform.position);
 
-            return _staffData;
+            return _data;
         }
-
-
 
         protected override void SaveData() { }
     }

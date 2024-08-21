@@ -13,6 +13,8 @@ public enum Type
 public enum TypeID
 {
     computer_1,
+    customer_1,
+    customer_2,
     shelf_1,
     table_1,
     parcel_1,

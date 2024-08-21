@@ -43,7 +43,7 @@ namespace CuaHang
         // tạo vật thể với SO mới trùng vs SO mẫu nào đó
         private bool CreateObjectPlant()
         {
-            Item parcel = ItemPooler.Instance.GetItemWithTypeID(TypeID.parcel_1);
+            Item parcel = ItemPooler.Instance.GetObjectPool(TypeID.parcel_1).GetComponent<Item>();
 
             if (parcel)
             {

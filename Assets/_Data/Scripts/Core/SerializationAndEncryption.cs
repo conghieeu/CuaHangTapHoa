@@ -11,16 +11,16 @@ using System.Xml;
 public class ItemData
 {
     public string _id;
-    public float _price;
     public TypeID _typeID;
+    public float _price;
     public Vector3 _position;
     public Quaternion _rotation;
 
-    public ItemData(string id, float price, TypeID typeID, Vector3 position, Quaternion rotate)
+    public ItemData(string id, TypeID typeID, float price, Vector3 position, Quaternion rotate)
     {
         _id = id;
-        _price = price;
         _typeID = typeID;
+        _price = price;
         _position = position;
         _rotation = rotate;
     }
@@ -30,13 +30,15 @@ public class ItemData
 public class StaffData
 {
     public string _id;
+    public TypeID _typeID;
     public string _name;
     public ItemData _parcelHold;
     public Vector3 _position;
 
-    public StaffData(string id, string name, ItemData parcelHold, Vector3 position)
+    public StaffData(string id, TypeID typeID, string name, ItemData parcelHold, Vector3 position)
     {
         _id = id;
+        _typeID = typeID;
         _name = name;
         _parcelHold = parcelHold;
         _position = position;
@@ -47,6 +49,7 @@ public class StaffData
 public class CustomerData
 {
     public string _id;
+    public TypeID _typeID;
     public string _name;
     public float _totalPay;
     public bool _isNotNeedBuy; // Không cần mua gì nữa 
@@ -55,9 +58,10 @@ public class CustomerData
     public Vector3 _position;
     public Quaternion _rotation;
 
-    public CustomerData(string id, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position, Quaternion rotation)
+    public CustomerData(string id, TypeID typeID, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position, Quaternion rotation)
     {
         _id = id;
+        _typeID = typeID;
         _name = name;
         _totalPay = totalPay;
         _isNotNeedBuy = isNotNeedBuy;
@@ -103,8 +107,8 @@ public class GameData
 {
     public PlayerData _playerData;
     public GameSettingsData _gameSettingsData;
-    public List<CustomerData> _customers;
-    public List<StaffData> _staffs;
+    public List<CustomerData> _customersData;
+    public List<StaffData> _staffsData;
     public List<ItemData> _itemsData;
 }
 

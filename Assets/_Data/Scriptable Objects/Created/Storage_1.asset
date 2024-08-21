@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Storage_1
   m_EditorClassIdentifier: 
   _name: Storage
-  _typeID: 5
+  _typeID: 7
   _type: 3
   _priceDefault: 0
   _priceMarketMin: 0

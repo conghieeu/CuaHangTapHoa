@@ -40,7 +40,7 @@ public abstract class ObjectStats : HieuBehavior
 
     //-----------ABSTRACT------------
     /// <summary> Truyền giá trị save vào _gameData </summary>
-    protected abstract void SaveData();
+    protected abstract void SaveData(); 
 
     //-----------PROTECTED-VIRTUAL------------
 

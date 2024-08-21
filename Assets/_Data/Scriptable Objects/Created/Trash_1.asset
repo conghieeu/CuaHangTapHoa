@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Trash_1
   m_EditorClassIdentifier: 
   _name: Trash
-  _typeID: 4
+  _typeID: 6
   _type: 4
   _priceDefault: 0
   _priceMarketMin: 0

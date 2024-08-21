@@ -13,12 +13,10 @@ MonoBehaviour:
   m_Name: Banana_1
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSellSO
   _name: BananaA
-  _typeID: 7
+  _typeID: 10
   _type: 5
   _priceDefault: 2
   _priceMarketMin: 0
   _priceMarketMax: 99
   _isCanSell: 1
-  _currency: USD
-  _thisPrefabs: {fileID: 5093278088282058274, guid: ad81afd499c88fd4ca0c23549ee682c8, type: 3}
-  _items: []
+  _isBlockPrice: 0

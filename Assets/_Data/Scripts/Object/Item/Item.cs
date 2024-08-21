@@ -7,12 +7,11 @@ using System;
 namespace CuaHang
 {
     /// <summary> Là item, có khả năng drag </summary>
-    public class Item : PoolObject, IInteractable
+    public class Item : ObjectPool, IInteractable
     {
         [Header("ITEM")]
         [Header("Properties")]
-        public ItemSO _SO; // SO chỉ được load một lần 
-        public TypeID _typeID;
+        public ItemSO _SO; // SO chỉ được load một lần  
         public Type _type;
         public float _price;
         [SerializeField] bool _isBlockPrice;
@@ -110,13 +109,7 @@ namespace CuaHang
         #endregion
 
         #region -------------------PUBLIC-----------------------
-
-        /// <summary> tạo mã định danh </summary>
-        public void CreateID()
-        {
-            if (_ID == "") _ID = Guid.NewGuid().ToString(); 
-        }
-
+        
         /// <summary> Set Properties with Item Data </summary>
         public void SetProperties(ItemData itemData)
         {
@@ -133,7 +126,7 @@ namespace CuaHang
             {
                 if (items[i])
                 {
-                    Item item = ItemPooler.Instance.GetItemWithTypeID(items[i]._typeID);
+                    Item item = ItemPooler.Instance.GetObjectPool(items[i]._typeID).GetComponent<Item>();
 
                     if (_itemSlot.TryAddItemToItemSlot(item, false) && _isSamePrice)
                     {

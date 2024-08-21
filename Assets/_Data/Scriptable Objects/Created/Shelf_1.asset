@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Shelf_1
   m_EditorClassIdentifier: 
   _name: Shelf
-  _typeID: 1
+  _typeID: 3
   _type: 0
   _priceDefault: 55
   _priceMarketMin: 0

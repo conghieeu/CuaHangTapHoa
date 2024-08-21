@@ -13,15 +13,17 @@ public class CustomerStats : ObjectStats
         _customer = GetComponent<Customer>();
     }
 
-    public void LoadData(CustomerData customerData)
+    public void LoadData(CustomerData data)
     {
-        _customerData = customerData;
+        _customerData = data;
+        _customer.SetProperties(data);
     }
 
-    public CustomerData GetCustomerData()
+    public CustomerData GetData()
     {
         _customerData = new CustomerData(
             _customer._ID,
+            _customer._typeID,
             _customer._name,
             _customer._totalPay,
             _customer._isNotNeedBuy,

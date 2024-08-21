@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dccc8d6dbb4808c43bbd04c4cc8e4120, type: 3}
   m_Name: MayTinh_1
   m_EditorClassIdentifier: 
-  _name: 
+  _name: May Tinh
   _typeID: 0
   _type: 2
   _priceDefault: 0

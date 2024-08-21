@@ -9,7 +9,7 @@ namespace CuaHang.AI
 {
     public class Customer : AIBehavior
     {
-        [Header("Customer")] 
+        [Header("Customer")]
         public float _totalPay;
         public Item _itemFinding; // item mà khách hàng đang tìm
         public Transform _slotWaiting; // Hàng chờ (WaitingLine) modun của máy tính sẽ SET thứ này
@@ -47,7 +47,7 @@ namespace CuaHang.AI
             {
                 foreach (var typeID in _listItemBuy)
                 {
-                    _itemFinding = FindItem(typeID);
+                    _itemFinding = ItemPooler.Instance.ShuffleFindItem(typeID);
                 }
             }
 
@@ -107,6 +107,20 @@ namespace CuaHang.AI
         }
 
         // -----------PUBLIC-----------
+
+        /// <summary> Set Properties with Item Data </summary>
+        public void SetProperties(CustomerData data)
+        {
+            _ID = data._id;
+            _isNotNeedBuy = data._isNotNeedBuy;
+            _isPay = data._isPay;
+            _name = data._name;
+            _playerConfirmPay = data._playerConfirmPay;
+            transform.position = data._position;
+            transform.rotation = data._rotation;
+            _totalPay = data._totalPay; 
+        }
+
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>
         public void PlayerConfirmPay()
         {
@@ -163,37 +177,41 @@ namespace CuaHang.AI
                 // Tạo một số ngẫu nhiên giữa minCount và maxCount
                 int countBuy = UnityEngine.Random.Range(3, 3);
 
-                // Thêm đối tượng vào danh sách ngẫu nhiên số lần
+                // Thêm danh sach item muon mua
                 for (int i = 0; i < countBuy; i++)
                 {
-                    if (FindItem(GetRandomItemBuy()))
-                    {
-                        _listItemBuy.Add(GetRandomItemBuy());
-                    }
+                    _listItemBuy.Add(GetRandomItemBuy());
                 }
             }
         }
 
         private TypeID GetRandomItemBuy()
         {
+            Debug.Log($"Chỗ này chưa xong");
             return TypeID.apple_1;
         }
 
         /// <summary> Chạy tới vị trí item cần lấy </summary>
         private bool GoToItemNeed()
         {
-            Item itemTarget = _itemPooler.FindShelfContentItem(_itemFinding); // lấy cái bàn chứa quả táo
-
-            if (itemTarget == null)
+            Item target = _itemPooler.GetItemContentItem(_itemFinding); // lấy cái bàn chứa quả táo
+            if (target == null)
             {
                 _itemFinding = null;
                 return false;
             }
-            if (MoveToTarget(itemTarget._waitingPoint.transform))
+
+            Transform movePoint = null;
+            if (target._waitingPoint)
             {
-                return true;
+                movePoint = target._waitingPoint;
+            }
+            else
+            {
+                movePoint = target.transform;
             }
 
+            if (MoveToTarget(movePoint)) return true;
             return false;
         }
 
@@ -205,9 +223,9 @@ namespace CuaHang.AI
                 // xoá tắt cả item dang giữ
                 foreach (var item in _itemsCard)
                 {
-                    ItemPooler.Instance.RemovePoolObj(item);
+                    ItemPooler.Instance.RemoveObject(item);
                 }
-                CustomerPooler.Instance.RemovePoolObj(this);
+                CustomerPooler.Instance.RemoveObject(this);
             }
         }
 
@@ -254,21 +272,7 @@ namespace CuaHang.AI
             _isPickingItem = false;
         }
 
-        /// <summary> Tìm item lần lượt theo mục đang muốn mua </summary>
-        private Item FindItem(TypeID typeID)
-        {
-            List<Item> poolItem = ItemPooler.Instance._Items.ToList();
-            poolItem.Shuffle<Item>();
 
-            foreach (var i in poolItem)
-            {
-                if (!i) continue;
-                if (!i._itemParent) continue;
-                if (i._typeID == typeID && i._itemParent._type == Type.Shelf && i.gameObject.activeSelf) return i;
-            }
-
-            return null;
-        }
 
     }
 }

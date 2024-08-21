@@ -9,8 +9,6 @@ namespace CuaHang.AI
     public class Staff : AIBehavior
     {
         [Header("Staff")]
-        public string _ID;
-        public string _name;
         public StaffStats _staffStats;
         public Item _parcelHold; // Parcel đã nhặt và đang giữ trong người
         private Item triggerParcel; // trigger của animation ngăn animation được gọi liên tục từ fixed Update
@@ -57,7 +55,7 @@ namespace CuaHang.AI
             if (_parcelHold == null) return;
 
             // Đưa item lênh kệ
-            Item shelf = GetItem(TypeID.shelf_1);
+            Item shelf = ItemPooler.Instance.GetItemEmptySlot(TypeID.shelf_1);
             if (shelf && parcelHasItem)
             {
                 if (MoveToTarget(shelf._waitingPoint.transform))
@@ -68,7 +66,7 @@ namespace CuaHang.AI
             }
 
             // Đặt ObjectPlant vào kho
-            Item storage = GetItem(TypeID.storage_1);
+            Item storage = ItemPooler.Instance.GetItemEmptySlot(TypeID.storage_1);
             if (storage && parcelHasItem)
             {
                 if (MoveToTarget(storage.transform))
@@ -80,9 +78,8 @@ namespace CuaHang.AI
                 return;
             }
 
-            // Đặt ObjectPlant vào thùng rác
-            Item trashItem = GetItem(TypeID.trash_1);
-            Trash trash = trashItem.GetComponent<Trash>();
+            // Đặt ObjectPlant vào thùng rác 
+            Trash trash = ItemPooler.Instance.GetItemEmptySlot(TypeID.trash_1).GetComponent<Trash>();
             if (!parcelHasItem && trash)
             {
                 if (MoveToTarget(trash.transform))
@@ -94,6 +91,17 @@ namespace CuaHang.AI
                 }
                 return;
             }
+        }
+
+        /// <summary> Set Properties with Item Data </summary>
+        public void SetProperties(StaffData data)
+        {
+            _ID = data._id;
+            _name = data._name;
+            transform.position = data._position;
+
+            // tái tạo parcel hold trong tay cua nhan vien
+            // reStaff._parcelHold = staff._parcelHold; 
         }
 
         void Animation()
@@ -122,28 +130,20 @@ namespace CuaHang.AI
 
         }
 
-        /// <summary> Tìm item có item Slot và còn chỗ trống </summary>
-        Item GetItem(TypeID typeID)
-        {
-            foreach (var item in ItemPooler.Instance._Items)
-            {
-                if (!item) continue;
-                if (!item._itemSlot) continue;
-                if (item._typeID == typeID && item._itemSlot.IsHasSlotEmpty()) return item;
-            }
-            return null;
-        }
-
         /// <summary> Tìm item có thể kéo drag </summary>
         Item GetParcel()
         {
-            foreach (var item in ItemPooler.Instance._Items)
+            foreach (var objectPool in ItemPooler.Instance._ObjectPools)
             {
-                if (!item) continue;
-                if (item._typeID == TypeID.parcel_1 && !item._thisParent && item.gameObject.activeSelf) return item;
+                Item item = objectPool.GetComponent<Item>();
+
+                if (item && item._typeID == TypeID.parcel_1 && !item._thisParent && item.gameObject.activeSelf)
+                {
+                    return item;
+                }
             }
 
             return null;
         }
     }
-} 
+}
