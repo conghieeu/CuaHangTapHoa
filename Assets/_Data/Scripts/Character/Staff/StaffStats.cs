@@ -8,10 +8,15 @@ namespace CuaHang.AI
         [SerializeField] Staff _staff;
         [SerializeField] StaffData _data;
 
+        private void Awake()
+        {
+
+            _staff = GetComponent<Staff>();
+        }
+
         protected override void Start()
         {
             base.Start();
-            _staff = GetComponent<Staff>();
         }
 
         public void LoadData(StaffData staffData)

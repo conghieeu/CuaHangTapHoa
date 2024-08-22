@@ -119,7 +119,7 @@ namespace CuaHang
             _typeID = itemData._typeID;
         }
 
-        /// <summary> Tạo item có thể mua với list item SO </summary>
+        /// <summary> Tạo item trong itemSlot </summary>
         public void CreateItemInSlot(List<ItemSO> items)
         {
             for (int i = 0; i < _itemSlot._itemsSlots.Count && i < items.Count; i++)

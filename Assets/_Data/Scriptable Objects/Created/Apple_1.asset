@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Apple_1
   m_EditorClassIdentifier: Assembly-CSharp::ObjectSellSO
   _name: Apple_1A
-  _typeID: 4
+  _typeID: 8
   _type: 5
   _priceDefault: 4
   _priceMarketMin: 0

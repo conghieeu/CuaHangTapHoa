@@ -118,7 +118,7 @@ namespace CuaHang.AI
             _playerConfirmPay = data._playerConfirmPay;
             transform.position = data._position;
             transform.rotation = data._rotation;
-            _totalPay = data._totalPay; 
+            _totalPay = data._totalPay;
         }
 
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>

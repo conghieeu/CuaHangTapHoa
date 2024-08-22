@@ -7,7 +7,7 @@ namespace CuaHang
 {
     public class StaffPoolerStats : ObjectStats
     {
-        [Header("CUSTOMER POOLER STATS")]
+        [Header("STAFF POOLER STATS")]
         [SerializeField] ObjectPooler _objectPooler;
         [SerializeField] List<StaffData> _listData;
 

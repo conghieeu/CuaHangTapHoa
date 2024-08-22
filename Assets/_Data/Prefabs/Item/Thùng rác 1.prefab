@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 512716362761274671}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.2705, y: 0.545, z: 0.304}
+  m_LocalPosition: {x: -0.281, y: 0.545, z: 0.194}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -56,7 +56,7 @@ Transform:
   m_GameObject: {fileID: 909637604252138440}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.305, y: 0.5452, z: -0.287}
+  m_LocalPosition: {x: -0.311, y: 0.5452, z: -0.247}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -132,12 +132,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _ID: 
+  _typeID: 6
+  _name: "Th\xF9ng r\xE1c"
   _isRecyclable: 0
   _SO: {fileID: 11400000, guid: 8d908801ee98d1c49a1c98e97249fd30, type: 2}
-  _ID: 
-  _typeID: 4
   _type: 3
-  _name: "Th\xF9ng r\xE1c"
   _price: 0
   _isBlockPrice: 0
   _interactionPrompt: 
@@ -169,10 +169,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
-  _itemData:
+  _data:
     _id: 
-    _price: 0
     _typeID: 0
+    _price: 0
     _position: {x: 0, y: 0, z: 0}
     _rotation: {x: 0, y: 0, z: 0, w: 0}
   _item: {fileID: 0}
@@ -233,7 +233,7 @@ Transform:
   m_GameObject: {fileID: 6091551657938009570}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4202, y: 0.5452, z: 0.332}
+  m_LocalPosition: {x: 0.376, y: 0.5452, z: 0.199}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -314,7 +314,7 @@ Transform:
   m_GameObject: {fileID: 8314852061660539227}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0.4215, y: 0.5452, z: -0.332}
+  m_LocalPosition: {x: 0.344, y: 0.5452, z: -0.248}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []

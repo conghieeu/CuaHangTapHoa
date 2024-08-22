@@ -342,12 +342,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
+  _ID: 
+  _typeID: 5
+  _name: "B\u01B0u ki\u1EC7n"
   _isRecyclable: 0
   _SO: {fileID: 11400000, guid: dc64d6717f1b03c44bebdf411eda2439, type: 2}
-  _ID: 
-  _typeID: 1
   _type: 1
-  _name: "B\u01B0u ki\u1EC7n"
   _price: 0
   _isBlockPrice: 0
   _interactionPrompt: 
@@ -377,10 +377,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
-  _itemData:
+  _data:
     _id: 
-    _price: 0
     _typeID: 0
+    _price: 0
     _position: {x: 0, y: 0, z: 0}
     _rotation: {x: 0, y: 0, z: 0, w: 0}
   _item: {fileID: 0}

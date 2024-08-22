@@ -8,16 +8,18 @@ namespace CuaHang.AI
 {
     public class Staff : AIBehavior
     {
-        [Header("Staff")]
-        public StaffStats _staffStats;
+        [Header("STAFF")]
+        [Header("Flags")]
         public Item _parcelHold; // Parcel đã nhặt và đang giữ trong người
-        private Item triggerParcel; // trigger của animation ngăn animation được gọi liên tục từ fixed Update
-        [SerializeField] Transform _itemHoldingPoint; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
+        private Item _triggerParcel; // trigger của animation ngăn animation được gọi liên tục từ fixed Update
 
-        protected override void Awake()
+        [Header("Components")]
+        [SerializeField] Transform _itemHoldPos; // là vị trí mà nhân viên này đang giữ ObjectPlant trong người 
+
+        protected override void Start()
         {
-            base.Awake();
-            _staffStats = GetComponent<StaffStats>();
+            base.Start();
+            _itemHoldPos = transform.Find("ITEM_HOLD_POS");
         }
 
         private void FixedUpdate()
@@ -34,15 +36,12 @@ namespace CuaHang.AI
             if (!_parcelHold) parcel = GetParcel();
 
             // Nhặt parcel
-            if (parcel)
+            if (parcel && MoveToTarget(parcel.transform))
             {
-                if (MoveToTarget(parcel.transform))
-                {
-                    parcel.SetParent(_itemHoldingPoint, null, true);
-                    parcel._isCanDrag = false;
-                    _parcelHold = parcel;
-                    return;
-                }
+                parcel.SetParent(_itemHoldPos, null, true);
+                parcel._isCanDrag = false;
+                _parcelHold = parcel;
+                return;
             }
 
             // Parcel có item không
@@ -109,21 +108,21 @@ namespace CuaHang.AI
             float velocity = _navMeshAgent.velocity.sqrMagnitude;
 
             // Idle
-            if (velocity == 0 && _stageAnim != STATE_ANIM.Idle || velocity == 0 && triggerParcel != _parcelHold)
+            if (velocity == 0 && _stageAnim != STATE_ANIM.Idle || velocity == 0 && _triggerParcel != _parcelHold)
             {
                 if (_parcelHold) _stageAnim = STATE_ANIM.Idle_Carrying;
                 else _stageAnim = STATE_ANIM.Idle;
-                triggerParcel = _parcelHold;
+                _triggerParcel = _parcelHold;
                 SetAnim();
                 return;
             }
 
             // Walk
-            if (velocity > 0.1f && _stageAnim != STATE_ANIM.Walk || velocity > 0.1f && triggerParcel != _parcelHold)
+            if (velocity > 0.1f && _stageAnim != STATE_ANIM.Walk || velocity > 0.1f && _triggerParcel != _parcelHold)
             {
                 if (_parcelHold) _stageAnim = STATE_ANIM.Walk_Carrying;
                 else _stageAnim = STATE_ANIM.Walk;
-                triggerParcel = _parcelHold;
+                _triggerParcel = _parcelHold;
                 SetAnim();
                 return;
             }

@@ -15,7 +15,7 @@ namespace CuaHang
 
     public class Trash : Item
     {
-        [Header("Trash")]
+        [Header("TRASH")]
         public float _timeDelete; // thời gian để xoá đi đối tượng bênh trong kho
         public List<ParcelTrash> _listTrash; // thời gian để xoá đi đối tượng bênh trong kho
 

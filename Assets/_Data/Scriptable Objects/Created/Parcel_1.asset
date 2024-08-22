@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Parcel_1
   m_EditorClassIdentifier: 
   _name: Parcel
-  _typeID: 3
+  _typeID: 5
   _type: 1
   _priceDefault: 0
   _priceMarketMin: 0

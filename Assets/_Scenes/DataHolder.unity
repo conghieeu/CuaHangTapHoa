@@ -270,18 +270,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a09b8a23409b3234fa074aeecd31594d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  enableDebugLog: 0
   _dontDestroyOnLoad: 0
   GameData:
     _playerData:
       _name: 
-      _position: {x: 0, y: 0, z: 0}
       _money: 0
+      _position: {x: 0, y: 0, z: 0}
     _gameSettingsData:
       _fullScreen: 0
       _quality: 
       _masterVolume: 0
-    customers: []
-    staff: []
+    _customersData: []
+    _staffsData: []
+    _itemsData: []
   _serialize: 1
   _usingXML: 0
   _encrypt: 0
@@ -321,8 +323,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 299.12115, y: -186.82349}
-  m_SizeDelta: {x: 598.2423, y: 373.647}
+  m_AnchoredPosition: {x: 144.63391, y: -63.851685}
+  m_SizeDelta: {x: 289.2678, y: 127.7033}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1903335570
 MonoBehaviour:
