@@ -1,63 +1,75 @@
 using System.Collections.Generic;
+using HieuDev;
 using UnityEngine;
 
 namespace CuaHang.Pooler
 {
     public class ItemPoolerStats : ObjectStats
     {
-        [Header("ItemPoolerStats")]
-        [SerializeField] ObjectPooler _objectPooler;
-        [SerializeField] List<ItemData> _listData;
+        [Header("ITEM POOLER STATS")]
+        [SerializeField] ItemPooler _itemPooler;
 
-        protected override void Start()
+        private void Start()
         {
-            base.Start();
-            _objectPooler = GetComponent<ObjectPooler>();
+            _itemPooler = GetComponent<ItemPooler>(); 
+
+            // load
+            SerializationAndEncryption._OnDataLoaded += gameData =>
+            {
+                if (this != null && transform != null)
+                {
+                    LoadData(gameData._itemsData);
+                }
+            };
+
+            // save
+            SerializationAndEncryption._OnDataSaved += () =>
+            {
+                if (this != null && transform != null)
+                {
+                    SaveData();
+                }
+            };
         }
 
-        /// <summary> Tái sử dụng hoặc tạo ra item mới từ item có sẵn </summary>
-        protected override void LoadData(GameData gameData)
+        // tạo các root đầu tiên
+        public override void LoadData<T>(T data)
         {
-            base.LoadData(gameData);
+            List<ItemData> itemsData = data as List<ItemData>;
 
-            _listData = gameData._itemsData;
-
-            // tái tạo 
-            foreach (var data in _listData)
+            // tái tạo items data
+            foreach (var itemData in itemsData)
             {
                 // ngăn tạo item đã có ID
-                if(_objectPooler.IsContentID(data._id)) continue;
+                if (_itemPooler.IsContentID(itemData._id)) continue;
 
-                // tạo 
-                ObjectPool reObject = _objectPooler.GetObjectPool(data._typeID);
-                if (!reObject)
-                {
-                    Debug.LogWarning($"Item {data._typeID} Này Tạo từ pool không thành công");
-                    continue;
-                }
-
-                reObject.GetComponent<ItemStats>().LoadData(data);
+                // tạo
+                ObjectPool reObject = _itemPooler.GetObjectPool(itemData._typeID);
+                reObject.GetComponent<ItemStats>().LoadData(itemData);
             }
         }
 
         protected override void SaveData()
+        { 
+            GetGameData()._itemsData = GetItemsDataRoot();
+        }
+
+        /// <summary> Tìm và lọc item từ root data </summary>
+        public List<ItemData> GetItemsDataRoot()
         {
-            _listData.Clear();
+            List<ItemData> data = new List<ItemData>();
 
-            foreach (var poolObject in _objectPooler._ObjectPools)
+            foreach (var pool in _itemPooler._ObjectPools)
             {
-                ItemStats stats = poolObject.GetComponent<ItemStats>();
-
-                if (stats && stats.gameObject.activeInHierarchy)
+                if (pool && pool._ID != "" && !pool.GetComponent<Item>()._thisParent) // kiểm tra có phải là root
                 {
-                    ItemData data = stats.GetData();
-
-                    if (data._id != "") _listData.Add(data); 
+                    data.Add(pool.GetComponent<ItemStats>().GetData());
                 }
             }
 
-            GetGameData()._itemsData = _listData;
+            return data;
         }
+
 
     }
 }

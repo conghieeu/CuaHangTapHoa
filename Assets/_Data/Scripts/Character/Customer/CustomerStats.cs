@@ -4,24 +4,23 @@ using UnityEngine;
 public class CustomerStats : ObjectStats
 {
     [Header("ItemStats")]
-    [SerializeField] CustomerData _customerData;
+    public CustomerData _data;
     [SerializeField] Customer _customer;
 
-    protected override void Start()
-    {
-        base.Start();
+    protected void Start()
+    { 
         _customer = GetComponent<Customer>();
     }
 
     public void LoadData(CustomerData data)
     {
-        _customerData = data;
+        _data = data;
         _customer.SetProperties(data);
     }
 
     public CustomerData GetData()
     {
-        _customerData = new CustomerData(
+        _data = new CustomerData(
             _customer._ID,
             _customer._typeID,
             _customer._name,
@@ -32,8 +31,16 @@ public class CustomerStats : ObjectStats
             _customer.transform.position,
             _customer.transform.rotation);
 
-        return _customerData;
+        return _data;
     }
 
-    protected override void SaveData() { }
+    protected override void SaveData()
+    {
+        
+    }
+
+    public override void LoadData<T>(T data)
+    {
+        
+    }
 }

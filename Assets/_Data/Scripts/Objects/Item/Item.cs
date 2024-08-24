@@ -30,7 +30,7 @@ namespace CuaHang
         public ItemStats _itemStats;
         public Transform _waitingPoint;
         public Transform _models;
-        public CamHere _camHere;
+        public CamHere _camHere; 
         [SerializeField] TextMeshProUGUI _txtPrice;
         [SerializeField] BoxCollider _coll;
 
@@ -216,11 +216,6 @@ namespace CuaHang
             {
                 _itemSlot.SetItemsDrag(true);
             }
-        }
-
-        public override void LoadProperties()
-        {
-            
         }
 
         #endregion

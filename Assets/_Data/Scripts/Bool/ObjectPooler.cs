@@ -68,6 +68,7 @@ namespace CuaHang.Pooler
             }
 
             if (objectPool) objectPool.CreateID();
+            else  Debug.LogWarning($"Item {typeID} Này Tạo từ pool không thành công");
 
             return objectPool;
         }

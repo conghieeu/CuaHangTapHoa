@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace CuaHang
@@ -10,13 +11,14 @@ namespace CuaHang
         public string _name;
         public bool _isRecyclable;
 
+        public string GenerateIdentifier => System.Guid.NewGuid().ToString();
+
         /// <summary> tạo mã định danh </summary>
         [ContextMenu("CreateID")]
         public void CreateID()
         {
-            _ID = System.Guid.NewGuid().ToString();
+            _ID = GenerateIdentifier;
         }
 
-        public abstract void LoadProperties();
     }
 }

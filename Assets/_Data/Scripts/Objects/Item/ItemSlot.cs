@@ -164,21 +164,6 @@ namespace CuaHang
             return false;
         }
 
-        /// <summary> Thêm item list ItemSlot và không set cha của item là vị trí slot </summary> 
-        public void AddItemToSlot(Item item)
-        {
-            for (int i = 0; i < _itemsSlots.Count; i++)
-            {
-                if (_itemsSlots[i]._item == null)
-                {
-                    _itemsSlots[i]._item = item;
-                    item.SetLocation(_itemsSlots[i]._slot);
-
-                    return;
-                }
-            }
-        }
-
         /// <summary> Xoá item ra khỏi danh sách và ẩn item nó ở thế giới </summary>
         public bool RemoveItemInWorld(Item item)
         {

@@ -5,19 +5,15 @@ namespace CuaHang.AI
     public class StaffStats : ObjectStats
     {
         [Header("ItemStats")]
+        public StaffData _data;
         [SerializeField] Staff _staff;
-        [SerializeField] StaffData _data;
 
         private void Awake()
         {
 
             _staff = GetComponent<Staff>();
         }
-
-        protected override void Start()
-        {
-            base.Start();
-        }
+ 
 
         /// <summary> Được gọi từ cha </summary>
         public void LoadData(StaffData staffData)
@@ -32,7 +28,7 @@ namespace CuaHang.AI
 
             if (_staff._parcelHold)
             {
-                itemHolder = _staff._parcelHold._itemStats._data;
+                // itemHolder = _staff._parcelHold._itemStats._data;
             }
 
             _data = new StaffData(
@@ -46,6 +42,11 @@ namespace CuaHang.AI
         }
 
         protected override void SaveData() { }
+
+        public override void LoadData<T>(T data)
+        {
+            throw new System.NotImplementedException();
+        }
     }
 
 }

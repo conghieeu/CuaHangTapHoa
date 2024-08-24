@@ -3,26 +3,18 @@ using UnityEngine;
 public class GameSettingStats : ObjectStats
 {
     [Header("GameSettingStats")]
-    public GameSettingsData _settings;
+    public GameSettingsData _data;
 
-    protected override void LoadData(GameData gameData)
+    public override void LoadData<T>(T data)
     {
-        base.LoadData(gameData);
-
-        _settings = gameData._gameSettingsData;
-
-        // áp dụng trạng thái vào game
-        if (_settings != null)
-        {
-            
-        }
+        _data = GetGameData()._gameSettingsData;
     }
 
     protected override void SaveData()
     {
         GetGameData()._gameSettingsData = new GameSettingsData(
-            _settings._fullScreen, 
-            _settings._quality, 
-            _settings._masterVolume); 
+            _data._fullScreen,
+            _data._quality,
+            _data._masterVolume);
     }
 }

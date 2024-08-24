@@ -8,21 +8,14 @@ namespace CuaHang
         [Header("PlayerStats")]
         public PlayerData _playerData;
 
-        protected override void LoadData(GameData gameData)
+        public override void LoadData<T>(T data)
         {
-            base.LoadData(gameData);
-
-            _playerData = gameData._playerData;
-
-            if (_playerData != null)
-            {
-                transform.position = _playerData._position;
-            }
+            throw new System.NotImplementedException();
         }
 
         protected override void SaveData()
-        { 
-            GetGameData()._playerData = new PlayerData(_playerData._name, transform.position, _playerData._money);
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

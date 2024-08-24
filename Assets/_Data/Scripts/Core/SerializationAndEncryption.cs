@@ -5,25 +5,27 @@ using System.IO;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml; 
+using System.Xml;
+using CuaHang.Pooler;
 
 [Serializable]
 public class ItemData
 {
     public string _id; 
-    public TypeID _typeID;
+    public TypeID _typeID; 
     public float _price;
     public Vector3 _position;
     public Quaternion _rotation;
-    List<ItemData> _itemSlot;
+    public List<ItemData> _itemSlot; // leaf 
 
-    public ItemData(string id, TypeID typeID, float price, Vector3 position, Quaternion rotation)
+    public ItemData(string id, TypeID typeID, float price, List<ItemData> itemSlot,Vector3 position, Quaternion rotation)
     {
         _id = id;
         _typeID = typeID;
         _price = price;
         _position = position;
         _rotation = rotation;
+        _itemSlot = itemSlot;
     }
 }
 
