@@ -1,18 +1,16 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using UnityEngine;
 
 namespace CuaHang.Pooler
 {
     public class ItemPooler : ObjectPooler
     {
+        public TypePool _typePool;
         public static ItemPooler Instance;
 
         private void Awake()
         {
             if (Instance) Destroy(this); else { Instance = this; }
-
         }
 
         /// <summary> Tìm item có item Slot và còn chỗ trống </summary>

@@ -6,7 +6,7 @@ namespace CuaHang
 {
     public class SingleModuleManager : MonoBehaviour
     {
-        public ObjectDrag _objectDrag;
+        public ItemDrag _objectDrag;
         public RaycastCursor _raycastCursor;
         public PlayerCtrl _playerCtrl;
         public Transform _itemSpawnPos;

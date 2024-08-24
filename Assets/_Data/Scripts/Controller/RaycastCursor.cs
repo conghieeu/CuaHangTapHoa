@@ -7,7 +7,7 @@ namespace CuaHang
     public class RaycastCursor : HieuBehavior
     {
         [Header("RaycastCursor")]
-        public ObjectDrag _objectDrag;
+        public ItemDrag _objectDrag;
         [SerializeField] Camera cam;
 
         [Space]
@@ -103,11 +103,11 @@ namespace CuaHang
             // khoảng cách bị quá dài
             if (Vector3.Distance(cam.transform.position, _hit.point) < _snapDistance)
             {
-                _objectDrag.GetComponent<ObjectDrag>()._isDistance = true;
+                _objectDrag.GetComponent<ItemDrag>()._isDistance = true;
             }
             else
             {
-                _objectDrag.GetComponent<ObjectDrag>()._isDistance = false;
+                _objectDrag.GetComponent<ItemDrag>()._isDistance = false;
             }
         }
 

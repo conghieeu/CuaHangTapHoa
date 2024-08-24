@@ -5,24 +5,25 @@ using System.IO;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
+using System.Xml; 
 
 [Serializable]
 public class ItemData
 {
-    public string _id;
+    public string _id; 
     public TypeID _typeID;
     public float _price;
     public Vector3 _position;
     public Quaternion _rotation;
+    List<ItemData> _itemSlot;
 
-    public ItemData(string id, TypeID typeID, float price, Vector3 position, Quaternion rotate)
+    public ItemData(string id, TypeID typeID, float price, Vector3 position, Quaternion rotation)
     {
         _id = id;
         _typeID = typeID;
         _price = price;
         _position = position;
-        _rotation = rotate;
+        _rotation = rotation;
     }
 }
 
@@ -57,6 +58,7 @@ public class CustomerData
     public bool _isPay;
     public Vector3 _position;
     public Quaternion _rotation;
+    List<ItemData> _itemSlot;
 
     public CustomerData(string id, TypeID typeID, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position, Quaternion rotation)
     {
@@ -93,6 +95,7 @@ public class PlayerData
     public string _name;
     public float _money;
     public Vector3 _position;
+    public ItemData _itemHold;
 
     public PlayerData(string name, Vector3 position, float money)
     {

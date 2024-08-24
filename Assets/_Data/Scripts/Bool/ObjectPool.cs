@@ -1,9 +1,8 @@
- 
 using UnityEngine;
 
 namespace CuaHang
 {
-    public class ObjectPool : HieuBehavior
+    public abstract class ObjectPool : HieuBehavior
     {
         [Header("POOL OBJECT")]
         public string _ID;
@@ -18,5 +17,6 @@ namespace CuaHang
             _ID = System.Guid.NewGuid().ToString();
         }
 
+        public abstract void LoadProperties();
     }
 }

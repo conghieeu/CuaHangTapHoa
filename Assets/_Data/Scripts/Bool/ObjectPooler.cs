@@ -1,14 +1,21 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 namespace CuaHang.Pooler
 {
+    public enum TypePool
+    {
+        Item,
+        Customer,
+        Staff,
+    }
+
     public class ObjectPooler : MonoBehaviour
     {
         [Header("BoolingObjects")]
+        public TypePool _poolType;
         [SerializeField] protected List<Transform> _prefabs;
-        [SerializeField] private List<ObjectPool> _objectPools;
+        [SerializeField] private List<ObjectPool> _objectPools; 
 
         public List<ObjectPool> _ObjectPools { get => _objectPools; private set => _objectPools = value; }
 

@@ -92,7 +92,7 @@ namespace CuaHang.AI
             }
         }
 
-        /// <summary> Set Properties with Item Data </summary>
+        /// <summary> Được gọi stats </summary>
         public void SetProperties(StaffData data)
         {
             _ID = data._id;

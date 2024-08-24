@@ -60,5 +60,9 @@ namespace CuaHang.AI
             return false;
         }
 
+        public override void LoadProperties()
+        {
+             
+        }
     }
 }

@@ -19,6 +19,8 @@ namespace CuaHang
         public void LoadData(ItemData itemData)
         {
             _data = itemData;
+             
+            _item = GetComponent<Item>();
             _item.SetProperties(itemData);
         }
 

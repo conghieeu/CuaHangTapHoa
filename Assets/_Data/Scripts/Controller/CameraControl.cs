@@ -15,7 +15,7 @@ namespace CuaHang
         public Transform _objectFollow; // là đối tượng theo giỏi object forcus
         public Transform _cameraHolder;
         public Item _itemEditing;
-        public ObjectDrag _objectDrag;
+        public ItemDrag _objectDrag;
         public RaycastCursor _raycastCursor;
         public Camera _cam;
         public bool _isTargetToCamHere;

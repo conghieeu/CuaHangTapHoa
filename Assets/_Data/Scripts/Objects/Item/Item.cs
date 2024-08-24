@@ -111,12 +111,13 @@ namespace CuaHang
         #region -------------------PUBLIC-----------------------
         
         /// <summary> Set Properties with Item Data </summary>
-        public void SetProperties(ItemData itemData)
+        public virtual void SetProperties(ItemData data)
         {
-            _ID = itemData._id;
-            transform.position = itemData._position;
-            _price = itemData._price;
-            _typeID = itemData._typeID;
+            _ID = data._id;
+            _price = data._price;
+            _typeID = data._typeID;
+            transform.position = data._position;
+            transform.rotation = data._rotation;
         }
 
         /// <summary> Tạo item trong itemSlot </summary>
@@ -215,6 +216,11 @@ namespace CuaHang
             {
                 _itemSlot.SetItemsDrag(true);
             }
+        }
+
+        public override void LoadProperties()
+        {
+            
         }
 
         #endregion

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using CuaHang;
 
 public static class HieuExtensions
 {
@@ -17,4 +18,5 @@ public static class HieuExtensions
             ts[r] = tmp;
         }
     }
+
 }

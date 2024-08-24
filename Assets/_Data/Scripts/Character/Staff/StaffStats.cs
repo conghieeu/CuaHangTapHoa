@@ -19,6 +19,7 @@ namespace CuaHang.AI
             base.Start();
         }
 
+        /// <summary> Được gọi từ cha </summary>
         public void LoadData(StaffData staffData)
         {
             _data = staffData;

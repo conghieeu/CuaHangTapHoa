@@ -8,7 +8,7 @@ using UnityEngine.UI;
 namespace CuaHang
 {
     /// <summary> ObjectTemp là đối tượng đại diện cho object Plant khi di dời đối tượng </summary>
-    public class ObjectDrag : MonoBehaviour
+    public class ItemDrag : MonoBehaviour
     {
         [Space]
         public bool _isDragging;
