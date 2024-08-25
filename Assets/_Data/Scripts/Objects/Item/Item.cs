@@ -30,7 +30,7 @@ namespace CuaHang
         public ItemStats _itemStats;
         public Transform _waitingPoint;
         public Transform _models;
-        public CamHere _camHere; 
+        public CamHere _camHere;
         [SerializeField] TextMeshProUGUI _txtPrice;
         [SerializeField] BoxCollider _coll;
 
@@ -109,7 +109,7 @@ namespace CuaHang
         #endregion
 
         #region -------------------PUBLIC-----------------------
-        
+
         /// <summary> Set Properties with Item Data </summary>
         public virtual void SetProperties(ItemData data)
         {
@@ -118,6 +118,25 @@ namespace CuaHang
             _typeID = data._typeID;
             transform.position = data._position;
             transform.rotation = data._rotation;
+            CreateItemInSlot(data._itemSlot);
+        }
+
+        public void CreateItemInSlot(List<ItemData> itemsData)
+        {
+            ItemSlot itemSlot = GetComponentInChildren<ItemSlot>();
+
+            // tái tạo items data
+            foreach (var itemData in itemsData)
+            {
+                // tạo
+                ObjectPool item = ItemPooler.Instance.GetObjectPool(itemData._typeID);
+
+                item.GetComponent<ItemStats>().LoadData(itemData);
+                if (itemSlot)
+                {
+                    itemSlot.TryAddItemToItemSlot(item.GetComponent<Item>(), true);
+                }
+            }
         }
 
         /// <summary> Tạo item trong itemSlot </summary>

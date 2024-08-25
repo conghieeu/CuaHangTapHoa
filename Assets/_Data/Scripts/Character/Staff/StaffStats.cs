@@ -1,3 +1,4 @@
+using CuaHang.Pooler;
 using UnityEngine;
 
 namespace CuaHang.AI
@@ -5,47 +6,39 @@ namespace CuaHang.AI
     public class StaffStats : ObjectStats
     {
         [Header("ItemStats")]
-        public StaffData _data;
+        [SerializeField] StaffData _staffData;
         [SerializeField] Staff _staff;
 
-        private void Awake()
+        protected override void Start()
         {
-
             _staff = GetComponent<Staff>();
-        }
- 
-
-        /// <summary> Được gọi từ cha </summary>
-        public void LoadData(StaffData staffData)
-        {
-            _data = staffData;
-            _staff.SetProperties(staffData);
         }
 
         public virtual StaffData GetData()
         {
+            SaveData();
+            return _staffData;
+        }
+
+        protected override void SaveData()
+        {
             ItemData itemHolder = null;
 
-            if (_staff._parcelHold)
-            {
-                // itemHolder = _staff._parcelHold._itemStats._data;
-            }
-
-            _data = new StaffData(
+            _staffData = new StaffData(
                 _staff._ID,
                 _staff._typeID,
                 _staff._name,
                 itemHolder,
                 _staff.transform.position);
-
-            return _data;
         }
-
-        protected override void SaveData() { }
 
         public override void LoadData<T>(T data)
         {
-            throw new System.NotImplementedException();
+            _staffData = data as StaffData;
+            if (StaffPooler.Instance.IsContentID(_staffData._id)) return;
+
+            _staff = GetComponent<Staff>();
+            _staff.SetProperties(_staffData);
         }
     }
 

@@ -49,7 +49,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &8007151895188808621
 RectTransform:
   m_ObjectHideFlags: 0
@@ -344,13 +344,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   enableDebugLog: 0
-  _data:
+  _item: {fileID: 0}
+  _itemSlot: {fileID: 0}
+  _itemData:
     _id: 
     _typeID: 0
     _price: 0
     _position: {x: 0, y: 0, z: 0}
     _rotation: {x: 0, y: 0, z: 0, w: 0}
-  _item: {fileID: 0}
+    _itemSlot: []
 --- !u!1 &5702891752709663305
 GameObject:
   m_ObjectHideFlags: 0

@@ -21,13 +21,12 @@ namespace CuaHang.AI
         public bool _isPay;
 
         public List<TypeID> _listItemBuy; // Cac item can lay, giới hạn là 15 item
-        public List<Item> _itemsCard;
+        public List<Item> _itemsCard; // cac item da mua
 
         protected override void Awake()
         {
             base.Awake();
             _customerStats = GetComponent<CustomerStats>();
-            if (_ID == "") _ID = Guid.NewGuid().ToString();
         }
 
         protected override void Start()
@@ -119,6 +118,8 @@ namespace CuaHang.AI
             transform.position = data._position;
             transform.rotation = data._rotation;
             _totalPay = data._totalPay;
+
+            // chưa set lại player đã mua những gì 
         }
 
         /// <summary> Player xác nhận thanh toán với khách hàng này </summary>

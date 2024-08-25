@@ -8,12 +8,12 @@ using UnityEngine;
 public class GameSettings : Singleton<GameSettings>
 {
     [Header("GameSettings")]
-    public GameSettingStats _gametStats;
+    public GameSettingStats _gameSettingStats;
 
     protected override void Awake()
     {
         base.Awake();
 
-        _gametStats = GetComponentInChildren<GameSettingStats>();
+        _gameSettingStats = GetComponentInChildren<GameSettingStats>();
     }
 }

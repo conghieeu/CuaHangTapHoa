@@ -7,18 +7,19 @@ using System.Security.Cryptography;
 using System.Text;
 using System.Xml;
 using CuaHang.Pooler;
+using UnityEngine.UIElements;
 
 [Serializable]
 public class ItemData
 {
-    public string _id; 
-    public TypeID _typeID; 
+    public string _id;
+    public TypeID _typeID;
     public float _price;
     public Vector3 _position;
     public Quaternion _rotation;
     public List<ItemData> _itemSlot; // leaf 
 
-    public ItemData(string id, TypeID typeID, float price, List<ItemData> itemSlot,Vector3 position, Quaternion rotation)
+    public ItemData(string id, TypeID typeID, float price, Vector3 position, Quaternion rotation, List<ItemData> itemSlot)
     {
         _id = id;
         _typeID = typeID;
@@ -60,9 +61,9 @@ public class CustomerData
     public bool _isPay;
     public Vector3 _position;
     public Quaternion _rotation;
-    List<ItemData> _itemSlot;
+    public List<ItemData> _itemSlot;
 
-    public CustomerData(string id, TypeID typeID, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position, Quaternion rotation)
+    public CustomerData(string id, TypeID typeID, string name, float totalPay, bool isNotNeedBuy, bool playerConfirmPay, bool isPay, Vector3 position, Quaternion rotation, List<ItemData> itemSlot)
     {
         _id = id;
         _typeID = typeID;
@@ -73,21 +74,29 @@ public class CustomerData
         _isPay = isPay;
         _position = position;
         _rotation = rotation;
+        _itemSlot = itemSlot;
     }
 }
 
 [Serializable]
 public class GameSettingsData
 {
-    public bool _fullScreen;
-    public string _quality;
+    public bool _isFullScreen;
+    public int _qualityIndex;
     public float _masterVolume;
+    public int _currentResolutionIndex;
 
-    public GameSettingsData(bool fullScreen, string quality, float masterVolume)
+    public GameSettingsData()
     {
-        _fullScreen = fullScreen;
-        _quality = quality;
+
+    }
+
+    public GameSettingsData(bool fullScreen, int quality, float masterVolume, int currentResolutionIndex)
+    {
+        _isFullScreen = fullScreen;
+        _qualityIndex = quality;
         _masterVolume = masterVolume;
+        _currentResolutionIndex = currentResolutionIndex;
     }
 }
 
@@ -97,13 +106,15 @@ public class PlayerData
     public string _name;
     public float _money;
     public Vector3 _position;
+    public Quaternion _rotation;
     public ItemData _itemHold;
 
-    public PlayerData(string name, Vector3 position, float money)
+    public PlayerData(string name, float money, Quaternion rotation, Vector3 position)
     {
         _name = name;
-        _position = position;
         _money = money;
+        _rotation = rotation;
+        _position = position;
     }
 }
 

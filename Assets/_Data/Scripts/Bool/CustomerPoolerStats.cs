@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using CuaHang.AI;
 using CuaHang.Pooler;
+using HieuDev;
 using UnityEngine;
 
 namespace CuaHang
@@ -8,41 +9,43 @@ namespace CuaHang
     public class CustomerPoolerStats : ObjectStats
     {
         [Header("CUSTOMER POOLER STATS")]
-        [SerializeField] ObjectPooler _objectPooler;
-        public List<CustomerData> _customersData;
+        [SerializeField] CustomerPooler _customerPooler;
 
-        private void Start()
+        protected override void Start()
         {
-            _objectPooler = GetComponent<ObjectPooler>();
-        }
-
-        /// <summary> Tìm và lọc item từ root data </summary>
-        public List<CustomerData> GetRootCustomerData()
-        {
-            List<CustomerData> data = new List<CustomerData>();
-
-            return data;
+            base.Start();
+            _customerPooler = GetComponent<CustomerPooler>();
         }
 
         protected override void SaveData()
         {
-            _customersData.Clear();
+            List<CustomerData> cussData = new List<CustomerData>();
 
-            foreach (var poolObject in _objectPooler._ObjectPools) {
-                CustomerStats stats = poolObject.GetComponent<CustomerStats>();
-                if (stats && stats.gameObject.activeInHierarchy)
+            foreach (var pool in _customerPooler._ObjectPools)
+            {
+                if (pool && pool._ID != "" && pool.gameObject.activeInHierarchy)
                 {
-                    CustomerData data = stats.GetData();
-                    if (data._id != "") _customersData.Add(data);
+                    cussData.Add(pool.GetComponent<CustomerStats>().GetData());
                 }
             }
 
-            GetGameData()._customersData = _customersData;
+            GetGameData()._customersData = cussData;
         }
 
         public override void LoadData<T>(T data)
         {
+            List<CustomerData> customersData = (data as GameData)._customersData;
 
+            // tái tạo items data
+            foreach (var cusData in customersData)
+            {
+                // ngăn tạo item đã có ID
+                if (_customerPooler.IsContentID(cusData._id)) continue;
+
+                // tạo
+                ObjectPool customer = _customerPooler.GetObjectPool(cusData._typeID);
+                customer.GetComponent<CustomerStats>().LoadData(cusData);
+            }
 
         }
 
