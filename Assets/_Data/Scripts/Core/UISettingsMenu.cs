@@ -1,7 +1,5 @@
-using System.Collections;
+
 using System.Collections.Generic;
-using log4net.Util;
-using Palmmedia.ReportGenerator.Core;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
@@ -46,9 +44,9 @@ namespace HieuDev
             SetResolution(data._currentResolutionIndex);
 
             // UI
-            _toggleFullScreen.isOn = data._isFullScreen;
-            _sliderVolume.value = data._masterVolume;
-            _dropDownGraphics.value = data._qualityIndex;
+            if (_toggleFullScreen) _toggleFullScreen.isOn = data._isFullScreen;
+            if (_sliderVolume) _sliderVolume.value = data._masterVolume;
+            if (_dropDownGraphics) _dropDownGraphics.value = data._qualityIndex;
         }
 
         private void SetResolution()

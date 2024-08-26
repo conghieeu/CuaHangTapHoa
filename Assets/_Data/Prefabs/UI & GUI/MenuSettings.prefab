@@ -522,7 +522,19 @@ MonoBehaviour:
       m_Image: {fileID: 0}
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1959237220302953146}
+        m_TargetAssemblyTypeName: HieuDev.UISettingsMenu, Project
+        m_MethodName: SetResolution
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
   m_AlphaFadeSpeed: 0.15
 --- !u!1 &976956298337717747
 GameObject:
@@ -1976,8 +1988,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 9135720717010668986}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 1, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 20, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2451,7 +2463,7 @@ RectTransform:
   m_Father: {fileID: 8593240492552511538}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 1, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2862,6 +2874,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4146178807169461077}
   - component: {fileID: 1959237220302953146}
+  - component: {fileID: 4983723173139183576}
   m_Layer: 5
   m_Name: GameSettingMenu
   m_TagString: Untagged
@@ -2885,10 +2898,10 @@ RectTransform:
   - {fileID: 2036316283608503120}
   m_Father: {fileID: 8540077912520456094}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 1128.3326, y: 687.6187}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1959237220302953146
 MonoBehaviour:
@@ -2903,9 +2916,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioMixer: {fileID: 24100000, guid: f8552aa6ec3be4340a240f9e2d91b82e, type: 2}
-  resolutionDropdown: {fileID: 9129108072370110901}
   _panelContent: {fileID: 3501082966958551178}
   _enableMenuSettings: 0
+  resolutionDropdown: {fileID: 9129108072370110901}
+  _dropDownGraphics: {fileID: 6885775446900090600}
+  _toggleFullScreen: {fileID: 3012734386663911663}
+  _sliderVolume: {fileID: 8122889882247727341}
+--- !u!114 &4983723173139183576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7931588784310321737}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c97afc556caea1c44969477eb7ddec74, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ConformX: 1
+  ConformY: 1
+  Logging: 1
 --- !u!1 &8077210524656929895
 GameObject:
   m_ObjectHideFlags: 0
@@ -3577,7 +3608,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3501082966958551178
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3599,6 +3630,6 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 95.22974, y: 40.720703}
+  m_SizeDelta: {x: -995.2623, y: -371.4513}
   m_Pivot: {x: 0.5, y: 0.5}

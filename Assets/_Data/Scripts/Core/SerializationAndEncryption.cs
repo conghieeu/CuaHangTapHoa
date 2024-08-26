@@ -5,9 +5,7 @@ using System.IO;
 using System;
 using System.Security.Cryptography;
 using System.Text;
-using System.Xml;
-using CuaHang.Pooler;
-using UnityEngine.UIElements;
+using System.Xml; 
 
 [Serializable]
 public class ItemData

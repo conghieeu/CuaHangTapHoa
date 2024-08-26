@@ -9,6 +9,8 @@ public abstract class ObjectStats : HieuBehavior
 {
     protected virtual void Start() // root thì mới cần bắt sự kiện
     {
+        // LoadData(GetGameData());
+
         // load
         SerializationAndEncryption._OnDataLoaded += gameData =>
         {
