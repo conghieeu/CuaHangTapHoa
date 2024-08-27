@@ -52,7 +52,7 @@ namespace CuaHang.UI
 
         void FixedUpdate()
         {
-            CreateBtnSlot();
+            CreateBtnSlot(); 
         }
 
         // -----------BUY PANEL----------
