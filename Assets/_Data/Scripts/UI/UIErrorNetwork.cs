@@ -5,20 +5,25 @@ namespace CuaHang.UI
 {
     public class UIErrorNetwork : UIPanel
     {
-        
-
-        public override void Show()
+        private void Start()
         {
-            
-        }
+            GameSystem._OnCheckConnect += CheckInternet;
 
-        public override void Hide()
-        { 
 
         }
 
+        private void CheckInternet(bool value)
+        {
+            if (!value)
+            {
+                ShowContents(true);
+                Time.timeScale = 0;
+            }
+            else
+            {
+                ShowContents(false);
+                Time.timeScale = 1;
+            }
+        }
     }
-
-
-
 }

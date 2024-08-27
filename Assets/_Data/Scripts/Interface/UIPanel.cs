@@ -6,8 +6,10 @@ namespace CuaHang.UI
     {
         [Header("UI PANEL")]
         public RectTransform _contentPanel;
-        public abstract void Show();
-        public abstract void Hide();
+        public virtual void ShowContents(bool value)
+        {
+            _contentPanel.gameObject.SetActive(value);
+        }
     }
 
 
