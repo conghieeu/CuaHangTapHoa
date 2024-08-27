@@ -133,6 +133,7 @@ namespace HieuDev
     {
         public static event Action _OnDataSaved;
         public static event Action<GameData> _OnDataLoaded;
+        public static bool _isExistsSaveFile;
 
         public GameData GameData = new();
         [SerializeField] bool _serialize;
@@ -173,9 +174,11 @@ namespace HieuDev
                 _OnDataLoaded?.Invoke(GameData);
 
                 Debug.Log("Game data loaded from: " + _filePath);
+                _isExistsSaveFile = true;
             }
             else
             {
+                _isExistsSaveFile = false;
                 Debug.LogWarning("Save file not found in: " + _filePath);
             }
         }

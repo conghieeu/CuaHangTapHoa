@@ -23,7 +23,7 @@ namespace CuaHang
         /// <summary> Luôn Spawn khách hàng ngẫu nhiên </summary>
         IEnumerator AutoSpawn()
         {
-            float delay = Random.Range(3, 3);
+            float delay = Random.Range(10, 10);
             yield return new WaitForSeconds(delay);
 
             if (_customerPrefabs.Count > 0 && _spawnPoint.Count > 0)

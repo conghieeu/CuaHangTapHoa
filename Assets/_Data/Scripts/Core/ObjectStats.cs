@@ -9,9 +9,13 @@ public abstract class ObjectStats : HieuBehavior
 {
     protected virtual void Start() // root thì mới cần bắt sự kiện
     {
-        // LoadData(GetGameData());
+        // có file save thì load
+        if (SerializationAndEncryption._isExistsSaveFile)
+        {
+            LoadData(GetGameData());
+        }
 
-        // load
+        // load event
         SerializationAndEncryption._OnDataLoaded += gameData =>
         {
             if (this != null && transform != null)
@@ -20,7 +24,7 @@ public abstract class ObjectStats : HieuBehavior
             }
         };
 
-        // save
+        // save event
         SerializationAndEncryption._OnDataSaved += () =>
         {
             if (this != null && transform != null)
