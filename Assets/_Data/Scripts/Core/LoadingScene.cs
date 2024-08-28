@@ -16,7 +16,7 @@ namespace HieuDev
         private void Start()
         {
             m_async = SceneManager.LoadSceneAsync(GameScene.DataHolder.ToString(), LoadSceneMode.Additive);
-            m_async = SceneManager.LoadSceneAsync(GameScene.OptionsMenu.ToString(), LoadSceneMode.Additive);
+            // m_async = SceneManager.LoadSceneAsync(GameScene.OptionsMenu.ToString(), LoadSceneMode.Additive);
         }
 
         private void Update()
