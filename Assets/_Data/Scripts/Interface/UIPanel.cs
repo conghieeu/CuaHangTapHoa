@@ -8,7 +8,8 @@ namespace CuaHang.UI
         public RectTransform _contentPanel;
         public virtual void ShowContents(bool value)
         {
-            _contentPanel.gameObject.SetActive(value);
+            if (_contentPanel)
+                _contentPanel.gameObject.SetActive(value);
         }
     }
 
