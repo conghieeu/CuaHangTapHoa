@@ -5,7 +5,7 @@ using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
-namespace HieuDev
+namespace Core
 {
     /// <summary> Loading khi mới khởi động game </summary>
     public class LoadingScene : MonoBehaviour

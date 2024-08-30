@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HieuDev
+namespace Core
 {
     public class GameScene
     {

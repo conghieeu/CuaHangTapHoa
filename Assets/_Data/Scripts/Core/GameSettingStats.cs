@@ -8,11 +8,6 @@ public class GameSettingStats : ObjectStats
 
     public static event Action<GameSettingsData> _OnDataChange;
 
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     public override void LoadData<T>(T data)
     {
         _gameSettingData = (data as GameData)._gameSettingsData;

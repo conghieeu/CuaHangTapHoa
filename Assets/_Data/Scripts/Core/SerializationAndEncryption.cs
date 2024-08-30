@@ -126,7 +126,7 @@ public class GameData
     public List<ItemData> _itemsData;
 }
 
-namespace HieuDev
+namespace Core
 {
     /// <summary> Là GAMEDATA, chuỗi hoá và mã hoá lưu được nhiều loại dữ liệu của đối tượng </summary>
     public class SerializationAndEncryption : Singleton<SerializationAndEncryption>

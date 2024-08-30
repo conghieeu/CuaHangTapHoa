@@ -1,16 +1,16 @@
 
 using System.Collections.Generic;
+using CuaHang.UI;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 
-namespace HieuDev
+namespace Core
 {
-    public class UISettingsMenu : MonoBehaviour
+    public class UISettingsMenu : UIPanel
     {
         [SerializeField] AudioMixer audioMixer;
-        [SerializeField] RectTransform _panelContent;
         [SerializeField] bool _enableMenuSettings;
         [SerializeField] TMP_Dropdown resolutionDropdown;
         [SerializeField] TMP_Dropdown _dropDownGraphics;

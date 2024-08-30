@@ -1,14 +1,34 @@
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace CuaHang.UI
 {
     public class BtnSwitch : MonoBehaviour
     {
-        public RectTransform _panelObsever;
+        [Header("Open new panels")]
+        public UIPanel _panelOpen;
+        public UIPanel _panelClose;
 
-        public void OnClickBtnSwitch(bool trigger)
+        Button _button;
+
+        private void Start()
         {
-            _panelObsever.gameObject.SetActive(trigger);
+            _button = GetComponent<Button>();
+            _button.onClick.AddListener(_OpenNewPanel);
+        }
+
+        public void _OpenNewPanel()
+        {
+            if (_panelClose)
+            {
+                _panelClose.ShowContents(false);
+            }
+
+            if (_panelOpen)
+            {
+                _panelOpen.ShowContents(true);
+            }
+
         }
     }
 

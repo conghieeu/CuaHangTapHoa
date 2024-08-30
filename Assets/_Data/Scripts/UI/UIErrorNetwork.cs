@@ -8,8 +8,6 @@ namespace CuaHang.UI
         private void Start()
         {
             GameSystem._OnCheckConnect += CheckInternet;
-
-
         }
 
         private void CheckInternet(bool value)

@@ -10,15 +10,14 @@ public class EmailPassLogin : MonoBehaviour
     #region variables
 
     [Header("Login")]
-    public TMP_InputField LoginEmail;
-    public TMP_InputField loginPassword;
+    public TMP_InputField _LoginEmail;
+    public TMP_InputField _loginPassword;
 
     [Header("Sign up")]
-
-    public TMP_InputField SingupName;
-    public TMP_InputField SignupEmail;
-    public TMP_InputField SignupPassword;
-    public TMP_InputField SignupPasswordConfirm;
+    public TMP_InputField _singupName;
+    public TMP_InputField _signupEmail;
+    public TMP_InputField _signupPassword;
+    public TMP_InputField _signupPasswordConfirm;
 
     [Header("Extra")]
     public GameObject loadingScreen;
@@ -32,8 +31,8 @@ public class EmailPassLogin : MonoBehaviour
         loadingScreen.SetActive(true);
 
         FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-        string email = SignupEmail.text;
-        string password = SignupPassword.text;
+        string email = _signupEmail.text;
+        string password = _signupPassword.text;
         auth.CreateUserWithEmailAndPasswordAsync(email, password).ContinueWithOnMainThread(task =>
         {
             if (task.IsCanceled)
@@ -53,9 +52,9 @@ public class EmailPassLogin : MonoBehaviour
             Debug.LogFormat("Firebase user created successfully: {0} ({1})",
                 result.User.DisplayName, result.User.UserId);
 
-            SignupEmail.text = "";
-            SignupPassword.text = "";
-            SignupPasswordConfirm.text = "";
+            _signupEmail.text = "";
+            _signupPassword.text = "";
+            _signupPasswordConfirm.text = "";
 
             if (result.User.IsEmailVerified)
             {
@@ -269,8 +268,8 @@ public class EmailPassLogin : MonoBehaviour
         loadingScreen.SetActive(true);
 
         FirebaseAuth auth = FirebaseAuth.DefaultInstance;
-        string email = LoginEmail.text;
-        string password = loginPassword.text;
+        string email = _LoginEmail.text;
+        string password = _loginPassword.text;
 
         Credential credential =
         EmailAuthProvider.GetCredential(email, password);

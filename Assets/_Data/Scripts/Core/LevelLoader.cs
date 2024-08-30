@@ -4,18 +4,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-namespace HieuDev
+namespace Core
 {
     /// <summary> Hiện ứng chuyển cảnh </summary>
     public class LevelLoader : MonoBehaviour
     {
         public Animator _anim;
         public float transitionTime = 1f;
-
-        private void Start()
-        {
-            // DontDestroyOnLoad(gameObject);
-        }
 
         public void LoadNextLevel()
         {

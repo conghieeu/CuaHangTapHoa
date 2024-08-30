@@ -2,7 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using CuaHang;
-using HieuDev;
+using Core;
 using UnityEngine;
 
 public class GameSettings : Singleton<GameSettings>

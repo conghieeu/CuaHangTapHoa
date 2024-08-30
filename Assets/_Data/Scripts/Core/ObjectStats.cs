@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using CuaHang;
-using HieuDev;
+using Core;
 using UnityEngine;
 
 public abstract class ObjectStats : HieuBehavior
@@ -12,6 +12,7 @@ public abstract class ObjectStats : HieuBehavior
         // có file save thì load
         if (SerializationAndEncryption._isExistsSaveFile)
         {
+            Debug.Log("Log file save");
             LoadData(GetGameData());
         }
 

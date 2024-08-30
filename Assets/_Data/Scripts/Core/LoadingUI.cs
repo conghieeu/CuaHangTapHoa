@@ -4,7 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace HieuDev
+namespace Core
 {
     /// <summary> Hiển thị thanh bar loading khi mới khởi động game được loading scene gọi </summary>
     public class LoadingUI : MonoBehaviour

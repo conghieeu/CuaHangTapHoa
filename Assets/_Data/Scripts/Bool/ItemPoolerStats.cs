@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using HieuDev;
+using Core;
 using UnityEngine;
 
 namespace CuaHang.Pooler
@@ -19,6 +19,7 @@ namespace CuaHang.Pooler
         // tạo các root đầu tiên
         public override void LoadData<T>(T data)
         {
+            _itemPooler = GetComponent<ItemPooler>();
             List<ItemData> itemsData = (data as GameData)._itemsData;
 
             // tái tạo items data

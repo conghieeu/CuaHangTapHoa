@@ -1,15 +1,15 @@
 using System.Collections.Generic;
 using CuaHang.AI;
 using CuaHang.Pooler;
-using HieuDev;
+using Core;
 using UnityEngine;
 
-namespace CuaHang 
+namespace CuaHang
 {
     public class StaffPoolerStats : ObjectStats
     {
         [Header("STAFF POOLER STATS")]
-        [SerializeField] StaffPooler _staffPooler; 
+        [SerializeField] StaffPooler _staffPooler;
 
         protected override void Start()
         {
@@ -17,8 +17,10 @@ namespace CuaHang
             _staffPooler = GetComponent<StaffPooler>();
         }
 
+        /// <summary> Load dữ liệu theo GameData </summary>
         public override void LoadData<T>(T data)
         {
+            _staffPooler = GetComponent<StaffPooler>();
             List<StaffData> staffsData = (data as GameData)._staffsData;
 
             // tái tạo items data
